@@ -1,0 +1,5 @@
+<%if @user.present? %>
+    <h1>Hi <%= @user.name %></h1>   
+<%else %>
+    <a href = "/login"> Ir a login </a>
+<%end %>   

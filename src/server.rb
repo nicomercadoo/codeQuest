@@ -29,15 +29,14 @@ class App < Sinatra::Application
     end
   end
 
+  get '/' do
+    @user = current_user
+    erb:landing
+  end
+
   get '/game' do
     logger.info 'USANDO LOGGER INFO EN GAME PATH'
     'Game'
   end
 
-
-
-  get '/' do
-    'Welcome'
-  end
 end
-
