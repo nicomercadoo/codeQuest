@@ -39,4 +39,8 @@ class App < Sinatra::Application
     erb :log_in
   end
 
+  get '/home' do
+    erb :home
+  end
+
 end
