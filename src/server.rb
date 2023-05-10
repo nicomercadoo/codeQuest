@@ -29,14 +29,14 @@ class App < Sinatra::Application
     end
   end
 
+  set :views, File.join(File.dirname(__FILE__), 'views')
+
   get '/' do
-    @user = current_user
-    erb:landing
+    erb :sign_in
   end
 
-  get '/game' do
-    logger.info 'USANDO LOGGER INFO EN GAME PATH'
-    'Game'
+  get '/log_in' do
+    erb :log_in
   end
 
 end
