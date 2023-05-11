@@ -43,4 +43,8 @@ class App < Sinatra::Application
     erb :home
   end
 
+  get '/settings' do
+    erb :settings
+  end
+
 end
