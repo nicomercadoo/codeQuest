@@ -39,12 +39,31 @@ class App < Sinatra::Application
     erb :log_in
   end
 
-  get '/home' do
-    erb :home
-  end
-
   get '/settings' do
     erb :settings
+  end
+
+  post '/log_in' do
+    # Retrieve the form data
+    email = params[:email]
+    password = params[:password]
+    name = params[:name]
+    nickname = params[:nickname]
+  
+    # Store the user data in your desired way (e.g., database, file, etc.)
+    # Here, we're just printing the data as an example
+    puts "New User Registration:"
+    puts "Email: #{email}"
+    puts "Password: #{password}"
+    puts "Name: #{name}"
+    puts "Nickname: #{nickname}"
+  
+    # Redirect to a success page or perform other actions as needed
+    redirect '/home'
+  end
+
+  get '/home' do
+    erb :home
   end
 
 end
