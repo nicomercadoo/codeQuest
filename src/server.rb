@@ -35,15 +35,15 @@ class App < Sinatra::Application
     erb :sign_in
   end
 
-  get '/log_in' do
-    erb :log_in
+  get '/login' do
+    erb :login
   end
 
   get '/settings' do
     erb :settings
   end
 
-  post '/log_in' do
+  post '/login' do
     # Retrieve the form data
     email = params[:email]
     password = params[:password]
