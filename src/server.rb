@@ -71,17 +71,16 @@ class App < Sinatra::Application
       end
     end
   end
-  
 
-  post '/signin' do
+  post '/' do
     email = params[:email]
     password = params[:password]
 
-    is—valid = Account.find_by(email: email, password: password)
+    account = Account.find_by(email: email, password: password)
 
-    if is—valid
-      logger. info "Account #{email} signed in successfully"
-      redirect '/home '
+    if account
+      logger.info "Account #{email} signed in successfully"
+      redirect '/home'
     else
       logger.info "Account #{email} failed to sign in"
     end
