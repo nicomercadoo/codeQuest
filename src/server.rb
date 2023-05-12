@@ -6,7 +6,7 @@ require 'sinatra/activerecord'
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 
 
-require_relative 'models/user'
+require_relative 'models/account'
 
 class App < Sinatra::Application
   def initialize(app = nil)
@@ -30,9 +30,10 @@ class App < Sinatra::Application
   end
 
   set :views, File.join(File.dirname(__FILE__), 'views')
+  set :public_folder, File.join(File.dirname(__FILE__), 'styles')
 
   get '/' do
-    erb :sign_in
+    erb :signin
   end
 
   get '/login' do
@@ -49,7 +50,7 @@ class App < Sinatra::Application
     password = params[:password]
     name = params[:name]
     nickname = params[:nickname]
-  
+
     # Store the user data in your desired way (e.g., database, file, etc.)
     # Here, we're just printing the data as an example
     puts "New User Registration:"
@@ -57,7 +58,7 @@ class App < Sinatra::Application
     puts "Password: #{password}"
     puts "Name: #{name}"
     puts "Nickname: #{nickname}"
-  
+
     # Redirect to a success page or perform other actions as needed
     redirect '/home'
   end

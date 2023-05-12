@@ -2,69 +2,7 @@
 <html>
 <head>
   <title>codeQuest - Home</title>
-  <style>
-    /* Global styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      background-color: #1e90ff;
-    }
-    
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-    }
-    
-    .header-buttons {
-      display: flex;
-      gap: 10px;
-    }
-    
-    .header-button {
-      padding: 10px 20px;
-      background-color: #ffffff;
-      color: #1e90ff;
-      border: none;
-      border-radius: 30px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    
-    .header-button:hover {
-      background-color: #e6e6e6;
-    }
-    
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: calc(100vh - 80px);
-    }
-    
-    .learn-button {
-      padding: 20px 40px;
-      background-color: #1e90ff;
-      color: #ffffff;
-      border: none;
-      border-radius: 30px;
-      font-size: 24px;
-      cursor: pointer;
-    }
-    
-    .learn-button:hover {
-      background-color: #0066cc;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="<%=url('/home.css')%>" >
 </head>
 <body>
   <header class="container">
@@ -75,7 +13,7 @@
       <a href="/settings"><button class="header-button">Settings</button></a>
     </div>
   </header>
-  
+
   <div class="content">
     <button class="learn-button">Start learning Haskell!</button>
   </div>

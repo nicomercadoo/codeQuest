@@ -1,4 +1,4 @@
-From ruby:2.7.5
+FROM ruby:2.7.5
 
 ADD . /src
 WORKDIR /src
