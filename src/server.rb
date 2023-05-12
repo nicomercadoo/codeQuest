@@ -50,17 +50,41 @@ class App < Sinatra::Application
     password = params[:password]
     name = params[:name]
     nickname = params[:nickname]
+  
+    account = Account.find_by(email: email, password: password)
+    
+    if account
+      logger.info "Account #{email} logged in successfully"
+      # Aquí puedes agregar lógica para almacenar información de sesión o redirigir al usuario a la página de inicio.
+      redirect '/home'
+    else
+      # Si la cuenta no existe, registra una nueva cuenta en la base de datos.
+      account = Account.new(email: email, password: password, name: name, nickname: nickname) 
+      if account.save
+        logger.info "Account #{email} created successfully"
+        # Aquí puedes agregar lógica para almacenar información de sesión o redirigir al usuario a la página de inicio.
+        redirect '/home'
+      else
+        # Si la cuenta no se pudo guardar, muestra un mensaje de error al usuario.
+        logger.info "Failed to create account for #{email}"
+        erb :login, locals: { error_message: "Error al crear cuenta" }
+      end
+    end
+  end
+  
 
-    # Store the user data in your desired way (e.g., database, file, etc.)
-    # Here, we're just printing the data as an example
-    puts "New User Registration:"
-    puts "Email: #{email}"
-    puts "Password: #{password}"
-    puts "Name: #{name}"
-    puts "Nickname: #{nickname}"
+  post '/signin' do
+    email = params[:email]
+    password = params[:password]
 
-    # Redirect to a success page or perform other actions as needed
-    redirect '/home'
+    is—valid = Account.find_by(email: email, password: password)
+
+    if is—valid
+      logger. info "Account #{email} signed in successfully"
+      redirect '/home '
+    else
+      logger.info "Account #{email} failed to sign in"
+    end
   end
 
   get '/home' do
