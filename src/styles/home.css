@@ -26,9 +26,9 @@ body {
 .header-button {
   padding: 10px 20px;
   background-color: #ffffff;
-  color: #1e90ff;
+  color: #137CBD;
   border: none;
-  border-radius: 30px;
+  border-radius: 15px;
   font-size: 16px;
   cursor: pointer;
 }
@@ -43,18 +43,4 @@ body {
   align-items: center;
   justify-content: center;
   height: calc(100vh - 80px);
-}
-
-.learn-button {
-  padding: 20px 40px;
-  background-color: #1e90ff;
-  color: #ffffff;
-  border: none;
-  border-radius: 30px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.learn-button:hover {
-  background-color: #0066cc;
 }

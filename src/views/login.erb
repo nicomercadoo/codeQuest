@@ -30,7 +30,7 @@
       transform: translate(-50%, -50%);
       background-color: rgba(255, 255, 255, 0.8);
       padding: 20px;
-      border-radius: 10px;
+      border-radius: 15px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
   
@@ -43,14 +43,15 @@
       margin: 10px auto;
       padding: 10px 20px;
       border: none;
-      border-radius: 5px;
+      border-radius: 15px;
       background-color: #137CBD;
       color: #FFFFFF;
       font-size: 16px;
       cursor: pointer;
       text-decoration: none;
     }
-  </style>  
+  </style>
+
 </head>
 <body>
   <div class="container">
@@ -61,20 +62,20 @@
     <div class="right-section">
       <div class="content">
         <% if params[:error_message] %>
-        <div class="error">
-          <div class="floating-box">
-            <p>That account is already registered. Please sign in.</p>
-            <a href="/"><button>Sign In</button></a>
+          <div class="error">
+            <div class="floating-box">
+              <p>The account is not registered. Please create the account first.</p>
+              <a href="/signup"><button>Create an Account</button></a>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
         <form class="form" action="#" method="post">
-          <input type="text" name="name" placeholder="Name" required>
           <input type="text" name="email" placeholder="Email" required>
           <input type="password" name="password" placeholder="Password" required>
-          <input type="text" name="nickname" placeholder="Nickname" required>
-          <button type="submit">Create Account</button>
-          <a href="/"><button type="button">Back to Sign In</button></a>
+          <div class="button-wrapper">
+            <button type="submit">Sign In</button>
+            <a href="/signup"><button type="button">Create an Account</button></a>
+          </div>
         </form>
       </div>
     </div>

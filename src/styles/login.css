@@ -45,36 +45,55 @@ body {
 }
 
 .form input[type="text"],
-.form input[type="password"] {
-  padding: 12px 20px;
+.form input[type="password"],
+.form button {
+  padding: 15px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   font-size: 16px;
-  margin-bottom: 10px;
-  width: 300px;
-  background-color: #FFFFFF;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease-in-out;
+  margin-bottom: 20px;
+  width: 350px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow to form boxes */
+}
+
+.form input[type="text"]:last-child,
+.form input[type="password"]:last-child {
+  margin-bottom: 40px;
+}
+
+.form button:last-child {
+  margin-bottom: 40px;
 }
 
 .form input[type="text"]:focus,
 .form input[type="password"]:focus {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Adjust the box shadow on focus if desired */
 }
 
 .form button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
   background-color: #137CBD;
   color: #FFFFFF;
   cursor: pointer;
-  margin-bottom: 10px;
 }
 
 .form button:last-child {
   background-color: #FFFFFF;
   color: #137CBD;
-  border: 2px solid #137CBD;
+}
+
+.form .button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px; /* Adjust the spacing between form boxes and buttons */
+}
+
+.form .button-wrapper button {
+  padding: 15px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  margin-bottom: 10px; /* Decrease the spacing between buttons */
+  width: 350px;
+  box-sizing: border-box; /* Ensure the padding is included in the width */
 }

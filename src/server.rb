@@ -33,18 +33,18 @@ class App < Sinatra::Application
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
 
   get '/' do
-    erb :signin
+    erb :login
   end
 
-  get '/login' do
-    erb :login
+  get '/signup' do
+    erb :signup
   end
 
   get '/settings' do
     erb :settings
   end
 
-  post '/login' do
+  post '/signup' do
     # Retrieve the form data
     email = params[:email]
     password = params[:password]
@@ -63,7 +63,7 @@ class App < Sinatra::Application
         redirect '/home'
       else
         logger.info "Failed to create account for #{email}"
-        erb :login, locals: { error_message: "Error al crear cuenta" }
+        erb :signup, locals: { error_message: "Error al crear cuenta" }
       end
     end
   end
@@ -79,16 +79,12 @@ class App < Sinatra::Application
       redirect '/home'
     else
       logger.info "Account #{email} failed to sign in"
-      redirect '/?error_message=Invalidad email or password'
+      redirect '/signup?error_message=Invalid email or password'
     end
   end
 
   get '/home' do
     erb :home
-  end
-
-  get '/login_error' do
-    erb :login_error
   end
 
 end
