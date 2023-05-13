@@ -55,7 +55,7 @@ class App < Sinatra::Application
     
     if account
       logger.info "Account #{email} already exists"
-      redirect '/login?error_message=Account already exists'
+      redirect '/signup?error_message=Account already exists'
     else
       account = Account.new(email: email, password: password, name: name, nickname: nickname) 
       if account.save
@@ -79,7 +79,7 @@ class App < Sinatra::Application
       redirect '/home'
     else
       logger.info "Account #{email} failed to sign in"
-      redirect '/signup?error_message=Invalid email or password'
+      redirect '/?error_message=Invalid email or password'
     end
   end
 
