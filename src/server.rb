@@ -54,7 +54,8 @@ class App < Sinatra::Application
     account = Account.find_by(email: email, password: password)
     
     if account
-      logger.info "Account #{email} logged in successfully"
+      logger.info "Account #{email} already exists"
+      redirect '/login_error'
     else
       account = Account.new(email: email, password: password, name: name, nickname: nickname) 
       if account.save
@@ -78,12 +79,20 @@ class App < Sinatra::Application
       redirect '/home'
     else
       logger.info "Account #{email} failed to sign in"
-      redirect '/'
+      redirect '/signin_error'
     end
   end
 
   get '/home' do
     erb :home
+  end
+
+  get '/login_error' do
+    erb :login_error
+  end
+
+  get '/signin_error' do
+    erb :signin_error
   end
 
 end
