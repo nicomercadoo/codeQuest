@@ -55,17 +55,12 @@ class App < Sinatra::Application
     
     if account
       logger.info "Account #{email} logged in successfully"
-      # Aquí puedes agregar lógica para almacenar información de sesión o redirigir al usuario a la página de inicio.
-      redirect '/home'
     else
-      # Si la cuenta no existe, registra una nueva cuenta en la base de datos.
       account = Account.new(email: email, password: password, name: name, nickname: nickname) 
       if account.save
         logger.info "Account #{email} created successfully"
-        # Aquí puedes agregar lógica para almacenar información de sesión o redirigir al usuario a la página de inicio.
         redirect '/home'
       else
-        # Si la cuenta no se pudo guardar, muestra un mensaje de error al usuario.
         logger.info "Failed to create account for #{email}"
         erb :login, locals: { error_message: "Error al crear cuenta" }
       end
@@ -83,6 +78,7 @@ class App < Sinatra::Application
       redirect '/home'
     else
       logger.info "Account #{email} failed to sign in"
+      redirect '/'
     end
   end
 
