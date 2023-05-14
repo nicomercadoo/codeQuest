@@ -1,6 +1,6 @@
 class Setting < ActiveRecord::Base
-  def initialize(theme, font)
-    @theme = theme
-    @font = font
-  end
+  enum theme: { default: 'default', dark: 'dark', light: 'light' }
+  
+  validates :theme, presence: true
+  validates :programming_font, presence: true
 end

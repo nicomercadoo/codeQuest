@@ -1,7 +1,8 @@
 class Lesson < ActiveRecord::Base
-  def initialize(lesson)
-    @id = 
-    @lesson_number = lesson
-    @complete = false
-  end
+  validates :number_lesson, presence: true
+  validates :completed_lesson, presence: true
+  validates :title_lesson, presence: true
+  validates :description_lesson, presence: true
+end
+
 end

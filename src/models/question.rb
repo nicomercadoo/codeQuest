@@ -1,6 +1,5 @@
 class Question < ActiveRecord::Base
-  def initialize(question)
-    @question = question
-    @id = 
-  end
+  validates :title_question, presence: true
+  validates :description_question, presence: true
+  validates :correct_option, presence: true
 end

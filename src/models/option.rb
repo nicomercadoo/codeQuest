@@ -1,6 +1,4 @@
 class Option < ActiveRecord::Base
-  def initialize(option, is_correct)
-    @option = option
-    @is_correct = is_correct
-  end
+  validates :description_option, presence: true
+  validates :correct_option, presence: true
 end

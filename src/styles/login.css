@@ -1,5 +1,4 @@
 body {
-  font-family: 'Metropolis', 'TT-Norms-Fonts', 'IBM_Plex_Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -12,14 +11,14 @@ body {
 }
 
 @font-face {
-  font-family: 'Metropolis';
+  font-family: 'MetropolisReg';
   src: url('/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Metropolis';
+  font-family: 'Metropolis2';
   src: url('/fonts/Metropolis/Metropolis-RegularItalic.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
@@ -27,7 +26,7 @@ body {
 
 
 @font-face {
-  font-family: 'Metropolis';
+  font-family: 'Metropolis3';
   src: url('/fonts/Metropolis/Metropolis-SemiBoldItalic.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
@@ -106,6 +105,7 @@ body {
 }
 
 .logo {
+  font-family: 'Metropolis3';
   font-size: 48px;
   margin-bottom: 20px;
 }
@@ -155,6 +155,7 @@ body {
 }
 
 .form button:last-child {
+  font-family: 'MetropolisReg';
   background-color: #FFFFFF;
   color: #137CBD;
 }
@@ -167,6 +168,7 @@ body {
 }
 
 .form .button-wrapper button {
+  font-family: 'MetropolisReg';
   padding: 15px 20px;
   border: none;
   border-radius: 15px;
@@ -202,6 +204,7 @@ body {
 }
 
 .floating-box button {
+  font-family: 'MetropolisReg';
   display: block;
   margin: 10px auto;
   padding: 10px 20px;

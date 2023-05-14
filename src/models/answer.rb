@@ -1,5 +1,3 @@
 class Answer < ActiveRecord::Base
-  def initialize()
-    @description = 
-  end
+  validates :description_answer, presence: true
 end

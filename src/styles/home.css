@@ -1,7 +1,14 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'MetropolisReg', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+@font-face {
+  font-family: 'MetropolisReg';
+  src: url('/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
 }
 
 .container {
@@ -9,7 +16,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  background-color: #1e90ff;
+  background-color: #1eff31;
 }
 
 .logo {
@@ -34,6 +41,7 @@ body {
 }
 
 .header-button:hover {
+  font-family: 'MetropolisReg';
   background-color: #e6e6e6;
 }
 
@@ -44,3 +52,4 @@ body {
   justify-content: center;
   height: calc(100vh - 80px);
 }
+
