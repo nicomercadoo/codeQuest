@@ -50,14 +50,36 @@ class App < Sinatra::Application
     password = params[:password]
     name = params[:name]
     nickname = params[:nickname]
-    
+
+    valid_email_format = /^[a-zA-Z0-9_.+-]+@(gmail|outlook|hotmail|live)\.[a-z.]+$/
+    valid_password_format = /(?=(?:.*[A-Z].*)+)(?=(?:.*[a-z].*)+)(?=(?:.*\d.*)+)(?!(?:.*\s.*)+)^(?=.{8,}$).*/
+    valid_name_format = /(?=(?:^\D*$)+)/
+    valid_nickname_format = /(?=(?:^\S*$)+)/
+
+    unless (email =~ valid_email_format)
+      logger.info "Account email #{email} isn't valid"
+      redirect '/signup?error=Invalid-email'
+    end
+    unless password =~ valid_password_format
+      logger.info "Account password #{password} isn't valid"
+      redirect '/signup?error=Invalid-password'
+    end
+    unless name =~ valid_name_format
+      logger.info "Account name #{name} isn't valid"
+      redirect '/signup?error=Invalid-name'
+    end
+    unless nickname =~ valid_nickname_format
+      logger.info "Account nickname #{nickname} isn't valid"
+      redirect '/signup?error=Invalid-nickname'
+    end
+
     account = Account.find_by(email: email, password: password)
-    
+
     if account
       logger.info "Account #{email} already exists"
       redirect '/signup?error_message=Account already exists'
     else
-      account = Account.new(email: email, password: password, name: name, nickname: nickname) 
+      account = Account.new(email: email, password: password, name: name, nickname: nickname)
       if account.save
         logger.info "Account #{email} created successfully"
         redirect '/home'
