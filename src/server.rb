@@ -74,11 +74,16 @@ class App < Sinatra::Application
     end
 
     account = Account.find_by(email: email, password: password)
+    account_with_nickname = Account.find_by(nickname: nickname)
 
     if account
       logger.info "Account #{email} already exists"
       redirect '/signup?error_message=Account already exists'
     else
+      if account_with_nickname
+        logger.info "Nickname #{nickname} already exists"
+        redirect '/signup?error=Nickname already exists'
+      end
       account = Account.new(email: email, password: password, name: name, nickname: nickname)
       if account.save
         logger.info "Account #{email} created successfully"
