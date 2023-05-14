@@ -72,7 +72,7 @@ body {
   src: url('/fonts/TT-Norms-Fonts/TTNorms-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
-} 
+}
 
 @font-face {
   font-family: 'IBM_Plex_Sans';
@@ -112,6 +112,7 @@ body {
 
 .description {
   font-size: 24px;
+  font-family: 'Metropolis2';
   margin-bottom: 40px;
 }
 
