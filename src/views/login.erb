@@ -2,56 +2,7 @@
 <html>
 <head>
   <title>codeQuest</title>
-  <link rel="stylesheet" type="text/css" href="<%=url('/login.css')%>" >
-  <style>
-    body {
-      background-image: url("/src/views/images/login_screen.png");
-      background-size: cover;
-    }
-
-    .container {
-      position: relative;
-    }
-  
-    .blurred-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(5px);
-      z-index: -1;
-    }
-  
-    .floating-box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-  
-    .floating-box p {
-      text-align: center;
-    }
-  
-    .floating-box button {
-      display: block;
-      margin: 10px auto;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 15px;
-      background-color: #137CBD;
-      color: #FFFFFF;
-      font-size: 16px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="<%=url('login.css')%>" >
 </head>
 <body>
   <div class="container">
