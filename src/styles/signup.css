@@ -85,7 +85,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px; /* Adjust the spacing between form boxes and buttons */
+  margin-top: 40px; 
 }
 
 .form .button-wrapper button {
@@ -93,9 +93,9 @@ body {
   border: none;
   border-radius: 15px;
   font-size: 16px;
-  margin-bottom: 10px; /* Decrease the spacing between buttons */
+  margin-bottom: 10px;
   width: 350px;
-  box-sizing: border-box; /* Ensure the padding is included in the width */
+  box-sizing: border-box; 
 }
 
 .blurred-background {
