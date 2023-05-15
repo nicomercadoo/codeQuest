@@ -1,0 +1,162 @@
+@import url("set-fonts.css");
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Metropolis';
+  font-weight: normal;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: #F0F6FF;
+}
+
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #137CBD;
+  color: #FFFFFF;
+  user-select: none;
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Metropolis';
+  font-weight: 600;
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-family: 'Metropolis';
+  font-style: italic;
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+.form input[type="text"]:focus,
+.form input[type="password"]:focus {
+  outline: #137CBD solid 2px;
+}
+
+.form input[type="text"],
+.form input[type="password"],
+.form button {
+  padding: 15px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  width: 350px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form input[type="text"]:last-child,
+.form input[type="password"]:last-child {
+  margin-bottom: 40px;
+}
+
+.form input[type="text"]::placeholder,
+.form input[type="password"]::placeholder {
+  color: #999999; /* Placeholder text color */
+  font-style: italic; /* Placeholder text style */
+}
+
+.form button:last-child {
+  margin-bottom: 40px;
+}
+
+.form input[type="text"]:focus,
+.form input[type="password"]:focus {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.form button {
+  background-color: #137CBD;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.form button #primary-btn {
+  color: red;
+}
+
+.form button:hover {
+  background-color: #0066cc;
+}
+
+.form button:last-child {
+  font-family: 'Metropolis';
+  background-color: #FFFFFF;
+  color: #137CBD;
+}
+
+.form .button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.form .button-wrapper button {
+  font-family: 'Metropolis';
+  padding: 15px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  width: 350px;
+  box-sizing: border-box;
+}
+
+.floating-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.floating-box p {
+  text-align: center;
+}
+
+.floating-box button {
+  font-family: 'Metropolis';
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  background-color: #137CBD;
+  color: #FFFFFF;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/*FUENTES AGREDADAS AL ARCHIVO CSS */
+
+
