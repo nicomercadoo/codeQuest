@@ -1,85 +1,6 @@
 body {
-  font-family: 'Metropolis','MetropolisReg', 'TT-Norms-Fonts', 'IBM_Plex_Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-}
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('/fonts/Metropolis/Metropolis-MediumItalic.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'MetropolisReg';
-  src: url('/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('/fonts/Metropolis/Metropolis-RegularItalic.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('/fonts/Metropolis/Metropolis-SemiBoldItalic.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Metropolis';
-  src: url('/fonts/Metropolis/Metropolis-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'TT-Norms-Fonts';
-  src: url('/fonts/TT-Norms-Fonts/TTNorms-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'TT-Norms-Fonts';
-  src: url('/fonts/TT-Norms-Fonts/TTNorms-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'TT-Norms-Fonts';
-  src: url('/fonts/TT-Norms-Fonts/TTNorms-Italic.otf') format('opentype');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'TT-Norms-Fonts';
-  src: url('/fonts/TT-Norms-Fonts/TTNorms-MediumItalic.otf') format('opentype');
-  font-weight: 500;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'TT-Norms-Fonts';
-  src: url('/fonts/TT-Norms-Fonts/TTNorms-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-} 
-
-@font-face {
-  font-family: 'IBM_Plex_Sans';
-  src: url('/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
 }
 
 .container {
@@ -106,12 +27,13 @@ body {
 }
 
 .logo {
-  
+  font-family: 'MetropolisReg';
   font-size: 48px;
   margin-bottom: 20px;
 }
 
 .description {
+  font-family: 'Metropolis2';
   font-size: 24px;
   margin-bottom: 40px;
 }
@@ -216,4 +138,82 @@ body {
   font-size: 16px;
   cursor: pointer;
   text-decoration: none;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis/Metropolis-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MetropolisReg';
+  src: url('/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis/Metropolis-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis/Metropolis-SemiBoldItalic.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis/Metropolis-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT-Norms-Fonts';
+  src: url('/fonts/TT-Norms-Fonts/TTNorms-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT-Norms-Fonts';
+  src: url('/fonts/TT-Norms-Fonts/TTNorms-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT-Norms-Fonts';
+  src: url('/fonts/TT-Norms-Fonts/TTNorms-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'TT-Norms-Fonts';
+  src: url('/fonts/TT-Norms-Fonts/TTNorms-MediumItalic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'TT-Norms-Fonts';
+  src: url('/fonts/TT-Norms-Fonts/TTNorms-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+} 
+
+@font-face {
+  font-family: 'IBM_Plex_Sans';
+  src: url('/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
 }

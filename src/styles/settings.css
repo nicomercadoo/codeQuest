@@ -1,5 +1,4 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -9,10 +8,11 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  background-color: #1e90ff;
+  background-color: #137CBD;
 }
 
 .logo {
+  font-family: 'MetropolisReg';
   font-size: 24px;
   font-weight: bold;
   color: #ffffff;
@@ -26,7 +26,7 @@ body {
 .header-button {
   padding: 10px 20px;
   background-color: #ffffff;
-  color: #1e90ff;
+  color: #137CBD;
   border: none;
   border-radius: 30px;
   font-size: 16px;
@@ -47,7 +47,7 @@ body {
 
 .learn-button {
   padding: 20px 40px;
-  background-color: #1e90ff;
+  background-color: #137CBD;
   color: #ffffff;
   border: none;
   border-radius: 30px;
@@ -57,4 +57,11 @@ body {
 
 .learn-button:hover {
   background-color: #0066cc;
+}
+
+@font-face {
+  font-family: 'MetropolisReg';
+  src: url('/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
 }

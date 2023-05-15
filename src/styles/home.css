@@ -1,14 +1,6 @@
 body {
-  font-family:'MetropolisReg', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-}
-
-@font-face {
-  font-family: 'MetropolisReg';
-  src: url('/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
 }
 
 .container {
@@ -16,10 +8,11 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  background-color: #1eff31;
+  background-color: #137CBD;
 }
 
 .logo {
+  font-family: 'MetropolisReg';
   font-size: 24px;
   font-weight: bold;
   color: #ffffff;
@@ -35,13 +28,12 @@ body {
   background-color: #ffffff;
   color: #137CBD;
   border: none;
-  border-radius: 15px;
+  border-radius: 30px;
   font-size: 16px;
   cursor: pointer;
 }
 
 .header-button:hover {
-  font-family: 'MetropolisReg';
   background-color: #e6e6e6;
 }
 
@@ -53,3 +45,9 @@ body {
   height: calc(100vh - 80px);
 }
 
+@font-face {
+  font-family: 'MetropolisReg';
+  src: url('/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
