@@ -28,9 +28,10 @@ body {
   background-color: #ffffff;
   color: #137CBD;
   border: none;
-  border-radius: 30px;
+  border-radius: 15px;
   font-size: 16px;
   cursor: pointer;
+  font-family: 'MetropolisReg';
 }
 
 .header-button:hover {
