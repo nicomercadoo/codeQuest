@@ -44,6 +44,18 @@ class App < Sinatra::Application
     erb :settings
   end
 
+  get '/profile' do
+    erb :profile
+  end
+
+  get '/snippets' do
+    erb :snippets
+  end
+
+  get '/home' do
+    erb :home
+  end
+
   post '/signup' do
     # Retrieve the form data
     email = params[:email]
@@ -109,9 +121,4 @@ class App < Sinatra::Application
       redirect '/?error_message=Invalid email or password'
     end
   end
-
-  get '/home' do
-    erb :home
-  end
-
 end
