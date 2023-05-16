@@ -5,8 +5,9 @@
   <link rel="stylesheet" type="text/css" href="<%=url('logins.css')%>">
 </head>
 <% if @theme = 'light' %>
-<style>@import url('color-scheme-light.css');</style>
+  <style>@import url('color-scheme-light.css');</style>
 <% else %>
+  <style>@import url('color-scheme-dark.css');</style>
 <% end %>
 <body>
   <div class="container">

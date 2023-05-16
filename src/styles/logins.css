@@ -165,7 +165,7 @@ body {
 }
 
 .closeBtn {
-  color: var(--primary-color);
+  color: var(--accent-color);
   float: right;
   margin-left: 18px;
   font-size: 30px;

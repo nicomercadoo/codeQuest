@@ -83,13 +83,3 @@ li, a, button {
   bottom: -8px;
   pointer-events: none;
 }
-
-.closeBtn {
-  color: var(--primary-color);
-  float: right;
-  margin-left: 18px;
-  font-size: 30px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.4s;
-}

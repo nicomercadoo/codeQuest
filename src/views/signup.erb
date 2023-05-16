@@ -4,6 +4,11 @@
   <title>codeQuest</title>
   <link rel="stylesheet" type="text/css" href="<%=url('logins.css')%>" >
 </head>
+<% if @theme = 'light' %>
+  <style>@import url('color-scheme-light.css');</style>
+<% else %>
+  <style>@import url('color-scheme-dark.css');</style>
+<% end %>
 <body>
   <div class="container">
     <div class="left-section">
@@ -15,8 +20,8 @@
         <% if params[:error] %>
           <div class="error">
             <div class="floating-box">
-              <p>Esta cuenta ya existe. Por favor, inicia sesión.</p>
               <span class="closeBtn" onclick="this.parentElement.style.display='none';">×</span>
+              <p>Esta cuenta ya existe. Por favor, inicia sesión.</p>
               <a href="/"><button>Iniciar sesión</button></a>
             </div>
           </div>
