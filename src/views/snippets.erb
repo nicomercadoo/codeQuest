@@ -4,14 +4,21 @@
   <title>codeQuest - Snippets</title>
   <link rel="stylesheet" type="text/css" href="<%=url('profile.css')%>">
 </head>
+<% if @theme = 'light' %>
+<style>@import url('color-scheme-light.css');</style>
+<% else %>
+<style>@import url('color-scheme-dark.css');</style>
+<% end %>
 <body>
   <header class="container">
     <h1 class="logo">codeQuest</h1>
-    <div class="header-buttons">
-      <a href="/profile"><button class="header-button">Profile</button>
-      <a href="/home"><button class="header-button">Home</button>
-      <a href="/settings"><button class="header-button">Settings</button></a>
-    </div>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="/home" class="nav-link">Home</a></li>
+        <li><a href="/profile" class="nav-link">Profile</a></li>
+        <li><a href="/snippets" class="current-page">Snippets</a></li>
+      </ul>
+    </nav>
   </header>
 </body>
 </html>

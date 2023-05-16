@@ -4,6 +4,11 @@
   <title>codeQuest - Profile</title>
   <link rel="stylesheet" type="text/css" href="<%=url('profile.css')%>">
 </head>
+<% if @theme = 'light' %>
+<style>@import url('color-scheme-light.css');</style>
+<% else %>
+<style>@import url('color-scheme-dark.css');</style>
+<% end %>
 <body>
   <header class="container">
     <h1 class="logo">codeQuest</h1>
@@ -12,9 +17,11 @@
         <li><a href="/home" class="nav-link">Home</a></li>
         <li><a href="/profile" class="current-page">Profile</a></li>
         <li><a href="/snippets" class="nav-link">Snippets</a></li>
-        <li><a href="/settings" class="nav-link">Settings</a></li>
       </ul>
     </nav>
   </header>
+  <main>
+
+  </main>
 </body>
 </html>
