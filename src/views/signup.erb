@@ -8,27 +8,26 @@
   <div class="container">
     <div class="left-section">
       <h1 class="logo">codeQuest</h1>
-      <p class="description">The new way of learning Haskell!</p>
+      <p class="description">La nueva forma de aprender Haskell!</p>
     </div>
     <div class="right-section">
       <div class="content">
         <% if params[:error] %>
           <div class="error">
             <div class="floating-box">
-              <span class="closeBtn" onclick="this.parentElement.style.display='none';">×</span>
-              <p>That account is already registered. Please sign in.</p>
-              <a href="/"><button>Sign In</button></a>
+              <p>Esta cuenta ya existe. Por favor, inicia sesión.</p>
+              <a href="/"><button>Iniciar sesión</button></a>
             </div>
           </div>
         <% end %>
         <form class="form" action="#" method="post">
-          <input type="text" name="name" placeholder="Name" required>
+          <input type="text" name="name" placeholder="Nombre" required>
           <input type="text" name="email" placeholder="Email" required>
-          <input type="password" name="password" placeholder="Password" required>
+          <input type="password" name="password" placeholder="Contraseña" required>
           <input type="text" name="nickname" placeholder="Nickname" required>
           <div class="button-wrapper">
-            <button type="submit" id="primary-btn">Create Account</button>
-            <a href="/"><button type="button" id="secondary-btn">Back to Sign In</button></a>
+            <button type="submit" id="primary-btn">Crear cuenta</button>
+            <a href="/"><button type="button" id="secondary-btn">Volver a iniciar sesión</button></a>
           </div>
         </form>
       </div>

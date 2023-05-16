@@ -136,6 +136,7 @@ body {
 
 .floating-box {
   position: absolute;
+  width: 550px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -163,6 +164,12 @@ body {
   text-decoration: none;
 }
 
-/*FUENTES AGREDADAS AL ARCHIVO CSS */
-
-
+.closeBtn {
+  color: var(--primary-color);
+  float: right;
+  margin-left: 18px;
+  font-size: 30px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+}

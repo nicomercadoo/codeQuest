@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>codeQuest - Home</title>
+  <title>codeQuest</title>
   <link rel="stylesheet" type="text/css" href="<%=url('home.css')%>">
 </head>
 <% if @theme = 'light' %>
-<style>@import url('color-scheme-light.css');</style>
+  <style>@import url('color-scheme-light.css');</style>
 <% else %>
-<style>@import url('color-scheme-dark.css');</style>
+  <style>@import url('color-scheme-dark.css');</style>
 <% end %>
 <body>
   <header class="container">
-    <h1 class="logo">codeQuest</h1>
+    <a href='/home'><h1 class="logo">codeQuest</h1></a>
     <nav class="nav-links">
       <ul>
-        <li><a href="/home" class="current-page">Home</a></li>
-        <li><a href="/profile" class="nav-link">Profile</a></li>
+        <li><a href="/profile" class="nav-link">Perfil</a></li>
         <li><a href="/snippets" class="nav-link">Snippets</a></li>
+        <li><a href="/" class="nav-link">Salir</a></li>
       </ul>
     </nav>
   </header>
