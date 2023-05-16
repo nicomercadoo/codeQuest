@@ -10,29 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_14_054709) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_16_040133) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password"
     t.string "nickname"
+    t.integer "progress", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "answers", force: :cascade do |t|
-    t.text "description_answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "accounts_id"
+    t.index ["accounts_id"], name: "index_answers_on_accounts_id"
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.integer "number_lesson"
+    t.integer "name_lesson"
     t.boolean "completed_lesson", default: false
-    t.string "title_lesson"
     t.text "description_lesson"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "accounts_id"
+    t.integer "tests_id"
+    t.index ["accounts_id"], name: "index_lessons_on_accounts_id"
+    t.index ["tests_id"], name: "index_lessons_on_tests_id"
   end
 
   create_table "options", force: :cascade do |t|
@@ -40,20 +45,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_14_054709) do
     t.text "description_option"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "answers_id"
+    t.integer "questions_id"
+    t.index ["answers_id"], name: "index_options_on_answers_id"
+    t.index ["questions_id"], name: "index_options_on_questions_id"
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string "title_question"
     t.text "description_question"
-    t.boolean "correct_question", default: false
+    t.boolean "well_answered", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "tests_id"
+    t.index ["tests_id"], name: "index_questions_on_tests_id"
   end
 
   create_table "tests", force: :cascade do |t|
-    t.string "letter"
+    t.string "letter", limit: 1
     t.boolean "completed_test", default: false
-    t.string "title_test"
     t.text "description_test"
     t.integer "cant_questions", default: 0
     t.integer "acerted_answers", default: 0
