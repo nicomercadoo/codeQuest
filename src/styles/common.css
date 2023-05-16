@@ -1,0 +1,95 @@
+@import url('set-fonts.css');
+@import url('color-scheme-light.css');
+
+body {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10%;
+}
+
+li, a, button {
+  font-family: 'Metropolis';
+  font-weight: bold;
+  color: var(--bg-color);
+  text-decoration: none;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--primary-color);
+}
+
+.logo {
+  font-family: 'Metropolis';
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--bg-color);
+}
+
+.nav-links ul {
+  list-style: none;
+}
+
+.nav-links ul li {
+  display: inline-block;
+  padding: 10px 20px;
+
+}
+
+.nav-link {
+  font-family: 'Metropolis';
+  font-weight: bold;
+  color: var(--bg-color);
+  transition: all 0.4s;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  height: 2px;
+  width: 100%;
+  background-color: var(--bg-color);
+  display: block;
+  position: relative;
+  left: 0;
+  bottom: -8px;
+  transition: all 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-link:hover::after{
+  opacity: 1;
+}
+
+.current-page::after {
+  content: '';
+  height: 2px;
+  width: 100%;
+  background-color: var(--bg-color);
+  display: block;
+  position: relative;
+  left: 0;
+  bottom: -8px;
+  pointer-events: none;
+}
+
+.closeBtn {
+  color: var(--primary-color);
+  float: right;
+  margin-left: 18px;
+  font-size: 30px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+}

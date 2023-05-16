@@ -53,6 +53,7 @@ class App < Sinatra::Application
   end
 
   get '/home' do
+    @theme = 'light'
     erb :home
   end
 

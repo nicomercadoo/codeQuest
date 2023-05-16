@@ -2,8 +2,12 @@
 <html>
 <head>
   <title>codeQuest</title>
-  <link rel="stylesheet" type="text/css" href="<%=url('logins.css')%>" >
+  <link rel="stylesheet" type="text/css" href="<%=url('logins.css')%>">
 </head>
+<% if @theme = 'light' %>
+<style>@import url('color-scheme-light.css');</style>
+<% else %>
+<% end %>
 <body>
   <div class="container">
     <div class="left-section">
@@ -15,6 +19,7 @@
         <% if params[:error] %>
           <div class="error">
             <div class="floating-box">
+              <span class="closeBtn" onclick="this.parentElement.style.display='none';">×</span>
               <p>The account is not registered. Please create the account first.</p>
               <a href="/signup"><button>Create an Account</button></a>
             </div>
@@ -31,5 +36,21 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const floatingBox = document.querySelector('.floating-box');
+      const errorBox = document.querySelector('.error');
+
+      // Function to handle outside click events
+      function outsideClickHandler(event) {
+        if (!floatingBox.contains(event.target) && errorBox.contains(event.target)) {
+          errorBox.style.display = 'none';
+        }
+      }
+
+      // Add event listener to the document
+      document.addEventListener('click', outsideClickHandler);
+    });
+  </script>
 </body>
 </html>

@@ -1,10 +1,16 @@
 @import url("set-fonts.css");
+@import url("color-scheme-light.css");
+
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Metropolis';
   font-weight: normal;
+}
+
+.hidden {
+  display: none;
 }
 
 .container {
@@ -19,8 +25,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #137CBD;
-  color: #FFFFFF;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
   user-select: none;
 }
 
@@ -55,7 +61,7 @@ body {
 
 .form input[type="text"]:focus,
 .form input[type="password"]:focus {
-  outline: #137CBD solid 2px;
+  outline: var(--primary-color) solid 2px;
 }
 
 .form input[type="text"],
@@ -91,8 +97,8 @@ body {
 }
 
 .form button {
-  background-color: #137CBD;
-  color: #FFFFFF;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
   cursor: pointer;
 }
 
@@ -106,8 +112,8 @@ body {
 
 .form button:last-child {
   font-family: 'Metropolis';
-  background-color: #FFFFFF;
-  color: #137CBD;
+  background-color: var(--bg-color);
+  color: var(--primary-color);
 }
 
 .form .button-wrapper {
@@ -133,7 +139,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #FFFFFF;
+  background-color: var(--bg-color);
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -150,8 +156,8 @@ body {
   padding: 10px 20px;
   border: none;
   border-radius: 15px;
-  background-color: #137CBD;
-  color: #FFFFFF;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
   font-size: 16px;
   cursor: pointer;
   text-decoration: none;
