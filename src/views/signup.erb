@@ -15,6 +15,7 @@
         <% if params[:error] %>
           <div class="error">
             <div class="floating-box">
+              <span class="closeBtn" onclick="this.parentElement.style.display='none';">×</span>
               <p>That account is already registered. Please sign in.</p>
               <a href="/"><button>Sign In</button></a>
             </div>
