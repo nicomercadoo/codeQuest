@@ -32,21 +32,5 @@
       </div>
     </div>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const floatingBox = document.querySelector('.floating-box');
-      const errorBox = document.querySelector('.error');
-
-      // Function to handle outside click events
-      function outsideClickHandler(event) {
-        if (!floatingBox.contains(event.target) && errorBox.contains(event.target)) {
-          errorBox.style.display = 'none';
-        }
-      }
-
-      // Add event listener to the document
-      document.addEventListener('click', outsideClickHandler);
-    });
-  </script>
 </body>
 </html>
