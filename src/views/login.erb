@@ -4,11 +4,6 @@
   <title>codeQuest</title>
   <link rel="stylesheet" type="text/css" href="<%=url('logins.css')%>">
 </head>
-<% if @theme = 'light' %>
-  <style>@import url('color-scheme-light.css');</style>
-<% else %>
-  <style>@import url('color-scheme-dark.css');</style>
-<% end %>
 <body>
   <div class="container">
     <div class="left-section">
@@ -20,7 +15,7 @@
         <% if params[:error] %>
           <div class="error">
             <div class="floating-box">
-              <span class="closeBtn" onclick="this.parentElement.style.display='none';">×</span>
+              <span class="close-button" onclick="this.parentElement.style.display='none';">×</span>
               <p>Esta cuenta no esta registrada. Por favor, crea primero la cuenta.</p>
               <a href="/signup"><button>Crear una cuenta</button></a>
             </div>
@@ -30,8 +25,8 @@
           <input type="text" name="email" placeholder="Email" required>
           <input type="password" name="password" placeholder="Contraseña" required>
           <div class="button-wrapper">
-            <button type="submit" id="primary-btn">Iniciar sesión</button>
-            <a href="/signup"><button type="button" id="secondary-btn">Crear una cuenta</button></a>
+            <button type="submit" class="first-button">Iniciar sesión</button>
+            <a href="/signup"><button type="button" class="second-button">Crear una cuenta</button></a>
           </div>
         </form>
       </div>

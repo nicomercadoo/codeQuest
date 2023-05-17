@@ -1,6 +1,7 @@
 @import url("set-fonts.css");
 @import url("color-scheme-light.css");
 
+/* Styles for the entire login screen */
 
 body {
   margin: 0;
@@ -9,14 +10,10 @@ body {
   font-weight: normal;
 }
 
-.hidden {
-  display: none;
-}
-
 .container {
   display: flex;
   height: 100vh;
-  background-color: #F0F6FF;
+  background-color: var(--bg-color);
 }
 
 .left-section {
@@ -41,6 +38,7 @@ body {
   font-family: 'Metropolis';
   font-weight: 600;
   font-size: 48px;
+  text-decoration-color: var(--text-color);
   margin-bottom: 20px;
 }
 
@@ -48,6 +46,7 @@ body {
   font-family: 'Metropolis';
   font-style: italic;
   font-size: 24px;
+  text-decoration-color: var(--text-color);
   margin-bottom: 40px;
 }
 
@@ -59,71 +58,11 @@ body {
   user-select: none;
 }
 
-.form input[type="text"]:focus,
-.form input[type="password"]:focus {
-  outline: var(--primary-color) solid 2px;
-}
+/* Styles for the form */
 
 .form input[type="text"],
 .form input[type="password"],
 .form button {
-  padding: 15px 20px;
-  border: none;
-  border-radius: 15px;
-  font-size: 16px;
-  margin-bottom: 20px;
-  width: 350px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.form input[type="text"]:last-child,
-.form input[type="password"]:last-child {
-  margin-bottom: 40px;
-}
-
-.form input[type="text"]::placeholder,
-.form input[type="password"]::placeholder {
-  color: #999999; /* Placeholder text color */
-  font-style: italic; /* Placeholder text style */
-}
-
-.form button:last-child {
-  margin-bottom: 40px;
-}
-
-.form input[type="text"]:focus,
-.form input[type="password"]:focus {
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.form button {
-  background-color: var(--primary-color);
-  color: var(--bg-color);
-  cursor: pointer;
-}
-
-.form button #primary-btn {
-  color: red;
-}
-
-.form button:hover {
-  background-color: #0066cc;
-}
-
-.form button:last-child {
-  font-family: 'Metropolis';
-  background-color: var(--bg-color);
-  color: var(--primary-color);
-}
-
-.form .button-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 40px;
-}
-
-.form .button-wrapper button {
   font-family: 'Metropolis';
   padding: 15px 20px;
   border: none;
@@ -131,12 +70,58 @@ body {
   font-size: 16px;
   margin-bottom: 10px;
   width: 350px;
-  box-sizing: border-box;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.form input[type="text"]:focus,
+.form input[type="password"]:focus {
+  outline: var(--primary-color) solid 2px;
+}
+
+.form input[type="text"]::placeholder,
+.form input[type="password"]::placeholder {
+  color: #999999; 
+}
+
+/* Styles for the buttons */
+
+.form button {
+  cursor: pointer;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.first-button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.second-button {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+/* Hover styles for Sign In button */
+.first-button:hover {
+  background-color: var(--hover-color-primary);
+}
+
+/* Hover styles for Create User button */
+.second-button:hover {
+  background-color: var(--hover-color-secondary);
+}
+
+/* Styles of the floating box */
 
 .floating-box {
   position: absolute;
   width: 550px;
+  height: 140px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -153,18 +138,17 @@ body {
 .floating-box button {
   font-family: 'Metropolis';
   display: block;
-  margin: 10px auto;
-  padding: 10px 20px;
+  margin: 45px auto;
+  padding: 15px 25px;
   border: none;
   border-radius: 15px;
   background-color: var(--primary-color);
-  color: var(--bg-color);
+  color: var(--secondary-color);
   font-size: 16px;
   cursor: pointer;
-  text-decoration: none;
 }
 
-.closeBtn {
+.close-button {
   color: var(--accent-color);
   float: right;
   margin-left: 18px;
