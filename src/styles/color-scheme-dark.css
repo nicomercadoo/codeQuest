@@ -1,11 +1,11 @@
 :root {
-    --text-color: #f1f2f9;
-    --bg-color: #22272e;
-    --primary-color: #5662b3;
-    --hover-color-primary: #3a3f5a;
-    --secondary-color: #020204;
-    --hover-color-secondary: #3a3f5a;
-    --accent-color: #8260a4;
-    --hover-color-accent: #b38dcf;
+  --text-color: #f1f2f9;
+  --bg-color: #22272e;
+  --primary-color: #5662b3;
+  --hover-color-primary: #303e9b;
+  --secondary-color: #020204;
+  --hover-color-secondary: #3a3f5a;
+  --accent-color: #8550aa;
+  --hover-color-accent: #6e3696;
 }
   

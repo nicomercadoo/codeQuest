@@ -1,4 +1,4 @@
-@import url("set-fonts.css");
+@import url('font-sets.css');
 @import url("color-scheme-light.css");
 
 /* Styles for the entire login screen */
@@ -106,12 +106,10 @@ body {
   color: var(--primary-color);
 }
 
-/* Hover styles for Sign In button */
 .first-button:hover {
   background-color: var(--hover-color-primary);
 }
 
-/* Hover styles for Create User button */
 .second-button:hover {
   background-color: var(--hover-color-secondary);
 }

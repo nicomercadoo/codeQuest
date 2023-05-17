@@ -5,9 +5,9 @@
   <link rel="stylesheet" type="text/css" href="<%=url('home.css')%>">
 </head>
 <% if @theme = 'light' %>
-  <style>@import url('color-scheme-light.css');</style>
-<% else %>
   <style>@import url('color-scheme-dark.css');</style>
+<% else %>
+  <style>@import url('color-scheme-light.css');</style>
 <% end %>
 <body>
   <header class="container">
@@ -20,5 +20,15 @@
       </ul>
     </nav>
   </header>
+  <div class="button-stack">
+    <a href="/"><button type="button" class="card lesson-card">Leccion 1</button></a>
+    <a href="/"><button type="button" class="card lesson-card">Leccion 2</button></a>
+    <a href="/"><button type="button" class="card lesson-card">Leccion 3</button></a>
+    <a href="/"><button type="button" class="card test-card">Test 1</button></a>
+    <a href="/"><button type="button" class="card lesson-card">Leccion 4</button></a>
+    <a href="/"><button type="button" class="card lesson-card">Leccion 5</button></a>
+    <a href="/"><button type="button" class="card lesson-card">Leccion 6</button></a>
+    <a href="/"><button type="button" class="card test-card">Test 2</button></a>
+  </div>     
 </body>
 </html>

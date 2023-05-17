@@ -1,12 +1,17 @@
-@import url('set-fonts.css');
+@import url('font-sets.css');
 @import url('color-scheme-light.css');
 @import url('color-scheme-dark.css');
 
 body {
+  background-color: var(--bg-color);
   margin: 0;
   padding: 0;
   user-select: none;
+  width: 100%;
+  float: left;
 }
+
+/* Styles for the header */
 
 header {
   display: flex;
@@ -83,4 +88,46 @@ li, a, button {
   left: 0;
   bottom: -8px;
   pointer-events: none;
+}
+
+/* Styles for the homepage body */
+
+.button-stack {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card {
+  position: relative;
+  width: 700px;
+  height: 113px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.lesson-card {
+  background: var(--primary-color);
+  color: var(--text-color);
+}
+
+.lesson-card:hover {
+  background: var(--hover-color-primary);
+} 
+
+.test-card {
+  background: var(--accent-color);
+  color: var(--text-color);
+}
+
+.test-card:hover {
+  background: var(--hover-color-accent);
 }
