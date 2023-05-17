@@ -57,6 +57,14 @@ class App < Sinatra::Application
     erb :home
   end
 
+  get '/lesson' do
+    erb :lesson
+  end
+
+  get '/test' do
+    erb :test
+  end
+
   post '/signup' do
     # Retrieve the form data
     email = params[:email]

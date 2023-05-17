@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>codeQuest</title>
+  <link rel="stylesheet" type="text/css" href="<%=url('home.css')%>">
+</head>
+<% if @theme = 'light' %>
+  <style>@import url('color-scheme-dark.css');</style>
+<% else %>
+  <style>@import url('color-scheme-light.css');</style>
+<% end %>
+<body>
+  <header class="container">
+    <a href='/home'><h1 class="logo">codeQuest</h1></a>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="/home" class="current-page">Home</a></li>
+        <li><a href="/profile" class="nav-link">Perfil</a></li>
+        <li><a href="/snippets" class="nav-link">Snippets</a></li>
+      </ul>
+    </nav>
+  </header>
+</body>
+</html>
