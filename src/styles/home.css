@@ -21,7 +21,12 @@
     align-items: center;
     margin-bottom: 20px;
     cursor: pointer;
+    transition: transform 0.3s;
 }
+
+.card:hover {
+    transform: scale(1.15);
+  }
 
 .card::before {
     content: "";
@@ -61,7 +66,7 @@
   
 .card-subtitle {
     font-size: 18px;
-    color: #bbbbbb;
+    color: var(--text-color);
 }
   
 .lesson-card {

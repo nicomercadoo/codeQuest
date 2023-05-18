@@ -41,32 +41,32 @@ class App < Sinatra::Application
   end
 
   get '/settings' do
-    @theme = 'light'
+    @theme = 'dark'
     erb :settings
   end
 
   get '/profile' do
-    @theme = 'light'
+    @theme = 'dark'
     erb :profile
   end
 
   get '/snippets' do
-    @theme = 'light'
+    @theme = 'dark'
     erb :snippets
   end
 
   get '/home' do
-    @theme = 'light'
+    @theme = 'dark'
     erb :home
   end
 
   get '/lesson' do
-    @theme = 'light'
+    @theme = 'dark'
     erb :lesson
   end
 
   get '/test' do
-    @theme = 'light'
+    @theme = 'dark'
     erb :test
   end
 
