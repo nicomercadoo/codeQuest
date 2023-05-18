@@ -23,7 +23,7 @@ header {
 li, a, button {
   font-family: 'Metropolis';
   font-weight: bold;
-  color: var(--bg-color);
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -39,7 +39,7 @@ li, a, button {
   font-family: 'Metropolis';
   font-size: 24px;
   font-weight: bold;
-  color: var(--bg-color);
+  color: var(--text-color);
 }
 
 .nav-links ul {
@@ -55,7 +55,7 @@ li, a, button {
 .nav-link {
   font-family: 'Metropolis';
   font-weight: bold;
-  color: var(--bg-color);
+  color: var(--text-color);
   transition: all 0.4s;
   position: relative;
 }
@@ -64,7 +64,7 @@ li, a, button {
   content: '';
   height: 2px;
   width: 100%;
-  background-color: var(--bg-color);
+  background-color: var(--text-color);
   display: block;
   position: relative;
   left: 0;
@@ -82,7 +82,7 @@ li, a, button {
   content: '';
   height: 2px;
   width: 100%;
-  background-color: var(--bg-color);
+  background-color: var(--text-color);
   display: block;
   position: relative;
   left: 0;
