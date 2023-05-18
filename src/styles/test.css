@@ -1,2 +1,78 @@
 @import url('font-sets.css');
 @import url('common.css');
+
+body {
+    width: 100%;
+    float: left;
+}
+  
+.leftside,
+.rightside{
+    font-family: 'Metropolis';
+    background-color: var(--bg-color);
+    color: var(--secondary-text-color);
+    width: 50%;
+    float: left;
+    height: 680px;
+    margin-left: 20;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 1;
+}
+
+h2 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+p {
+    padding-top: 50px;
+    text-align: left;
+    line-height: 1.5; 
+    font-size: 21px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin-right: 10px;
+    margin-top: 20px; 
+    cursor: pointer;
+}
+  
+/* Custom checkbox style */
+input[type="checkbox"]::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    background-color: transparent;
+    margin-right: 6px;
+    margin-left: 21px;
+    vertical-align: middle;
+}
+  
+input[type="checkbox"]:checked::before {
+    background-color: var(--primary-color);
+}
+  
+label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px; 
+    color: var(--secondary-text-color);
+    cursor: pointer;
+    font-size: 28px;
+}  

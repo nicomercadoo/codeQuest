@@ -4,7 +4,7 @@
   <title>codeQuest</title>
   <link rel="stylesheet" type="text/css" href="<%=url('profile.css')%>">
 </head>
-<% if @theme = 'light' %>
+<% if @theme == 'light' %>
   <style>@import url('color-scheme-light.css');</style>
 <% else %>
   <style>@import url('color-scheme-dark.css');</style>

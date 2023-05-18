@@ -4,10 +4,10 @@
   <title>codeQuest</title>
   <link rel="stylesheet" type="text/css" href="<%=url('test.css')%>">
 </head>
-<% if @theme = 'light' %>
-  <style>@import url('color-scheme-dark.css');</style>
-<% else %>
+<% if @theme == 'light' %>
   <style>@import url('color-scheme-light.css');</style>
+<% else %>
+  <style>@import url('color-scheme-dark.css');</style>
 <% end %>
 <body>
   <header class="container">
@@ -20,5 +20,30 @@
       </ul>
     </nav>
   </header>
+  <div class="leftside">
+    <h1>Que es Haskell?</h1>
+    <p>Haskell es un lenguaje de programación estandarizado multi-propósito, funcionalmente puro, con evaluación no estricta y memorizada, y fuerte tipificación estática. Su nombre se debe al lógico estadounidense Haskell Curry, debido a su aporte al cálculo lambda, el cual tiene gran influencia en el lenguaje. En Haskell, "una función es un ciudadano de primera clase" del lenguaje de programación. Como lenguaje de programación funcional, el constructor de controles primario es la función. El lenguaje tiene sus orígenes en las observaciones de Haskell Curry y sus descendientes intelectuales.</p>
+  </div>
+  <div class="rightside">
+  <h1>Prueba tu mismo!</h1>
+  <p><strong>Haskell es un lenguaje...?</strong></p>
+  <div class="question">
+    <label>
+      <input type="checkbox" name="option" />
+      <span class="checkbox-custom"></span>
+      Imperativo
+    </label>
+    <label>
+      <input type="checkbox" name="option" />
+      <span class="checkbox-custom"></span>
+      Funcional
+    </label>
+    <label>
+      <input type="checkbox" name="option" />
+      <span class="checkbox-custom"></span>
+      Orientado a objetos
+    </label>
+  </div>
+  </div>
 </body>
 </html>
