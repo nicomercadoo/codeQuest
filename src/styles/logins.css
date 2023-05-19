@@ -99,19 +99,21 @@ body {
 .first-button {
   background-color: var(--primary-color);
   color: var(--text-color);
+  transition: transform 0.2s;
 }
 
 .second-button {
   background-color: var(--text-color);
   color: var(--primary-color);
+  transition: transform 0.2s;
 }
 
 .first-button:hover {
-  background-color: var(--hover-color-primary);
+  transform: scale(1.11);
 }
 
 .second-button:hover {
-  background-color: var(--hover-color-secondary);
+  transform: scale(1.11);
 }
 
 /* Styles of the floating box */

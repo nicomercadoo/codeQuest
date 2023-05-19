@@ -89,19 +89,19 @@ class App < Sinatra::Application
 
     unless (email =~ valid_email_format)
       logger.info "Account email #{email} isn't valid"
-      redirect '/signup?error=Invalid-email'
+      redirect '/signup?Invalid-email'
     end
     unless password =~ valid_password_format
       logger.info "Account password #{password} isn't valid"
-      redirect '/signup?error=Invalid-password'
+      redirect '/signup?Invalid-password'
     end
     unless name =~ valid_name_format
       logger.info "Account name #{name} isn't valid"
-      redirect '/signup?error=Invalid-name'
+      redirect '/signup?Invalid-name'
     end
     unless nickname =~ valid_nickname_format
       logger.info "Account nickname #{nickname} isn't valid"
-      redirect '/signup?error=Invalid-nickname'
+      redirect '/signup?Invalid-nickname'
     end
 
     account = Account.find_by(email: email, password: password)

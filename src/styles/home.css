@@ -21,7 +21,7 @@
     align-items: center;
     margin-bottom: 20px;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: transform 0.2s;
 }
 
 .card:hover {
@@ -74,15 +74,7 @@
     color: var(--text-color);
 }
   
-.lesson-card:hover {
-    background: var(--hover-color-primary);
-} 
-  
 .test-card {
     background: var(--accent-color);
     color: var(--text-color);
-}
-  
-.test-card:hover {
-    background: var(--hover-color-accent);
 }
