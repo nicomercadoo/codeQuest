@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_16_040133) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_19_025738) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -29,7 +29,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_16_040133) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.integer "name_lesson"
     t.boolean "completed_lesson", default: false
     t.text "description_lesson"
     t.datetime "created_at", null: false

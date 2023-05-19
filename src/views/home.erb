@@ -21,86 +21,55 @@
     </nav>
   </header>
   <div class="button-stack">
-  <a href="/lesson">
-    <button type="button" class="card lesson-card">
+
+    <form action="/home" method="post">
+      <input type="hidden" name="lesson_id" value="1">
+      <button type="submit" class="card lesson-card">
+        <div class="card-content">
+          <h2 class="card-title">Que es haskell</h2>
+          <h3 class="card-subtitle">Leccion 1</h3>
+        </div>
+        <div class="card-divider"></div>
+        <span class="number">1</span>
+      </button>
+    </form>
+
+    <form action="/home" method="post">
+      <input type="hidden" name="lesson_id" value="2">
+      <button type="submit" class="card lesson-card">
+        <div class="card-content">
+          <h2 class="card-title">Tipos de datos</h2>
+          <h3 class="card-subtitle">Leccion 2</h3>
+        </div>
+        <div class="card-divider"></div>
+        <span class="number">2</span>
+      </button>
+    </form>
+
+    <form action="/home" method="post">
+      <input type="hidden" name="lesson_id" value="3">
+      <button type="submit" class="card lesson-card">
+        <div class="card-content">
+          <h2 class="card-title">Tipos de datos</h2>
+          <h3 class="card-subtitle">Leccion 2</h3>
+        </div>
+        <div class="card-divider"></div>
+        <span class="number">2</span>
+      </button>
+    </form>
+
+  <form action="/home" method="post">
+    <input type="hidden" name="test_id" value="1">
+    <button type="submit" class="card test-card">
       <div class="card-content">
-        <h2 class="card-title">Que es Haskell?</h2>
-        <h3 class="card-subtitle">Leccion 1</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">1</span>
-    </button>
-  </a>
-  <a href="/lesson">
-    <button type="button" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">Tipos de datos</h2>
-        <h3 class="card-subtitle">Leccion 2</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">2</span>
-    </button>
-  </a>
-  <a href="/lesson">
-    <button type="button" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">Funciones</h2>
-        <h3 class="card-subtitle">Leccion 3</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">3</span>
-    </button>
-  </a>
-  <a href="/test">
-    <button type="button" class="card test-card">
-      <div class="card-content">
-        <h2 class="card-title">Test 1</h2>
+        <h2 class="card-title">Test A</h2>
         <h3 class="card-subtitle">Funciones, tipos de datos</h3>
       </div>
       <div class="card-divider"></div>
       <span class="letter">A</span>
     </button>
-  </a>
-  <a href="/lesson">
-    <button type="button" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">Leccion 4</h2>
-        <h3 class="card-subtitle">Subtitle goes here</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">4</span>
-    </button>
-  </a>
-  <a href="/lesson">
-    <button type="button" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">Leccion 5</h2>
-        <h3 class="card-subtitle">Subtitle goes here</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">5</span>
-    </button>
-  </a>
-  <a href="/lesson">
-    <button type="button" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">Leccion 6</h2>
-        <h3 class="card-subtitle">Subtitle goes here</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">6</span>
-    </button>
-  </a>
-  <a href="/test">
-    <button type="button" class="card test-card">
-      <div class="card-content">
-        <h2 class="card-title">Test 2</h2>
-        <h3 class="card-subtitle">Subtitle goes here</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="letter">B</span>
-    </button>
-  </a>
+  </form>
+
 </div>
 </body>
 </html>

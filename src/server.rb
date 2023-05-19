@@ -5,8 +5,9 @@ require 'sinatra/activerecord'
 
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 
-
 require_relative 'models/account'
+require_relative 'models/lesson'
+require_relative 'models/test'
 
 class App < Sinatra::Application
   def initialize(app = nil)
@@ -57,7 +58,9 @@ class App < Sinatra::Application
 
   get '/home' do
     @theme = 'dark'
-    erb :home
+    @tests = Test.all
+    @lessons = Lesson.all
+    erb :home, locals: { lessons: @lessons, tests: @tests}
   end
 
   get '/lesson' do
@@ -135,4 +138,27 @@ class App < Sinatra::Application
       redirect '/?error=Invalid-email-or-password'
     end
   end
+
+  get '/lesson/:lesson_id' do
+    lesson_id = params[:lesson_id]
+    @lesson = Lesson.find_by(id: lesson_id.to_i)
+    erb :lesson
+  end
+
+  get '/test/:test_id' do
+    test_id = params[:test_id]
+    @test = Test.find_by(id: test_id)
+    erb :test
+  end
+
+  post '/home' do
+    if params[:lesson_id]
+      lesson_id = params[:lesson_id]
+      redirect "/lesson/#{lesson_id}"
+    else
+      test_id = params[:test_id]
+      redirect "/test/#{test_id}"
+    end
+  end
+
 end

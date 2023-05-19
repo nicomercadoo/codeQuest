@@ -20,6 +20,7 @@
       </ul>
     </nav>
   </header>
+  <% if @lesson.id == 1 %>
   <div class="text-container">
     <h1>Que es Haskell?</h1>
     <p>Haskell es un lenguaje funcional, creado por Haskell Curry en los años 80.
@@ -33,6 +34,12 @@
       lo que significa que las funciones pueden recibir otras funciones como parametros.
     </p>
   </div>
+  <% end %>
+
+  <% if @lesson.id == 2 %>
+      <p>Hola nico como estas.</p> 
+  <% end %>
+
   <div class="continue-button-container">
     <a href='#'><button type="button" class="continue-button">Siguiente leccion</button></a>  
   </div>
