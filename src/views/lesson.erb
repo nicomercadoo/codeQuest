@@ -24,21 +24,22 @@
   <% if @lesson.id == 1 %>
   <div class="text-container">
     <h1>Que es Haskell?</h1>
-    <p>Haskell es un lenguaje funcional, creado por Haskell Curry en los años 80.
-      Posee una notacion similar a la utilizada por los matematicos, lo que lo hace
-      muy facil de leer y entender. Es un lenguaje de programacion estaticamente tipado,
-      lo que significa que el tipo de cada variable debe ser declarado al momento de
-      su creacion. Es un lenguaje puro, lo que significa que no posee efectos secundarios,
-      es decir, no modifica el estado de las variables globales, ni tampoco realiza
-      operaciones de entrada y salida. Es un lenguaje lazy, lo que significa que
-      no evalua las expresiones hasta que sea necesario. Es un lenguaje de orden superior,
-      lo que significa que las funciones pueden recibir otras funciones como parametros.
-    </p>
+    <p>Haskell es un lenguaje de programación funcional puro, conocido por su evaluación lazy y su enfoque en la expresividad y la concisión del código. Pertenece al paradigma de programación funcional y fue creado por un comité liderado por Simon Peyton Jones en 1990. Haskell se basa en la teoría de categorías y promueve el uso de funciones para la resolución de problemas, evitando efectos secundarios. La evaluación lazy permite retrasar el cálculo hasta que los resultados sean necesarios, lo que puede conducir a una mayor eficiencia en ciertos casos. Haskell fomenta la programación declarativa y ofrece un sistema de tipos fuerte y estático.</p>
   </div>
   <% end %>
 
   <% if @lesson.id == 2 %>
-      <p>Hola nico como estas.</p> 
+  <div class="text-container">
+    <h1>Tipos de datos en Haskell</h1>
+    <p>En Haskell, el tipado es estático y fuerte. Cada expresión tiene un tipo definido en tiempo de compilación y se verifica su coherencia antes de la ejecución. El sistema de tipos de Haskell es poderoso y permite la inferencia automática de tipos. Los tipos ayudan a prevenir errores y garantizan la consistencia del programa. Haskell utiliza una combinación de tipos básicos, tipos algebraicos y tipos polimórficos para expresar estructuras de datos y comportamientos. La precisión y rigurosidad del tipado en Haskell contribuyen a la seguridad y la confiabilidad del código.</p> 
+  </div>
+  <% end %>
+
+  <% if @lesson.id == 3 %>
+  <div class="text-container">
+    <h1>Funciones</h1>
+    <p>Las funciones en Haskell son ciudadanos de primera clase y pueden ser pasadas como argumentos, devueltas como resultados y almacenadas en estructuras de datos. Haskell fomenta la composición de funciones y el estilo declarativo. Las funciones son puras, lo que significa que no tienen efectos secundarios y producen el mismo resultado para los mismos argumentos. Las funciones de alto orden permiten la abstracción y la reutilización de patrones comunes. La programación funcional en Haskell se basa en la aplicación de funciones y la transformación de datos, lo que promueve un código más conciso y modular.</p> 
+  </div>
   <% end %>
 
   <div class="continue-button-container">
