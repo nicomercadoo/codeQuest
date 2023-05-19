@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_19_025738) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_19_163744) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -29,8 +29,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_025738) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.boolean "completed_lesson", default: false
-    t.text "description_lesson"
+    t.integer "name"
+    t.string "tittle"
+    t.boolean "completed", default: false
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "accounts_id"
@@ -40,8 +42,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_025738) do
   end
 
   create_table "options", force: :cascade do |t|
-    t.boolean "correct_option", default: false
-    t.text "description_option"
+    t.boolean "correct", default: false
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "answers_id"
@@ -51,7 +53,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_025738) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.text "description_question"
+    t.integer "number"
+    t.text "description"
     t.boolean "well_answered", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -60,13 +63,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_025738) do
   end
 
   create_table "tests", force: :cascade do |t|
-    t.string "letter", limit: 1
-    t.boolean "completed_test", default: false
-    t.text "description_test"
+    t.string "name", limit: 1
+    t.boolean "completed", default: false
     t.integer "cant_questions", default: 0
     t.integer "acerted_answers", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
   end
 
 end

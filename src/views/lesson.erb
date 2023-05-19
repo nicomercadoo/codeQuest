@@ -21,26 +21,11 @@
       </ul>
     </nav>
   </header>
-  <% if @lesson.id == 1 %>
+  
   <div class="text-container">
-    <h1>¿Qué es Haskell?</h1>
-    <p>Haskell es un lenguaje de programación funcional puro, conocido por su evaluación lazy y su enfoque en la expresividad y la concisión del código. Pertenece al paradigma de programación funcional y fue creado por un comité liderado por Simon Peyton Jones en 1990. Haskell se basa en la teoría de categorías y promueve el uso de funciones para la resolución de problemas, evitando efectos secundarios. La evaluación lazy permite retrasar el cálculo hasta que los resultados sean necesarios, lo que puede conducir a una mayor eficiencia en ciertos casos. Haskell fomenta la programación declarativa y ofrece un sistema de tipos fuerte y estático.</p>
+    <h1><%= @lesson.tittle %></h1>
+    <p><%= @lesson.description %></p>
   </div>
-  <% end %>
-
-  <% if @lesson.id == 2 %>
-  <div class="text-container">
-    <h1>Tipos de datos en Haskell</h1>
-    <p>En Haskell, el tipado es estático y fuerte. Cada expresión tiene un tipo definido en tiempo de compilación y se verifica su coherencia antes de la ejecución. El sistema de tipos de Haskell es poderoso y permite la inferencia automática de tipos. Los tipos ayudan a prevenir errores y garantizan la consistencia del programa. Haskell utiliza una combinación de tipos básicos, tipos algebraicos y tipos polimórficos para expresar estructuras de datos y comportamientos. La precisión y rigurosidad del tipado en Haskell contribuyen a la seguridad y la confiabilidad del código.</p> 
-  </div>
-  <% end %>
-
-  <% if @lesson.id == 3 %>
-  <div class="text-container">
-    <h1>Funciones</h1>
-    <p>Las funciones en Haskell son ciudadanos de primera clase y pueden ser pasadas como argumentos, devueltas como resultados y almacenadas en estructuras de datos. Haskell fomenta la composición de funciones y el estilo declarativo. Las funciones son puras, lo que significa que no tienen efectos secundarios y producen el mismo resultado para los mismos argumentos. Las funciones de alto orden permiten la abstracción y la reutilización de patrones comunes. La programación funcional en Haskell se basa en la aplicación de funciones y la transformación de datos, lo que promueve un código más conciso y modular.</p> 
-  </div>
-  <% end %>
 
   <% if @lesson.id < Lesson.maximum(:id) %>
     <div class="continue-button-container">
