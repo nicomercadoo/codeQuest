@@ -23,7 +23,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--primary-color);
-  color: var(--bg-color);
+  color: var(--text-color);
   user-select: none;
 }
 
@@ -98,11 +98,11 @@ body {
 
 .first-button {
   background-color: var(--primary-color);
-  color: var(--secondary-color);
+  color: var(--text-color);
 }
 
 .second-button {
-  background-color: var(--secondary-color);
+  background-color: var(--text-color);
   color: var(--primary-color);
 }
 
@@ -131,6 +131,7 @@ body {
 
 .floating-box p {
   text-align: center;
+  color: var(--text-color);
 }
 
 .floating-box button {
@@ -141,7 +142,7 @@ body {
   border: none;
   border-radius: 15px;
   background-color: var(--primary-color);
-  color: var(--secondary-color);
+  color: var(--text-color);
   font-size: 16px;
   cursor: pointer;
 }

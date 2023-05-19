@@ -34,26 +34,13 @@ class App < Sinatra::Application
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
 
   get '/' do
+    @theme = 'dark'
     erb :login
   end
 
   get '/signup' do
+    @theme = 'dark'
     erb :signup
-  end
-
-  get '/settings' do
-    @theme = 'dark'
-    erb :settings
-  end
-
-  get '/profile' do
-    @theme = 'dark'
-    erb :profile
-  end
-
-  get '/snippets' do
-    @theme = 'dark'
-    erb :snippets
   end
 
   get '/home' do
@@ -61,6 +48,21 @@ class App < Sinatra::Application
     @tests = Test.all
     @lessons = Lesson.all
     erb :home, locals: { lessons: @lessons, tests: @tests}
+  end
+
+  get '/profile' do
+    @theme = 'dark'
+    erb :profile
+  end
+
+  get '/settings' do
+    @theme = 'dark'
+    erb :settings
+  end
+
+  get '/snippets' do
+    @theme = 'dark'
+    erb :snippets
   end
 
   get '/lesson' do
@@ -151,7 +153,7 @@ class App < Sinatra::Application
     erb :test
   end
 
-  post '/home' do
+  get '/home' do
     if params[:lesson_id]
       lesson_id = params[:lesson_id]
       redirect "/lesson/#{lesson_id}"
@@ -161,4 +163,13 @@ class App < Sinatra::Application
     end
   end
 
+  post '/home' do
+    if params[:lesson_id]
+      lesson_id = params[:lesson_id]
+      redirect "/lesson/#{lesson_id}"
+    else
+      test_id = params[:test_id]
+      redirect "/test/#{test_id}"
+    end
+  end
 end
