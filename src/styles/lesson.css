@@ -44,6 +44,12 @@ p {
     margin-left: 50px;
     margin-top: 50px;
     cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.continue-button:hover {
+    transform: scale(1.1);
 }
 
 .continue-button:hover {

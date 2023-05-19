@@ -2,19 +2,13 @@
 @import url('common.css');
 
 body {
-    width: 100%;
-    float: left;
-}
-  
-.leftside,
-.rightside{
     font-family: 'Metropolis';
     background-color: var(--bg-color);
     color: var(--secondary-text-color);
-    width: 50%;
-    float: left;
     height: 680px;
     margin-left: 20;
+    width: 100%;
+    float: left;
 }
 
 h1 {

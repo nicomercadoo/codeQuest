@@ -23,7 +23,7 @@
   </header>
   <% if @lesson.id == 1 %>
   <div class="text-container">
-    <h1>Que es Haskell?</h1>
+    <h1>¿Qué es Haskell?</h1>
     <p>Haskell es un lenguaje de programación funcional puro, conocido por su evaluación lazy y su enfoque en la expresividad y la concisión del código. Pertenece al paradigma de programación funcional y fue creado por un comité liderado por Simon Peyton Jones en 1990. Haskell se basa en la teoría de categorías y promueve el uso de funciones para la resolución de problemas, evitando efectos secundarios. La evaluación lazy permite retrasar el cálculo hasta que los resultados sean necesarios, lo que puede conducir a una mayor eficiencia en ciertos casos. Haskell fomenta la programación declarativa y ofrece un sistema de tipos fuerte y estático.</p>
   </div>
   <% end %>
@@ -45,7 +45,7 @@
   <% if @lesson.id < Lesson.maximum(:id) %>
     <div class="continue-button-container">
       <% next_lesson_id = @lesson.id + 1 %>
-      <a href="/lesson/<%= next_lesson_id %>"><button type="button" class="continue-button">Siguiente leccion</button></a>  
+      <a href="/lesson/<%= next_lesson_id %>"><button type="button" class="continue-button">Siguiente lección</button></a>  
     </div>
   <% end %>
 
