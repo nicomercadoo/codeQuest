@@ -1,6 +1,75 @@
 @import url('font-sets.css');
 @import url('common.css');
 
+/* Styles for the chapter buttons */
+
+.chapter-button {
+    background-color: var(--bg-color);
+    display: flex;
+    font-size: 24px;
+    border-radius: 15px;
+    width: 700px;
+    height: 70px;
+    align-items: center;
+    padding: 10px 15px;
+    position: relative;
+    font-family: 'Metropolis';
+    cursor: pointer;
+    border: none;
+    margin-bottom: 50px;
+    transition: transform 0.2s;
+}
+
+.chapter-button:hover {
+    transform: scale(1.15);
+}
+
+.chapter-title {
+    margin-right: 10px; 
+}
+
+.additional-text {
+    font-size: 15px;
+    color: #8C8C8C;
+    margin-right: 25px;
+    margin-left: auto;
+}
+
+.chapter-button::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    border: solid var(--accent-color);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+/* Styles for the dropdown menu */
+
+* {
+    list-style: none;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    left: 49%; 
+}
+  
+.dropdown-content li {
+    display: block;
+}
+
+/* Styles for the lesson and test cards */
+
 .button-stack {
     margin-top: 20px;
     display: flex;
@@ -9,6 +78,8 @@
 }
   
 .card {
+    background-color: var(--accent-color);
+    color: var(--text-color);
     position: relative;
     width: 700px;
     height: 113px;
@@ -45,7 +116,7 @@
     top: 50%;
     left: 10%;
     transform: translate(-50%, -50%);
-    font-size: 48px;
+    font-size: 34px;
     font-weight: bold;
 }
 
@@ -61,7 +132,6 @@
 .card-title {
     font-size: 25px;
     font-weight: bold;
-    margin-bottom: 10px;
 }
   
 .card-subtitle {
@@ -70,11 +140,15 @@
 }
   
 .lesson-card {
+    width: 600px;
+    height: 90px;
     background: var(--primary-color);
     color: var(--text-color);
 }
   
 .test-card {
+    width: 600px;
+    height: 90px;
     background: var(--accent-color);
     color: var(--text-color);
 }

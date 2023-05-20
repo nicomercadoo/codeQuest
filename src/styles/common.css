@@ -36,10 +36,22 @@ li, a, button {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
   font-family: 'Metropolis';
   font-size: 24px;
   font-weight: bold;
   color: var(--text-color);
+}
+
+.logo img {
+  width: 30px; /* Adjust the width of the image */
+  height: auto; /* Maintain the aspect ratio */
+  margin-right: 10px; /* Add spacing between logo and text */
+}
+
+.logo span {
+  display: inline-block;
 }
 
 .nav-links ul {

@@ -12,7 +12,12 @@
 <% end %>
 <body>
   <header class="container">
-    <a href='/home'><h1 class="logo">codeQuest</h1></a>
+    <a href='/home'>
+      <h1 class="logo">
+        <img src="favicon2.png" alt="Logo">
+        <span>codeQuest</span>
+      </h1>
+    </a>
     <nav class="nav-links">
       <ul>
         <li><a href="/home" class="current-page">Inicio</a></li>
@@ -23,55 +28,96 @@
     </nav>
   </header>
   <div class="button-stack">
-
-  <form action="/home" method="post">
-    <input type="hidden" name="lesson_id" value="1">
-    <button type="submit" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">¿Qué es Haskell?</h2>
-        <h3 class="card-subtitle">Lección 1</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">1</span>
-    </button>
-  </form>
-
-  <form action="/home" method="post">
-    <input type="hidden" name="lesson_id" value="2">
-    <button type="submit" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">Tipos de datos</h2>
-        <h3 class="card-subtitle">Lección 2</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">2</span>
-    </button>
-  </form>
-
-  <form action="/home" method="post">
-    <input type="hidden" name="lesson_id" value="3">
-    <button type="submit" class="card lesson-card">
-      <div class="card-content">
-        <h2 class="card-title">Funciones</h2>
-        <h3 class="card-subtitle">Lección 3</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="number">3</span>
-    </button>
-  </form>
-
-  <form action="/home" method="post">
-    <input type="hidden" name="test_id" value="1">
-    <button type="submit" class="card test-card">
-      <div class="card-content">
-        <h2 class="card-title">Test A</h2>
-        <h3 class="card-subtitle">Funciones y tipos de datos</h3>
-      </div>
-      <div class="card-divider"></div>
-      <span class="letter">A</span>
-    </button>
-  </form>
-
-</div>
+    <li class="dropdown">
+      <button class="chapter-button" onclick="toggleDropdown('introduction-dropdown', 'buttons-container')">
+        <span class="chapter-title">Introduccion a Haskell</span>
+        <div class="additional-text">4 actividades</div>
+      </button>
+        <ul class="dropdown-content" id="introduction-dropdown">
+          <li>
+            <form action="/home" method="post">
+              <input type="hidden" name="lesson_id" value="1">
+              <button type="submit" class="card test-card">
+                <div class="card-content">
+                  <h2 class="card-title">Titulo de leccion</h2>
+                </div>
+                <div class="card-divider"></div>
+                <span class="number">1.1</span>
+              </button>
+            </form>
+          </li>
+          <li>
+            <form action="/home" method="post">
+              <input type="hidden" name="lesson_id" value="1">
+              <button type="submit" class="card test-card">
+                <div class="card-content">
+                  <h2 class="card-title">Titulo de leccion</h2>
+                </div>
+                <div class="card-divider"></div>
+                <span class="number">1.2</span>
+              </button>
+            </form>
+          </li>
+          <li>
+            <form action="/home" method="post">
+              <input type="hidden" name="lesson_id" value="1">
+              <button type="submit" class="card test-card">
+                <div class="card-content">
+                  <h2 class="card-title">Titulo de leccion</h2>
+                </div>
+                <div class="card-divider"></div>
+                <span class="number">1.3</span>
+              </button>
+            </form>
+          </li>
+          <li>
+            <form action="/home" method="post">
+              <input type="hidden" name="test_id" value="1">
+              <button type="submit" class="card lesson-card">
+                <div class="card-content">
+                  <h2 class="card-title">Test</h2>
+                </div>
+                <div class="card-divider"></div>
+                <span class="letter">1.A</span>
+              </button>
+            </form>
+          </li>
+        </ul>  
+    </li>
+    <div id="buttons-container" class="items-below-dropdown">
+      <li>
+        <button class="chapter-button" onclick="toggleDropdown('functions-dropdown', 'buttons-container')">
+          <span class="chapter-title">Funciones</span>
+          <div class="additional-text">4 actividades</div>
+        </button>
+      </li>
+      <li>
+        <button class="chapter-button" onclick="toggleDropdown('monads-dropdown', 'buttons-container')">
+          <span class="chapter-title">Monadas</span>
+          <div class="additional-text">4 actividades</div>
+        </button>
+      </li>
+      <li>
+        <button class="chapter-button" onclick="toggleDropdown('functors-dropdown', 'buttons-container')">
+          <span class="chapter-title">Functores</span>
+          <div class="additional-text">4 actividades</div>
+        </button>
+      </li>
+    </div>   
+  </div>
+  <script>
+    function toggleDropdown(id, buttonsContainerId) {
+      var dropdown = document.getElementById(id);
+      var buttonsContainer = document.getElementById(buttonsContainerId);
+      
+      if (dropdown.style.display === 'block') {
+        dropdown.style.display = 'none';
+        buttonsContainer.style.transform = 'translateY(0)';
+      } else {
+        dropdown.style.display = 'block';
+        buttonsContainer.style.transform = 'translateY(440px)'; // Adjust the value based on how far you want to move the buttons down
+      }
+    };
+  </script>   
 </body>
 </html>
