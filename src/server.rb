@@ -152,17 +152,7 @@ class App < Sinatra::Application
     @test = Test.find_by(id: test_id)
     erb :test
   end
-
-  get '/home' do
-    if params[:lesson_id]
-      lesson_id = params[:lesson_id]
-      redirect "/lesson/#{lesson_id}"
-    else
-      test_id = params[:test_id]
-      redirect "/test/#{test_id}"
-    end
-  end
-
+  
   post '/home' do
     if params[:lesson_id]
       lesson_id = params[:lesson_id]

@@ -52,10 +52,6 @@ p {
     transform: scale(1.1);
 }
 
-.continue-button:hover {
-    background-color: var(--hover-color-primary);
-}
-
 .continue-button-container {
     position: fixed;
     left: 50%;

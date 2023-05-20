@@ -45,7 +45,14 @@
     display: inline-block;
     padding: 4px;
     transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s; /* Add a transition for the transform property */
 }
+
+/* Add a flipped class to rotate the arrow */
+.chapter-button.flipped::after {
+    transform: translateY(-50%) rotate(225deg); /* Rotate the arrow 180 degrees */
+}
+
 
 /* Styles for the dropdown menu */
 

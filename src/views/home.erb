@@ -29,7 +29,7 @@
   </header>
   <div class="button-stack">
     <li class="dropdown">
-      <button class="chapter-button" onclick="toggleDropdown('introduction-dropdown', 'buttons-container')">
+      <button class="chapter-button" id="introduction-button" onclick="toggleDropdown('introduction-dropdown', 'buttons-container', 'introduction-button')">
         <span class="chapter-title">Introduccion a Haskell</span>
         <div class="additional-text">4 actividades</div>
       </button>
@@ -37,48 +37,48 @@
           <li>
             <form action="/home" method="post">
               <input type="hidden" name="lesson_id" value="1">
-              <button type="submit" class="card test-card">
+              <button type="submit" class="card lesson-card">
                 <div class="card-content">
                   <h2 class="card-title">Titulo de leccion</h2>
                 </div>
                 <div class="card-divider"></div>
-                <span class="number">1.1</span>
+                <span class="number">1</span>
               </button>
             </form>
           </li>
           <li>
             <form action="/home" method="post">
               <input type="hidden" name="lesson_id" value="1">
-              <button type="submit" class="card test-card">
+              <button type="submit" class="card lesson-card">
                 <div class="card-content">
                   <h2 class="card-title">Titulo de leccion</h2>
                 </div>
                 <div class="card-divider"></div>
-                <span class="number">1.2</span>
+                <span class="number">2</span>
               </button>
             </form>
           </li>
           <li>
             <form action="/home" method="post">
               <input type="hidden" name="lesson_id" value="1">
-              <button type="submit" class="card test-card">
+              <button type="submit" class="card lesson-card">
                 <div class="card-content">
                   <h2 class="card-title">Titulo de leccion</h2>
                 </div>
                 <div class="card-divider"></div>
-                <span class="number">1.3</span>
+                <span class="number">3</span>
               </button>
             </form>
           </li>
           <li>
             <form action="/home" method="post">
               <input type="hidden" name="test_id" value="1">
-              <button type="submit" class="card lesson-card">
+              <button type="submit" class="card test-card">
                 <div class="card-content">
                   <h2 class="card-title">Test</h2>
                 </div>
                 <div class="card-divider"></div>
-                <span class="letter">1.A</span>
+                <span class="letter">A</span>
               </button>
             </form>
           </li>
@@ -86,19 +86,19 @@
     </li>
     <div id="buttons-container" class="items-below-dropdown">
       <li>
-        <button class="chapter-button" onclick="toggleDropdown('functions-dropdown', 'buttons-container')">
+        <button class="chapter-button" id="functions-button" onclick="toggleDropdown('functions-dropdown', 'buttons-container', 'functions-button')">
           <span class="chapter-title">Funciones</span>
           <div class="additional-text">4 actividades</div>
         </button>
       </li>
       <li>
-        <button class="chapter-button" onclick="toggleDropdown('monads-dropdown', 'buttons-container')">
+        <button class="chapter-button" id="monads-button" onclick="toggleDropdown('monads-dropdown', 'buttons-container', 'monads-button')">
           <span class="chapter-title">Monadas</span>
           <div class="additional-text">4 actividades</div>
         </button>
       </li>
       <li>
-        <button class="chapter-button" onclick="toggleDropdown('functors-dropdown', 'buttons-container')">
+        <button class="chapter-button" id="functors-button" onclick="toggleDropdown('functors-dropdown', 'buttons-container', 'functors-button')">
           <span class="chapter-title">Functores</span>
           <div class="additional-text">4 actividades</div>
         </button>
@@ -106,9 +106,10 @@
     </div>   
   </div>
   <script>
-    function toggleDropdown(id, buttonsContainerId) {
+    function toggleDropdown(id, buttonsContainerId, buttonId) {
       var dropdown = document.getElementById(id);
       var buttonsContainer = document.getElementById(buttonsContainerId);
+      var button = document.getElementById(buttonId);
       
       if (dropdown.style.display === 'block') {
         dropdown.style.display = 'none';
@@ -117,6 +118,9 @@
         dropdown.style.display = 'block';
         buttonsContainer.style.transform = 'translateY(440px)'; // Adjust the value based on how far you want to move the buttons down
       }
+
+      // Toggle the flipped class on the button element
+      button.classList.toggle('flipped');
     };
   </script>   
 </body>
