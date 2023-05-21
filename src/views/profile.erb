@@ -26,6 +26,76 @@
       </ul>
     </nav>
   </header>
-  
+  <div class="profile-section">
+    <h2 class="section-title">Cambiar nickname</h2>
+    <div class="section-line"></div>
+    <div class="button-form-container">
+      <button class="change-button" id="changeButton">Cambiar nickname</button>
+      <form class="text-form" id="usernameForm" style="display: none;", method="post">
+        <input type="text" id="nicknameInput" placeholder="Nuevo nickname">
+        <button class="save-button" type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="profile-section">
+    <h2 class="section-title">Cambiar email</h2>
+    <div class="section-line"></div>
+    <div class="button-form-container">
+      <button class="change-button" id="emailChangeButton">Cambiar email</button>
+      <form class="text-form" id="emailForm" style="display: none;", method="post">
+        <input type="text" id="emailInput" placeholder="Nuevo email">
+        <button class="save-button" type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="profile-section">
+    <h2 class="section-title">Cambiar contraseña</h2>
+    <div class="section-line"></div>
+    <div class="button-form-container">
+      <button class="change-button" id="passwordChangeButton">Cambiar contraseña</button>
+      <form class="text-form" id="passwordForm" style="display: none;", method="post">
+        <input type="password" id="passwordInput" placeholder="Nueva contraseña">
+        <button class="save-button" type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="profile-section">
+    <h2 class="section-title">Modo oscuro</h2>
+    <div class="section-line"></div>
+    <div class="button-form-container">
+      <button class="change-button" id="darkModeButton">Activar</button>
+    </div>
+  </div>
+  <script>
+    document.getElementById('changeButton').addEventListener('click', function() {
+      var form = document.getElementById('usernameForm');
+      if (form.style.display === 'none') {
+        form.style.display = 'block';
+      } else {
+        form.style.display = 'none';
+      }
+    });
+
+    document.getElementById('emailChangeButton').addEventListener('click', function () {
+      var form = document.getElementById('emailForm');
+      if (form.style.display === 'none') {
+        form.style.display = 'block';
+      } else {
+        form.style.display = 'none';
+      }
+    });
+
+    document.getElementById('passwordChangeButton').addEventListener('click', function () {
+      var form = document.getElementById('passwordForm');
+      if (form.style.display === 'none') {
+        form.style.display = 'block';
+      } else {
+        form.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
