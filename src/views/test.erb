@@ -21,29 +21,44 @@
       </ul>
     </nav>
   </header>
-
-    <div>
-
-      <h1><%= @test.name %></h1>
-      <p><strong>Haskell es un lenguaje...</strong></p>
-      <div class="question">
-        <label>
-          <input type="checkbox" name="option" />
-          <span class="checkbox-custom"></span>
-            Imperativo
-        </label>
-        <label>
-          <input type="checkbox" name="option" />
-          <span class="checkbox-custom"></span>
-            Funcional
-        </label>
-        <label>
-          <input type="checkbox" name="option" />
-          <span class="checkbox-custom"></span>
-            Orientado a objetos
-        </label>
-      </div>
+  <div class="rectangle">
+    <div class="question">
+      <strong>Haskell es un lenguaje...</strong>
     </div>
+  </div>
+  <div class="option-button" id="button1" onclick="handleButtonClick('button1')">
+    <b>Imperativo</b>
+  </div>
+  <div class="option-button" id="button1" onclick="handleButtonClick('button2')">
+    <b>Funcional</b>
+  </div>
+  <div class="option-button" id="button1" onclick="handleButtonClick('button3')">
+    <b>Orientado a objetos</b>
+  </div>
+  <div class="additional-button" id="additionalButton">
+    <b>Responder</b>
+  </div>
+  <div id="nextQuestion" class="next-question-button">
+    <b>Siguiente pregunta</b>
+  </div>
+  <script>
+  const additionalButton = document.getElementById('additionalButton');
+  const optionButtons = document.querySelectorAll('.option-button');
+  const nextQuestion = document.getElementById('nextQuestion');
 
+  optionButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      additionalButton.classList.remove('active', 'additional-button-animation');
+      setTimeout(function() {
+        additionalButton.classList.add('active', 'additional-button-animation');
+      }, 10);
+    });
+  });
+
+  additionalButton.addEventListener('click', function() {
+    additionalButton.classList.toggle('active');
+    nextQuestion.classList.toggle('active');
+  });
+</script>
 </body>
 </html>

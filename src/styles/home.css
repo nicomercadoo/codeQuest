@@ -4,21 +4,23 @@
 /* Styles for the chapter buttons */
 
 .chapter-button {
-    background-color: var(--bg-color);
-    display: flex;
-    font-size: 24px;
-    border-radius: 15px;
     width: 700px;
     height: 70px;
-    align-items: center;
+    border-radius: 15px;
     padding: 10px 15px;
-    position: relative;
-    font-family: 'Metropolis';
-    cursor: pointer;
-    border: none;
     margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: none;
+    background-color: var(--bg-color);
+    box-shadow: 0 0 0 2px var(--primary-color); /* Add a custom border color */
+    font-family: 'Metropolis';
+    font-size: 24px;
+    cursor: pointer;
     transition: transform 0.2s;
 }
+
 
 .chapter-button:hover {
     transform: scale(1.15);
@@ -39,11 +41,12 @@
     content: "";
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: 45%;
+    margin-right: 5px;
     border: solid var(--accent-color);
     border-width: 0 2px 2px 0;
     display: inline-block;
-    padding: 4px;
+    padding: 5px;
     transform: translateY(-50%) rotate(45deg);
     transition: transform 0.2s; /* Add a transition for the transform property */
 }
