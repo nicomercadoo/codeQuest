@@ -34,13 +34,13 @@ body {
   text-decoration-color: var(--text-color);
   margin-bottom: 15px;
   display: flex;
-  align-items: center; /* Align logo and picture vertically */
+  align-items: center; 
 }
 
 .logo img {
-  width: 70px; /* Adjust the width of the image */
-  height: auto; /* Maintain the aspect ratio */
-  margin-right: 20px; /* Add spacing between logo and picture */
+  width: 70px;
+  height: auto; 
+  margin-right: 20px; 
 }
 
 .description {
@@ -113,7 +113,7 @@ body {
 
 .second-button {
   background-color: var(--text-color);
-  color: var(--primary-color);
+  color: var(--accent-color);
   transition: transform 0.2s;
 }
 
