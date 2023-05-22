@@ -28,11 +28,12 @@
     </nav>
   </header>
   <div class="button-stack">
-    <li class="dropdown">
-      <button class="chapter-button" id="introduction-button" onclick="toggleDropdown('introduction-dropdown', 'buttons-container', 'introduction-button')">
+    <div class="button-container">
+      <button class="chapter-button" onclick="toggleDropdown('introduction-dropdown', this.parentElement)">
         <span class="chapter-title">Introduccion a Haskell</span>
         <div class="additional-text">4 actividades</div>
       </button>
+      <div class="introduction-dropdown">
         <ul class="dropdown-content" id="introduction-dropdown">
           <li>
             <form action="/home" method="post">
@@ -54,10 +55,20 @@
                   <h2 class="card-title">Titulo de leccion</h2>
                 </div>
                 <div class="card-divider"></div>
-                <span class="number">2</span>
+                <span class="number">1</span>
               </button>
             </form>
           </li>
+        </ul>  
+      </div>
+    </div>
+    <div class="button-container">
+      <button class="chapter-button" onclick="toggleDropdown('functions-dropdown', this.parentElement)">
+        <span class="chapter-title">Funciones</span>
+        <div class="additional-text">4 actividades</div>
+      </button>
+      <div class="functions-dropdown">
+        <ul class="dropdown-content" id="introduction-dropdown">
           <li>
             <form action="/home" method="post">
               <input type="hidden" name="lesson_id" value="1">
@@ -66,61 +77,73 @@
                   <h2 class="card-title">Titulo de leccion</h2>
                 </div>
                 <div class="card-divider"></div>
-                <span class="number">3</span>
+                <span class="number">1</span>
               </button>
             </form>
           </li>
+        </ul>
+      </div>
+    </div>
+    <div class="button-container">
+      <button class="chapter-button" onclick="toggleDropdown('monads-dropdown', this.parentElement)">
+        <span class="chapter-title">Monadas</span>
+        <div class="additional-text">4 actividades</div>
+      </button>
+      <div class="monads-dropdown">
+        <ul class="dropdown-content" id="introduction-dropdown">
           <li>
             <form action="/home" method="post">
-              <input type="hidden" name="test_id" value="1">
-              <button type="submit" class="card test-card">
+              <input type="hidden" name="lesson_id" value="1">
+              <button type="submit" class="card lesson-card">
                 <div class="card-content">
-                  <h2 class="card-title">Test</h2>
+                  <h2 class="card-title">Titulo de leccion</h2>
                 </div>
                 <div class="card-divider"></div>
-                <span class="letter">A</span>
+                <span class="number">1</span>
               </button>
             </form>
           </li>
-        </ul>  
-    </li>
-    <div id="buttons-container" class="items-below-dropdown">
-      <li>
-        <button class="chapter-button" id="functions-button" onclick="toggleDropdown('functions-dropdown', 'buttons-container', 'functions-button')">
-          <span class="chapter-title">Funciones</span>
-          <div class="additional-text">4 actividades</div>
-        </button>
-      </li>
-      <li>
-        <button class="chapter-button" id="monads-button" onclick="toggleDropdown('monads-dropdown', 'buttons-container', 'monads-button')">
-          <span class="chapter-title">Monadas</span>
-          <div class="additional-text">4 actividades</div>
-        </button>
-      </li>
-      <li>
-        <button class="chapter-button" id="functors-button" onclick="toggleDropdown('functors-dropdown', 'buttons-container', 'functors-button')">
-          <span class="chapter-title">Functores</span>
-          <div class="additional-text">4 actividades</div>
-        </button>
-      </li>
-    </div>   
+        </ul>
+      </div>
+    </div>
+    <div class="button-container">
+      <button class="chapter-button" onclick="toggleDropdown('functors-dropdown', this.parentElement)">
+        <span class="chapter-title">Functores</span>
+        <div class="additional-text">4 actividades</div>
+      </button>
+      <div class="functors-dropdown">
+        <ul class="dropdown-content" id="introduction-dropdown">
+          <li>
+            <form action="/home" method="post">
+              <input type="hidden" name="lesson_id" value="1">
+              <button type="submit" class="card lesson-card">
+                <div class="card-content">
+                  <h2 class="card-title">Titulo de leccion</h2>
+                </div>
+                <div class="card-divider"></div>
+                <span class="number">1</span>
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   <script>
-    function toggleDropdown(id, buttonsContainerId, buttonId) {
-      var dropdown = document.getElementById(id);
-      var buttonsContainer = document.getElementById(buttonsContainerId);
-      var button = document.getElementById(buttonId);
+    function toggleDropdown(className, buttonContainer) {
+      var dropdowns = document.getElementsByClassName(className);
       
-      if (dropdown.style.display === 'block') {
-        dropdown.style.display = 'none';
-        buttonsContainer.style.transform = 'translateY(0)';
-      } else {
-        dropdown.style.display = 'block';
-        buttonsContainer.style.transform = 'translateY(440px)'; // Adjust the value based on how far you want to move the buttons down
-      }
+      for (var i = 0; i < dropdowns.length; i++) {
+        var dropdown = dropdowns[i];
 
-      // Toggle the flipped class on the button element
-      button.classList.toggle('flipped');
+        if (dropdown.style.display === 'block') {
+          dropdown.style.display = 'none';
+          buttonContainer.style.marginBottom = '0';
+        } else {
+          dropdown.style.display = 'block';
+          buttonContainer.style.marginBottom = dropdown.offsetHeight + 'px';
+        }
+      }
     };
   </script>   
 </body>

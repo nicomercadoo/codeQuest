@@ -61,19 +61,20 @@
     list-style: none;
 }
 
-.dropdown-content {
+.introduction-dropdown, .functions-dropdown, .monads-dropdown, .functors-dropdown {
     display: none;
     position: absolute;
+    background-color: var(--bg-color);
     min-width: 160px;
     z-index: 1;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    left: 49%; 
 }
-  
-.dropdown-content li {
-    display: block;
+
+.introduction-dropdown a, .functions-dropdown a, .monads-dropdown a, .functors-dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: none;
+    text-align: left;
 }
 
 /* Styles for the lesson and test cards */
