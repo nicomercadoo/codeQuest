@@ -27,6 +27,7 @@
 }
 
 .chapter-title {
+    color: var(--primary-color);
     margin-right: 10px; 
 }
 
@@ -88,7 +89,7 @@
   
 .card {
     background-color: var(--accent-color);
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     position: relative;
     width: 700px;
     height: 113px;
@@ -116,7 +117,7 @@
     left: 20%;
     transform: translateX(-50%);
     width: 2px;
-    background-color: var(--text-color);
+    background-color: var(--secondary-text-color);
 }
 
 .card .number, 
@@ -142,22 +143,18 @@
     font-size: 25px;
     font-weight: bold;
 }
-  
-.card-subtitle {
-    font-size: 18px;
-    color: var(--text-color);
-}
+
   
 .lesson-card {
     width: 600px;
     height: 90px;
     background: var(--primary-color);
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 }
   
 .test-card {
     width: 600px;
     height: 90px;
     background: var(--accent-color);
-    color: var(--text-color);
+    color: var(--secondary-text-color);
 }

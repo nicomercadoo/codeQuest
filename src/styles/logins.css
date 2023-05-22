@@ -23,7 +23,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--primary-color);
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   user-select: none;
 }
 
@@ -31,7 +31,6 @@ body {
   font-family: 'Metropolis';
   font-weight: 600;
   font-size: 48px;
-  text-decoration-color: var(--text-color);
   margin-bottom: 15px;
   display: flex;
   align-items: center; 
@@ -47,7 +46,6 @@ body {
   font-family: 'Metropolis';
   font-style: italic;
   font-size: 24px;
-  text-decoration-color: var(--text-color);
   margin-bottom: 40px;
 }
 
@@ -107,12 +105,12 @@ body {
 
 .first-button {
   background-color: var(--primary-color);
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   transition: transform 0.2s;
 }
 
 .second-button {
-  background-color: var(--text-color);
+  background-color: var(--secondary-text-color);
   color: var(--accent-color);
   transition: transform 0.2s;
 }

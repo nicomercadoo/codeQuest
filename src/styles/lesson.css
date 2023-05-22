@@ -8,8 +8,7 @@ body {
 
 .text-container{
     font-family: 'Metropolis';
-    background-color: var(--bg-color);
-    color: var(--secondary-text-color);
+    color: var(--text-color);
     width: 100%;
     float: left;
     height: 680px;

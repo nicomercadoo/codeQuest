@@ -65,13 +65,17 @@ class App < Sinatra::Application
     erb :snippets
   end
 
-  get '/lesson' do
-    @theme = 'dark'
+  get '/lesson/:lesson_id' do
+    lesson_id = params[:lesson_id]
+    @lesson = Lesson.find_by(id: lesson_id.to_i)
+    @theme = 'light'
     erb :lesson
   end
 
-  get '/test' do
-    @theme = 'dark'
+  get '/test/:test_id' do
+    test_id = params[:test_id]
+    @test = Test.find_by(id: test_id)
+    @theme = 'light'
     erb :test
   end
 
@@ -88,19 +92,15 @@ class App < Sinatra::Application
     valid_nickname_format = /(?=(?:^\S*$)+)/
 
     unless (email =~ valid_email_format)
-      logger.info "Account email #{email} isn't valid"
       redirect '/signup?Invalid-email'
     end
     unless password =~ valid_password_format
-      logger.info "Account password #{password} isn't valid"
       redirect '/signup?Invalid-password'
     end
     unless name =~ valid_name_format
-      logger.info "Account name #{name} isn't valid"
       redirect '/signup?Invalid-name'
     end
     unless nickname =~ valid_nickname_format
-      logger.info "Account nickname #{nickname} isn't valid"
       redirect '/signup?Invalid-nickname'
     end
 
@@ -108,19 +108,15 @@ class App < Sinatra::Application
     account_with_nickname = Account.find_by(nickname: nickname)
 
     if account
-      logger.info "Account #{email} already exists"
       redirect '/signup?error=Account-already-exists'
     else
       if account_with_nickname
-        logger.info "Nickname #{nickname} already exists"
         redirect '/signup?error=Nickname-already-exists'
       end
       account = Account.new(email: email, password: password, name: name, nickname: nickname)
       if account.save
-        logger.info "Account #{email} created successfully"
         redirect '/home'
       else
-        logger.info "Failed to create account for #{email}"
         erb :signup, locals: { error_message: "Error al crear cuenta" }
       end
     end
@@ -133,25 +129,12 @@ class App < Sinatra::Application
     account = Account.find_by(email: email, password: password)
 
     if account
-      logger.info "Account #{email} signed in successfully"
       redirect '/home'
     else
-      logger.info "Account #{email} failed to sign in"
       redirect '/?error=Invalid-email-or-password'
     end
   end
 
-  get '/lesson/:lesson_id' do
-    lesson_id = params[:lesson_id]
-    @lesson = Lesson.find_by(id: lesson_id.to_i)
-    erb :lesson
-  end
-
-  get '/test/:test_id' do
-    test_id = params[:test_id]
-    @test = Test.find_by(id: test_id)
-    erb :test
-  end
   
   post '/home' do
     if params[:lesson_id]
