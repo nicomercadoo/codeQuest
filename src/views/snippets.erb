@@ -28,20 +28,24 @@
     </nav>
   </header>
  <button class="new-snippet-button" onclick="showInput()">Crear snippet</button>
-  <div id="inputContainer"></div>
-  <div class="button-container">
-    <button class="save-button">Guardar</button>
+  <div id="inputContainer">
+    <div class="title-field">
+      <input type="text" placeholder="Titulo del snippet" />
+    </div>
+    <div class="button-container">
+      <button class="save-button">Guardar</button>
+    </div>
   </div>
-
   <script>
     function showInput() {
       const inputContainer = document.getElementById('inputContainer');
+      const titleField = document.querySelector('.title-field');
       const inputElement = inputContainer.querySelector('.input-field');
-      const saveButton = document.querySelector('.save-button');
       const buttonContainer = document.querySelector('.button-container');
 
       if (inputElement) {
         inputContainer.removeChild(inputElement);
+        titleField.classList.remove('show');
         buttonContainer.classList.remove('show'); 
       } else {
         // Input box doesn't exist, create and append it
@@ -52,6 +56,7 @@
           <textarea class="text-area" id="textInput" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
         `;
         inputContainer.appendChild(newInputElement);
+        titleField.classList.add('show');
         buttonContainer.classList.add('show'); 
       }
     }

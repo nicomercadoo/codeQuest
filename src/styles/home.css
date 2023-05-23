@@ -21,7 +21,6 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
 .chapter-button:hover {
     transform: scale(1.15);
 }
@@ -49,11 +48,6 @@
     display: inline-block;
     padding: 5px;
     transform: translateY(-50%) rotate(45deg);
-    transition: transform 0.2s; 
-}
-
-.chapter-button.flipped::after {
-    transform: translateY(-50%) rotate(225deg); 
 }
 
 /* Styles for the dropdown menu */

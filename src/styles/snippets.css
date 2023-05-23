@@ -4,35 +4,73 @@
 /* Styles for the "Crear snippet" button */
 
 .new-snippet-button {
-  width: 700px;
-  height: 70px;
-  border-radius: 15px;
-  padding: 10px 15px;
-  margin-bottom: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: -350px;
-  bottom: 0;
-  margin: auto;
-  border: none;
-  background-color: #4CAF50;
-  font-family: 'Metropolis';
-  font-size: 24px;
-  cursor: pointer;
-  transition: transform 0.2s;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    height: 70px;
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -350px;
+    bottom: 0;
+    margin: auto;
+    border: none;
+    background-color: #4CAF50;
+    font-family: 'Metropolis';
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-  
+    
 .new-snippet-button:hover {
     transform: scale(1.15);
 }
 
-/* Styles for the text input */
+/* Styles for the new snippet title field */
+
+.title-field {
+    width: 666px;
+    height: 55px;
+    border-radius: 15px;
+    padding: 10px 15px;
+    margin-top: -90px;
+    margin-bottom: 20px;
+    left: 2%;
+    font-family: 'Cascadia Code';
+    font-size: 26px;
+    outline: none;
+    border: 2px solid var(--primary-color);
+    background-color: var(--bg-color);
+    color: var(--secondary-text-color);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    caret-color: gray;
+    opacity: 0;
+}
+
+.title-field.show {
+    opacity: 1;
+}
+
+.title-field input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Cascadia Code';
+    font-size: 24px;
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+/* Styles for the snippet input field */
 
 .text-area {
     appearance: none;
@@ -53,11 +91,11 @@
 #inputContainer {
     width: 700px;
     position: fixed;
-    top: 250px;
-    left: 685px;
+    top: 330px;
+    left: 49%;
     transform: translateX(-50%);
 }
-  
+
 .line-count {
     position: absolute;
     top: 0;
@@ -74,9 +112,9 @@
     text-align: center;
     pointer-events: none;
 }
-  
+
 .input-field {
-    font-family: 'Metropolis';
+    font-family: 'Cascadia Code';
     width: calc(100% - 30px);
     height: 300px;
     border: 2px solid var(--primary-color);
@@ -93,29 +131,28 @@
     overflow: hidden;
     caret-color: gray;
 }
-  
+
 .input-field::placeholder {
     position: absolute;
     top: 10px;
     left: 40px; 
 }
-  
-/* Styles for the "Guardar" button */
+
+/* Styles for the button to save the new snippet */
 
 .button-container {
-    display: flex;
+    display: center;
     justify-content: center;
     align-items: flex-end;
     position: fixed;
-    bottom: 100px;
+    bottom: -55px;
     left: 50%;
     transform: translateX(-50%);
     opacity: 0; 
-    transition: opacity 0.3s ease; 
 }
 
 .button-container.show {
-  opacity: 1; 
+    opacity: 1; 
 }
     
 .save-button {
@@ -135,4 +172,4 @@
 .save-button:hover {
     transform: scale(1.15);
 }
-  
+    
