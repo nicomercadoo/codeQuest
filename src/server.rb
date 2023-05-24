@@ -34,34 +34,34 @@ class App < Sinatra::Application
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
 
   get '/' do
-    @theme = 'dark'
+    @theme = 'light'
     erb :login
   end
 
   get '/signup' do
-    @theme = 'dark'
+    @theme = 'light'
     erb :signup
   end
 
   get '/home' do
-    @theme = 'dark'
+    @theme = 'light'
     @tests = Test.all
     @lessons = Lesson.all
     erb :home, locals: { lessons: @lessons, tests: @tests}
   end
 
   get '/profile' do
-    @theme = 'dark'
+    @theme = 'light'
     erb :profile
   end
 
   get '/settings' do
-    @theme = 'dark'
+    @theme = 'light'
     erb :settings
   end
 
   get '/snippets' do
-    @theme = 'dark'
+    @theme = 'light'
     erb :snippets
   end
 
@@ -123,10 +123,10 @@ class App < Sinatra::Application
   end
 
   post '/' do
-    email = params[:email]
+    nickname = params[:nickname]
     password = params[:password]
 
-    account = Account.find_by(email: email, password: password)
+    account = Account.find_by(nickname: nickname, password: password)
 
     if account
       redirect '/home'

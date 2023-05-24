@@ -110,8 +110,9 @@ body {
 }
 
 .second-button {
-  background-color: var(--secondary-text-color);
+  background-color: var(--secondary-color);
   color: var(--accent-color);
+  outline: var(--accent-color) solid 2px;
   transition: transform 0.2s;
 }
 
@@ -136,6 +137,7 @@ body {
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .floating-box p {
@@ -151,7 +153,7 @@ body {
   border: none;
   border-radius: 15px;
   background-color: var(--primary-color);
-  color: var(--text-color);
+  color: var(--secondary-text-color);
   font-size: 16px;
   cursor: pointer;
 }
