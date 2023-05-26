@@ -8,6 +8,9 @@ require 'sinatra/reloader' if Sinatra::Base.environment == :development
 require_relative 'models/account'
 require_relative 'models/lesson'
 require_relative 'models/test'
+require_relative 'models/option'
+require_relative 'models/answer'
+require_relative 'models/question'
 
 class App < Sinatra::Application
   def initialize(app = nil)
@@ -44,39 +47,54 @@ class App < Sinatra::Application
   end
 
   get '/home' do
-    @theme = 'light'
-    @tests = Test.all
-    @lessons = Lesson.all
-    erb :home, locals: { lessons: @lessons, tests: @tests}
+    if request.cookies['logged_in'] == 'true' 
+      @theme = 'light'
+      @tests = Test.all
+      @lessons = Lesson.all
+      erb :home, locals: { lessons: @lessons, tests: @tests }
+    else
+      redirect "/" 
+    end
   end
-
+  
   get '/profile' do
-    @theme = 'light'
-    erb :profile
-  end
-
-  get '/settings' do
-    @theme = 'light'
-    erb :settings
-  end
+    if request.cookies['logged_in'] == 'true' 
+      @theme = 'light'
+      erb :profile
+    else
+      redirect "/"
+    end
+  end 
 
   get '/snippets' do
-    @theme = 'light'
-    erb :snippets
+    if request.cookies['logged_in'] == 'true'
+      @theme = 'light'
+      erb :snippets
+    else
+      redirect "/"
+    end
   end
 
   get '/lesson/:lesson_id' do
-    lesson_id = params[:lesson_id]
-    @lesson = Lesson.find_by(id: lesson_id.to_i)
-    @theme = 'light'
-    erb :lesson
+    if request.cookies['logged_in'] == 'true' 
+      lesson_id = params[:lesson_id]
+      @lesson = Lesson.find_by(id: lesson_id.to_i)
+      @theme = 'light'
+      erb :lesson
+    else
+      redirect "/"
+    end
   end
 
   get '/test/:test_id' do
-    test_id = params[:test_id]
-    @test = Test.find_by(id: test_id)
-    @theme = 'light'
-    erb :test
+    if request.cookies['logged_in'] == 'true'
+      test_id = params[:test_id]
+      @test = Test.find_by(id: test_id)
+      @theme = 'light'
+      erb :test
+    else
+      redirect "/"
+    end
   end
 
   post '/signup' do
@@ -129,6 +147,7 @@ class App < Sinatra::Application
     account = Account.find_by(nickname: nickname, password: password)
 
     if account
+      response.set_cookie('logged_in', value: 'true', expires: Time.now + 24*60*60)
       redirect '/home'
     else
       redirect '/?error=Invalid-email-or-password'

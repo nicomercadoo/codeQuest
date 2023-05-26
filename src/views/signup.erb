@@ -21,16 +21,23 @@
     </div>
     <div class="right-section">
       <div class="content">
-        <% if params[:error] %>
-          <div class="error">
-            <div class="floating-box">
-              <span class="close-button" onclick="this.parentElement.style.display='none';">×</span>
-              <p>Esta cuenta ya existe. Por favor, inicia sesión.</p>
-              <a href="/"><button>Iniciar sesión</button></a>
-            </div>
+      <% if params[:error] %>
+      <div class="error">
+        <div class="floating-box">
+          <span class="close-button" onclick="this.parentElement.style.display='none';">×</span>
+          <% if params[:error] == "Account-already-exists" %>
+            <p>Esta cuenta ya está registrada. Por favor, inicia sesión.</p>
+            <a href="/"><button>Iniciar sesión</button></a>
+          <% elsif params[:error] == "Nickname-already-exists" %>
+            <p>El nickname ya está en uso. Por favor, elige otro.</p>
+            <a href="/signup"><button>Intenta de nuevo</button></a>
+          <% else %>
+            <p>Error desconocido. Por favor, contacta al administrador.</p>
+          <% end %>
           </div>
-        <% end %>
-        <form class="form" action="#" method="post">
+        </div>
+      <% end %>
+      <form class="form" action="#" method="post">
           <input type="text" name="name" placeholder="Nombre" required>
           <input type="text" name="email" placeholder="Email" required>
           <input type="password" name="password" placeholder="Contraseña" required>

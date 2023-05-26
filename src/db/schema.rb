@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_19_163744) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_19_154434) do
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password"
     t.string "nickname"
     t.integer "progress", default: 0
+    t.boolean "theme", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "answers", force: :cascade do |t|
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "accounts_id"
@@ -29,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_163744) do
   end
 
   create_table "lessons", force: :cascade do |t|
-    t.integer "name"
+    t.integer "number"
     t.string "tittle"
     t.boolean "completed", default: false
     t.text "description"
@@ -63,13 +65,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_19_163744) do
   end
 
   create_table "tests", force: :cascade do |t|
-    t.string "name", limit: 1
+    t.string "letter", limit: 1
+    t.string "description"
     t.boolean "completed", default: false
     t.integer "cant_questions", default: 0
     t.integer "acerted_answers", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "description"
   end
 
+  add_foreign_key "answers", "accounts", column: "accounts_id"
+  add_foreign_key "lessons", "accounts", column: "accounts_id"
+  add_foreign_key "lessons", "tests", column: "tests_id"
+  add_foreign_key "options", "answers", column: "answers_id"
+  add_foreign_key "options", "questions", column: "questions_id"
+  add_foreign_key "questions", "tests", column: "tests_id"
 end

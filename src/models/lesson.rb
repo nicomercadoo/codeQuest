@@ -1,7 +1,9 @@
 class Lesson < ActiveRecord::Base
-  validates :name, presence: true
+  validates :number, presence: true
   validates :tittle, presence: true
-  validates :completed_lesson, presence: true
-  validates :description_lesson, presence: true
+  validates :completed, presence: true
+  validates :description, presence: true
+  belongs_to :account
+  belongs_to :test
 end
 

@@ -147,7 +147,6 @@ body {
 
 .floating-box button {
   font-family: 'Metropolis';
-  display: block;
   margin: 45px auto;
   padding: 15px 25px;
   border: none;
@@ -156,6 +155,10 @@ body {
   color: var(--secondary-text-color);
   font-size: 16px;
   cursor: pointer;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .close-button {
