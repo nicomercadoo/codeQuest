@@ -32,10 +32,10 @@
     <p><%= @lesson.description %></p>
   </div>
 
-  <% if @lesson.id < Lesson.maximum(:id) %>
+  <% if @lesson.number < Lesson.maximum(:number) %>
     <div class="continue-button-container">
-      <% next_lesson_id = @lesson.id + 1 %>
-      <a href="/lesson/<%= next_lesson_id %>"><button type="button" class="continue-button">Siguiente lección</button></a>  
+      <% next_lesson_number = @lesson.number + 1 %>
+      <a href="/lesson/<%= next_lesson_number %>"><button type="button" class="continue-button">Siguiente lección</button></a>  
     </div>
   <% end %>
 </body>

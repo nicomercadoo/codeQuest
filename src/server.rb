@@ -79,10 +79,10 @@ class App < Sinatra::Application
     end
   end
 
-  get '/lesson/:lesson_id' do
+  get '/lesson/:lesson_number' do
     if request.cookies['logged_in'] == 'true' 
-      lesson_id = params[:lesson_id]
-      @lesson = Lesson.find_by(id: lesson_id.to_i)
+      lesson_number = params[:lesson_number]
+      @lesson = Lesson.find_by(number: lesson_number)
       @theme = 'light'
       erb :lesson
     else
@@ -90,12 +90,20 @@ class App < Sinatra::Application
     end
   end
 
-  get '/test/:test_id' do
+  get '/test/:test_letter/:question_number' do
     if request.cookies['logged_in'] == 'true'
-      test_id = params[:test_id]
-      @test = Test.find_by(id: test_id)
+      test_letter = params[:test_letter]
+      question_number = params[:question_number]
+
+      # Encuentra el test y la pregunta asociados a los nombres
+      @test = Test.find_by(letter: test_letter)
+      @question = Question.find_by(number: question_number)
+
+      # Encuentra las opciones asociadas a la pregunta
+      @options = Option.where(questions_id: @question.number)
+
       @theme = 'light'
-      erb :test
+      erb :test, locals: { test: @test, question: @question, options: @options }
     else
       redirect "/"
     end
@@ -160,12 +168,14 @@ class App < Sinatra::Application
 
   
   post '/home' do
-    if params[:lesson_id]
-      lesson_id = params[:lesson_id]
-      redirect "/lesson/#{lesson_id}"
+    if params[:lesson_number]
+      lesson_number = params[:lesson_number]
+      redirect "/lesson/#{lesson_number}"
     else
-      test_id = params[:test_id]
-      redirect "/test/#{test_id}"
+      test_letter = params[:test_letter]
+      question_number = params[:question_number]
+      redirect "/test/#{test_letter}/#{question_number}"
     end
   end
+
 end
