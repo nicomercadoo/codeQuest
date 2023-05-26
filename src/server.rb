@@ -37,8 +37,12 @@ class App < Sinatra::Application
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
 
   get '/' do
-    @theme = 'light'
-    erb :login
+    if request.cookies['logged_in'] == 'true'
+      redirect '/home'
+    else
+      @theme = 'light'
+      erb :login
+    end
   end
 
   get '/signup' do
