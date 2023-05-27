@@ -97,12 +97,12 @@ class App < Sinatra::Application
       # Se obtiene la ultima leccion
       last_lesson_in_group = lesson_group.last.number
       # Se verifica si la leccion actual es la ultima
-      current_is_last = @lesson.number == last_lesson_in_group
+      @current_is_last = @lesson.number == last_lesson_in_group
       # Se obtiene la (supuesta) proxima leccion
       next_lesson = @lesson.number + 1
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo
       # de la situacion
-      @next_step = current_is_last ? "/test/#{related_test}/1" : "/lesson/#{next_lesson}"
+      @next_step = @current_is_last ? "/test/#{related_test}/1" : "/lesson/#{next_lesson}"
 
       @theme = 'light'
       erb :lesson
