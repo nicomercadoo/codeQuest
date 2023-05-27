@@ -46,7 +46,11 @@
   <% if @question.number < 3 %>
   <div id="nextQuestion" class="next-question-button">
     <% next_question_number = @question.number + 1 %>
-    <a href="/test/<%= @test.letter %>/<%= next_question_number %>"><button type="button" class="continue-button">Siguiente Pregunta</button></a>
+    <a href="/test/<%= @test.letter %>/<%= next_question_number %>">Siguiente Pregunta</button></a>
+  </div>
+  <% else %>
+  <div id="nextQuestion" class="next-question-button">
+    <a href="/home">Terminar test</button></a>
   </div>
   <% end %>
 

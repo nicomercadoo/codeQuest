@@ -30,7 +30,7 @@ body {
     width: 700px;
     height: 2px;
     background-color: var(--accent-color);
-    margin: 0 auto;
+    margin-left: 350px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
