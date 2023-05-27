@@ -51,24 +51,24 @@ class App < Sinatra::Application
   end
 
   get '/home' do
-    if request.cookies['logged_in'] == 'true' 
+    if request.cookies['logged_in'] == 'true'
       @theme = 'light'
       @tests = Test.all
       @lessons = Lesson.all
       erb :home, locals: { lessons: @lessons, tests: @tests }
     else
-      redirect "/" 
+      redirect "/"
     end
   end
-  
+
   get '/profile' do
-    if request.cookies['logged_in'] == 'true' 
+    if request.cookies['logged_in'] == 'true'
       @theme = 'light'
       erb :profile
     else
       redirect "/"
     end
-  end 
+  end
 
   get '/snippets' do
     if request.cookies['logged_in'] == 'true'
@@ -80,9 +80,30 @@ class App < Sinatra::Application
   end
 
   get '/lesson/:lesson_number' do
-    if request.cookies['logged_in'] == 'true' 
+    if request.cookies['logged_in'] == 'true'
       lesson_number = params[:lesson_number]
       @lesson = Lesson.find_by(number: lesson_number)
+
+      # TODO: cuando la clave foranea que referencia a Test en Lesson sea la
+      # letra del test, modificar el siguiente codigo para evitar trabajar con
+      # los id de test.
+
+      # Se obtiene el id del test que se corresponde con la leccion
+      related_test_id = @lesson.tests_id
+      # Se obtiene la letra del test
+      related_test = Test.find_by(id: related_test_id).letter
+      # Se obtienen todas las lecciones que estan relacionadas con el test
+      lesson_group = Lesson.where(tests_id: related_test_id)
+      # Se obtiene la ultima leccion
+      last_lesson_in_group = lesson_group.last.number
+      # Se verifica si la leccion actual es la ultima
+      current_is_last = @lesson.number == last_lesson_in_group
+      # Se obtiene la (supuesta) proxima leccion
+      next_lesson = @lesson.number + 1
+      # Se almacena la url a donde debera ser redirigido el usuario dependiendo
+      # de la situacion
+      @next_step = current_is_last ? "/test/#{related_test}/1" : "/lesson/#{next_lesson}"
+
       @theme = 'light'
       erb :lesson
     else
@@ -166,7 +187,7 @@ class App < Sinatra::Application
     end
   end
 
-  
+
   post '/home' do
     if params[:lesson_number]
       lesson_number = params[:lesson_number]

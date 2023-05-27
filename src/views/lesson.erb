@@ -26,17 +26,14 @@
       </ul>
     </nav>
   </header>
-  
+
   <div class="text-container">
     <h1><%= @lesson.tittle %></h1>
     <p><%= @lesson.description %></p>
   </div>
 
-  <% if @lesson.number < Lesson.maximum(:number) %>
-    <div class="continue-button-container">
-      <% next_lesson_number = @lesson.number + 1 %>
-      <a href="/lesson/<%= next_lesson_number %>"><button type="button" class="continue-button">Siguiente lección</button></a>  
-    </div>
-  <% end %>
+  <div class="continue-button-container">
+    <a href="<%= @next_step %>"><button type="button" class="continue-button">Siguiente</button></a>
+  </div>
 </body>
 </html>
