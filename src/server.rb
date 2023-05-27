@@ -156,18 +156,24 @@ class App < Sinatra::Application
     end
 
     account = Account.find_by(email: email, password: password)
+    logger.info "Account: #{account}"
     account_with_nickname = Account.find_by(nickname: nickname)
 
     if account
+      logger.info "if account"
       redirect '/signup?error=Account-already-exists'
     else
       if account_with_nickname
+        logger.info "if account_with_nickname"
         redirect '/signup?error=Nickname-already-exists'
       end
       account = Account.new(email: email, password: password, name: name, nickname: nickname)
+      logger.info "NEW ACCOUNT: #{account.name} #{account.email}"
       if account.save
+        logger.info "account.save"
         redirect '/home'
       else
+        logger.info "!account.save"
         erb :signup, locals: { error_message: "Error al crear cuenta" }
       end
     end

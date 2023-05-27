@@ -1,6 +1,4 @@
 @import url('font-sets.css');
-@import url('color-scheme-light.css');
-@import url('color-scheme-dark.css');
 
 body {
   background-color: var(--bg-color);
