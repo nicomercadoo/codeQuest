@@ -40,10 +40,10 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
     align-items: center;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     font-size: 16px;
     position: relative;
-    top: 270px; /* Adjust the value to position the button vertically */
+    top: 270px; 
     left: calc(50% - 250px);
     transition: transform 0.2s;
     cursor: pointer;
@@ -62,7 +62,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     font-size: 16px;
     position: fixed;
     bottom: 20px;
@@ -92,7 +92,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     font-size: 16px;
     position: fixed;
     top: 50%;

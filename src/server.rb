@@ -104,7 +104,7 @@ class App < Sinatra::Application
       # de la situacion
       @next_step = @current_is_last ? "/test/#{related_test}/1" : "/lesson/#{next_lesson}"
 
-      @theme = 'light'
+      @theme = 'dark'
       erb :lesson
     else
       redirect "/"
