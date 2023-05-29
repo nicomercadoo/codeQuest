@@ -4,7 +4,7 @@ class Account < ActiveRecord::Base
   validates :password, presence: true
   validates :nickname, presence: true
   validates :progress, presence: true
-  validates :theme, presence: true
+
   has_many :answers
   has_many :lessons
 end

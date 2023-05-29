@@ -52,7 +52,7 @@ class App < Sinatra::Application
 
   get '/home' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'light'
+      @theme = 'dark'
       @tests = Test.all
       @lessons = Lesson.all
       erb :home, locals: { lessons: @lessons, tests: @tests }
@@ -63,7 +63,7 @@ class App < Sinatra::Application
 
   get '/profile' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'light'
+      @theme = 'dark'
       erb :profile
     else
       redirect "/"
@@ -72,7 +72,7 @@ class App < Sinatra::Application
 
   get '/snippets' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'light'
+      @theme = 'dark'
       erb :snippets
     else
       redirect "/"
@@ -89,19 +89,18 @@ class App < Sinatra::Application
       # los id de test.
 
       # Se obtiene el id del test que se corresponde con la leccion
-      related_test_id = @lesson.tests_id
+      related_test_letter = @lesson.test_letter
       # Se obtiene la letra del test
-      related_test = Test.find_by(id: related_test_id).letter
+      related_test = Test.find_by(letter: related_test_letter).letter
       # Se obtienen todas las lecciones que estan relacionadas con el test
-      lesson_group = Lesson.where(tests_id: related_test_id)
+      lesson_group = Lesson.where(test_letter: related_test_letter)
       # Se obtiene la ultima leccion
       last_lesson_in_group = lesson_group.last.number
       # Se verifica si la leccion actual es la ultima
       @current_is_last = @lesson.number == last_lesson_in_group
       # Se obtiene la (supuesta) proxima leccion
       next_lesson = @lesson.number + 1
-      # Se almacena la url a donde debera ser redirigido el usuario dependiendo
-      # de la situacion
+      # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test}/1" : "/lesson/#{next_lesson}"
 
       @theme = 'dark'
@@ -121,9 +120,9 @@ class App < Sinatra::Application
       @question = Question.find_by(number: question_number)
 
       # Encuentra las opciones asociadas a la pregunta
-      @options = Option.where(questions_id: @question.number)
+      @options = Option.where(question_number: @question.number)
 
-      @theme = 'light'
+      @theme = 'dark'
       erb :test, locals: { test: @test, question: @question, options: @options }
     else
       redirect "/"
@@ -156,24 +155,19 @@ class App < Sinatra::Application
     end
 
     account = Account.find_by(email: email, password: password)
-    logger.info "Account: #{account}"
     account_with_nickname = Account.find_by(nickname: nickname)
 
     if account
-      logger.info "if account"
       redirect '/signup?error=Account-already-exists'
     else
       if account_with_nickname
-        logger.info "if account_with_nickname"
         redirect '/signup?error=Nickname-already-exists'
       end
       account = Account.new(email: email, password: password, name: name, nickname: nickname)
-      logger.info "NEW ACCOUNT: #{account.name} #{account.email}"
       if account.save
-        logger.info "account.save"
+        response.set_cookie('logged_in', value: 'true', expires: Time.now + 24*60*60)
         redirect '/home'
       else
-        logger.info "!account.save"
         erb :signup, locals: { error_message: "Error al crear cuenta" }
       end
     end
@@ -205,4 +199,49 @@ class App < Sinatra::Application
     end
   end
 
+  post '/submit_answer' do
+    if request.cookies['logged_in'] == 'true'
+      question_number = params[:question_number]
+      test_letter = params[:test_letter]
+
+      @question = Question.find_by(number: question_number)
+
+      selected_option_number = params[:selected_option]
+  
+      # Encuentra la opción seleccionada por el usuario
+      selected_option = Option.find(selected_option_number)
+  
+      # Verifica si la opción seleccionada es correcta
+      if selected_option.correct
+  
+        current_user_nickname = request.cookies['logged_in_nickname']
+        answer = Answer.new(description: 'Respuesta correcta', account_nickname: current_user_nickname)
+        answer.save
+  
+        # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
+        if @question
+          @question.well_answered = true
+          @question.save
+        else
+          # Si @question es nulo, maneja el caso de error
+          redirect '/error_page'
+        end
+      
+        next_question_number = @question.number + 1 
+        redirect "/test/#{test_letter}/#{next_question_number}"
+      else
+        # La opción seleccionada es incorrecta
+  
+        current_user_nickname = request.cookies['logged_in_nickname']
+        answer = Answer.new(description: 'Respuesta incorrecta', account_nickname: current_user_nickname)
+        answer.save
+  
+        # TODO: Que no haga un redirect a otra página, sino que en el mismo test te diga que la opcion seleccionada es la incorrecta
+        redirect '/incorrect_response'
+      end
+    else
+      redirect "/"
+    end
+  end
+  
 end

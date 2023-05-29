@@ -33,26 +33,23 @@
     </div>
   </div>
 
-  <% @options.each do |option| %>
-    <div class="option-button" onclick="handleButtonClick('button<%= option.id %>')">
-      <b><%= option.description %></b>
+  <form action="/submit_answer" method="post">
+    <input type="hidden" name="question_number" value="<%= @question.number %>">
+    <input type="hidden" name="test_letter" value="<%= @test.letter %>">
+    <!-- Opciones de respuesta -->
+    <% @options.each do |option| %>
+      <div class="option-button">
+        <input type="radio" name="selected_option" value="<%= option.number %>">
+        <b><%= option.description %></b>
+      </div>
+    <% end %>
+  
+    <!-- Botón de envío -->
+    <div class="additional-button" id="additionalButton">
+      <input type="submit" value="Responder">
     </div>
-  <% end %>
-
-  <div class="additional-button" id="additionalButton">
-    <b>Responder</b>
-  </div>
-
-  <% if @question.number < 3 %>
-  <div id="nextQuestion" class="next-question-button">
-    <% next_question_number = @question.number + 1 %>
-    <a href="/test/<%= @test.letter %>/<%= next_question_number %>">Siguiente Pregunta</button></a>
-  </div>
-  <% else %>
-  <div id="nextQuestion" class="next-question-button">
-    <a href="/home">Terminar test</button></a>
-  </div>
-  <% end %>
+  </form>
+  
 
   <script>
   const additionalButton = document.getElementById('additionalButton');
