@@ -23,7 +23,7 @@
         <li><a href="/home" class="nav-link">Inicio</a></li>
         <li><a href="/profile" class="nav-link">Perfil</a></li>
         <li><a href="/snippets" class="current-page">Snippets</a></li>
-        <li><a href="/" class="nav-link">Salir</a></li>
+        <li onclick="logout()"><a href="/" class="nav-link">Salir</a></li>
       </ul>
     </nav>
   </header>
@@ -72,6 +72,10 @@
       }
 
       lineCount.textContent = lineNumbers;
+    }
+
+    function logout() {
+      document.cookie = `logged_in=false;`;
     }
   </script>
 </body>

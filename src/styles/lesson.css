@@ -32,7 +32,7 @@ p {
     height: 80px;
     width: 350px;
     background-color: var(--primary-color);
-    color: var(--text-color);
+    color: var(--secondary-text-color);
     border: none;
     border-radius: 15px;
     padding: 10px 20px;

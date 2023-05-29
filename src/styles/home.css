@@ -91,7 +91,7 @@
     border-radius: 15px;
     border: none;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 24px;
+    font-size: 19px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,7 +135,6 @@
 }
   
 .card-title {
-    font-size: 25px;
     font-weight: bold;
 }
 
@@ -150,6 +149,7 @@
 .test-card {
     width: 600px;
     height: 80px;
+    font-size: 19px;
     background: var(--accent-color);
     color: var(--secondary-text-color);
 }
