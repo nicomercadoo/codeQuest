@@ -99,3 +99,18 @@ li, a, button {
   bottom: -8px;
   pointer-events: none;
 }
+
+.no-style-button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.no-style-button:hover {
+  text-decoration: none;
+}

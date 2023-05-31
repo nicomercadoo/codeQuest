@@ -23,7 +23,7 @@
         <li><a href="/home" class="nav-link">Inicio</a></li>
         <li><a href="/profile" class="current-page">Perfil</a></li>
         <li><a href="/snippets" class="nav-link">Snippets</a></li>
-        <li onclick="logout()"><a href="/" class="nav-link">Salir</a></li>
+        <li><form action="/logout" method="post"><button type="submit" class="nav-link no-style-button">Salir</button></form></li>
       </ul>
     </nav>
   </header>
@@ -98,9 +98,6 @@
       }
     });
 
-    function logout() {
-      document.cookie = `logged_in=false;`;
-    }
   </script>
 </body>
 </html>

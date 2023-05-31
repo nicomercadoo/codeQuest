@@ -165,7 +165,7 @@ class App < Sinatra::Application
       end
       account = Account.new(email: email, password: password, name: name, nickname: nickname)
       if account.save
-        response.set_cookie('logged_in', value: 'true', expires: Time.now + 24*60*60)
+        response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
         redirect '/home'
       else
         erb :signup, locals: { error_message: "Error al crear cuenta" }
@@ -180,7 +180,7 @@ class App < Sinatra::Application
     account = Account.find_by(nickname: nickname, password: password)
 
     if account
-      response.set_cookie('logged_in', value: 'true', expires: Time.now + 24*60*60)
+      response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
       redirect '/home'
     else
       redirect '/?error=Invalid-email-or-password'
@@ -243,5 +243,10 @@ class App < Sinatra::Application
       redirect "/"
     end
   end
-  
+
+  post '/logout' do
+    response.delete_cookie('logged_in')
+    redirect '/'
+  end
+
 end
