@@ -29,10 +29,16 @@
   </header>
 
   <div class="button-stack">
+
+    <% @tests.each do |test| %>
+    
+    <% @questions = Question.where(test_letter: test.letter) %>
+
+    <% @lessons = Lesson.where(test_letter: test.letter) %>
     <div class="button-container">
       <button class="chapter-button" onclick="toggleDropdown('introduction-dropdown', this.parentElement)">
-        <span class="chapter-title">Introduccion a Haskell</span>
-        <div class="additional-text">4 actividades</div>
+        <span class="chapter-title"><%= test.description %></span>
+        <div class="additional-text"><%= @lessons.count + 1 %> actividades</div>
       </button>
       <div class="introduction-dropdown">
         <ul class="dropdown-content" id="introduction-dropdown">
@@ -53,57 +59,21 @@
           <% end %>
 
           <form action="/home" method="post">
-            <input type="hidden" name="test_letter" value="A">
-            <input type="hidden" name="question_number" value="1">
+            <input type="hidden" name="test_letter" value="<%= test.letter %>">
+            <input type="hidden" name="question_number" value="<%= @questions.minimum(:number) %>">
             <button type="submit" class="card test-card">
               <div class="card-content">
                 <h2 class="card-title">Test</h2>
               </div>
               <div class="card-divider"></div>
-              <span class="number">A</span>
+              <span class="number"><%= test.letter %></span>
             </button>
           </form>
 
         </ul>  
       </div>
     </div>
-
-    <div class="button-container">
-      <button class="chapter-button" onclick="toggleDropdown('functions-dropdown', this.parentElement)">
-        <span class="chapter-title">Funciones</span>
-        <div class="additional-text">4 actividades</div>
-      </button>
-      <div class="functions-dropdown">
-        <ul class="dropdown-content" id="introduction-dropdown">
-
-        </ul>
-      </div>
-    </div>
-
-    <div class="button-container">
-      <button class="chapter-button" onclick="toggleDropdown('monads-dropdown', this.parentElement)">
-        <span class="chapter-title">Monadas</span>
-        <div class="additional-text">4 actividades</div>
-      </button>
-      <div class="monads-dropdown">
-        <ul class="dropdown-content" id="introduction-dropdown">
-         
-        </ul>
-      </div>
-    </div>
-
-    <div class="button-container">
-      <button class="chapter-button" onclick="toggleDropdown('functors-dropdown', this.parentElement)">
-        <span class="chapter-title">Functores</span>
-        <div class="additional-text">4 actividades</div>
-      </button>
-      <div class="functors-dropdown">
-        <ul class="dropdown-content" id="introduction-dropdown">
-         
-        </ul>
-      </div>
-    </div>
-
+    <% end %>
   </div>
 
   <script>

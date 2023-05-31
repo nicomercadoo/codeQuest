@@ -54,8 +54,7 @@ class App < Sinatra::Application
     if request.cookies['logged_in'] == 'true'
       @theme = 'dark'
       @tests = Test.all
-      @lessons = Lesson.all
-      erb :home, locals: { lessons: @lessons, tests: @tests }
+      erb :home, locals: { tests: @tests }
     else
       redirect "/"
     end
@@ -163,7 +162,7 @@ class App < Sinatra::Application
       if account_with_nickname
         redirect '/signup?error=Nickname-already-exists'
       end
-      account = Account.new(email: email, password: password, name: name, nickname: nickname)
+      account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
       if account.save
         response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
         redirect '/home'
@@ -204,6 +203,7 @@ class App < Sinatra::Application
       question_number = params[:question_number]
       test_letter = params[:test_letter]
 
+      @test = Test.find_by(letter: test_letter)
       @question = Question.find_by(number: question_number)
 
       selected_option_number = params[:selected_option]
@@ -215,7 +215,7 @@ class App < Sinatra::Application
       if selected_option.correct
   
         current_user_nickname = request.cookies['logged_in_nickname']
-        answer = Answer.new(description: 'Respuesta correcta', account_nickname: current_user_nickname)
+        answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
         answer.save
   
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
@@ -228,12 +228,16 @@ class App < Sinatra::Application
         end
       
         next_question_number = @question.number + 1 
-        redirect "/test/#{test_letter}/#{next_question_number}"
+        if next_question_number <= @test.cant_questions
+          redirect "/test/#{test_letter}/#{next_question_number}"
+        else
+          redirect "/home"
+        end
       else
         # La opción seleccionada es incorrecta
   
         current_user_nickname = request.cookies['logged_in_nickname']
-        answer = Answer.new(description: 'Respuesta incorrecta', account_nickname: current_user_nickname)
+        answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
         answer.save
   
         # TODO: Que no haga un redirect a otra página, sino que en el mismo test te diga que la opcion seleccionada es la incorrecta
