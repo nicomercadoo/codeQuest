@@ -82,7 +82,18 @@ class App < Sinatra::Application
     if request.cookies['logged_in'] == 'true'
       lesson_number = params[:lesson_number]
       @lesson = Lesson.find_by(number: lesson_number)
-
+      current_user_nickname = request.cookies['logged_in_nickname']
+      if @lesson
+        # Marcar la lección como completada
+        @lesson.update(completed: true)
+        @lesson.update(account_nickname: current_user_nickname)
+        @lesson.save
+      end
+      
+      # Verificar si la lección anterior ha sido completada
+      if @lesson.number > 1 && Lesson.where(number: 1..(@lesson.number - 1), completed: false).exists?
+        redirect '/home/lecciones_incompletas' # Redirigir al inicio si la lección anterior no está completada
+      end
       # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
       # Se obtiene la letra del test
@@ -115,15 +126,26 @@ class App < Sinatra::Application
       @test = Test.find_by(letter: test_letter)
       @question = Question.find_by(number: question_number)
 
-      # Encuentra las opciones asociadas a la pregunta
-      @options = Option.where(question_number: @question.number)
+      questions = Question.where(test_letter: test_letter)
 
-      @theme = 'dark'
-      erb :test, locals: { test: @test, question: @question, options: @options }
+      # Verificar si todas las lecciones relacionadas con el test están completadas
+      if @test.lessons.exists?(completed: false)
+        redirect '/home/lecciones_incompletas' # Redirigir al inicio si alguna lección relacionada no está completada
+      end
+
+      if questions.exists?(number: question_number)
+        # Encuentra la pregunta asociada al question_number y al test
+        @options = Option.where(question_number: @question.number)
+
+        @theme = 'dark'
+        erb :test, locals: { test: @test, question: @question, options: @options }
+      else
+        redirect "/"
+      end
     else
       redirect "/"
     end
-  end
+  end 
 
   post '/signup' do
     # Retrieve the form data
@@ -162,6 +184,7 @@ class App < Sinatra::Application
       account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
       if account.save
         response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
+        response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
         redirect '/home'
       else
         erb :signup, locals: { error_message: "Error al crear cuenta" }
@@ -177,6 +200,7 @@ class App < Sinatra::Application
 
     if account
       response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
+      response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
       redirect '/home'
     else
       redirect '/?error=Invalid-email-or-password'
@@ -215,14 +239,26 @@ class App < Sinatra::Application
         answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
         answer.save
 
+        if @test
+          unless Question.where(test_letter: @test.letter, number: @question.number, well_answered: true).exists?
+            @test.increment!(:acerted_answers)  # Incrementar el contador acerted_answers del test en 1
+          end
+        end
+
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
         if @question
           @question.well_answered = true
-          @question.save
+          @question.save          
         else
           # Si @question es nulo, maneja el caso de error
           redirect '/error_page'
         end
+
+        if @test && !Question.where(test_letter: @test.letter, well_answered: false).exists?
+          # Todas las preguntas del test han sido respondidas correctamente
+          @test.update(completed: true)
+        end
+
         @questions = Question.where(test_letter: test_letter)
         next_question_number = @question.number + 1
         if next_question_number <= @questions.maximum(:number)
@@ -232,11 +268,11 @@ class App < Sinatra::Application
         end
       else
         # La opción seleccionada es incorrecta
-
+      
         current_user_nickname = request.cookies['logged_in_nickname']
         answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
         answer.save
-
+      
         # TODO: Que no haga un redirect a otra página, sino que en el mismo test te diga que la opcion seleccionada es la incorrecta
         redirect '/incorrect_response'
       end
