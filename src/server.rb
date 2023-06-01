@@ -207,17 +207,17 @@ class App < Sinatra::Application
       @question = Question.find_by(number: question_number)
 
       selected_option_number = params[:selected_option]
-  
+
       # Encuentra la opción seleccionada por el usuario
       selected_option = Option.find(selected_option_number)
-  
+
       # Verifica si la opción seleccionada es correcta
       if selected_option.correct
-  
+
         current_user_nickname = request.cookies['logged_in_nickname']
         answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
         answer.save
-  
+
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
         if @question
           @question.well_answered = true
@@ -226,20 +226,20 @@ class App < Sinatra::Application
           # Si @question es nulo, maneja el caso de error
           redirect '/error_page'
         end
-      
-        next_question_number = @question.number + 1 
-        if next_question_number <= @test.cant_questions
+        @questions = Question.where(test_letter: test_letter)
+        next_question_number = @question.number + 1
+        if next_question_number <= @questions.maximum(:number)
           redirect "/test/#{test_letter}/#{next_question_number}"
         else
           redirect "/home"
         end
       else
         # La opción seleccionada es incorrecta
-  
+
         current_user_nickname = request.cookies['logged_in_nickname']
         answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
         answer.save
-  
+
         # TODO: Que no haga un redirect a otra página, sino que en el mismo test te diga que la opcion seleccionada es la incorrecta
         redirect '/incorrect_response'
       end
