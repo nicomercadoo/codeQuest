@@ -153,3 +153,8 @@
     background: var(--accent-color);
     color: var(--secondary-text-color);
 }
+
+.introduction-dropdown {
+    position: relative;
+  }
+  

@@ -36,12 +36,12 @@
 
     <% @lessons = Lesson.where(test_letter: test.letter) %>
     <div class="button-container">
-      <button class="chapter-button" onclick="toggleDropdown('introduction-dropdown', this.parentElement)">
+      <button class="chapter-button" onclick="toggleDropdown('<%= test.letter %>')">
         <span class="chapter-title"><%= test.description %></span>
         <div class="additional-text"><%= @lessons.count + 1 %> actividades</div>
       </button>
-      <div class="introduction-dropdown">
-        <ul class="dropdown-content" id="introduction-dropdown">
+      <div class="introduction-dropdown" id="<%= test.letter %>">
+        <ul class="dropdown-content">
 
           <% @lessons.each do |lesson| %>
           <li>
@@ -77,19 +77,13 @@
   </div>
 
   <script>
-    function toggleDropdown(className, buttonContainer) {
-      var dropdowns = document.getElementsByClassName(className);
-      
-      for (var i = 0; i < dropdowns.length; i++) {
-        var dropdown = dropdowns[i];
+    function toggleDropdown(letter) {
+      var dropdown = document.getElementById(letter);
 
-        if (dropdown.style.display === 'block') {
-          dropdown.style.display = 'none';
-          buttonContainer.style.marginBottom = '0';
-        } else {
-          dropdown.style.display = 'block';
-          buttonContainer.style.marginBottom = dropdown.offsetHeight + 'px';
-        }
+      if (dropdown.style.display === 'block') {
+        dropdown.style.display = 'none';
+      } else {
+        dropdown.style.display = 'block';
       }
     };
   </script>
