@@ -83,24 +83,21 @@ class App < Sinatra::Application
       lesson_number = params[:lesson_number]
       @lesson = Lesson.find_by(number: lesson_number)
 
-      # TODO: cuando la clave foranea que referencia a Test en Lesson sea la
-      # letra del test, modificar el siguiente codigo para evitar trabajar con
-      # los id de test.
-
-      # Se obtiene el id del test que se corresponde con la leccion
+      # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
       # Se obtiene la letra del test
       related_test = Test.find_by(letter: related_test_letter).letter
-      # Se obtienen todas las lecciones que estan relacionadas con el test
-      lesson_group = Lesson.where(test_letter: related_test_letter)
+      # Se obtienen todas las preguntas y las lecciones que estan relacionadas con el test
+      @questions = Question.where(test_letter: related_test_letter)
+      @lessons = Lesson.where(test_letter: related_test_letter)
       # Se obtiene la ultima leccion
-      last_lesson_in_group = lesson_group.last.number
+      last_lesson_in_group = @lessons.last.number
       # Se verifica si la leccion actual es la ultima
       @current_is_last = @lesson.number == last_lesson_in_group
       # Se obtiene la (supuesta) proxima leccion
       next_lesson = @lesson.number + 1
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
-      @next_step = @current_is_last ? "/test/#{related_test}/1" : "/lesson/#{next_lesson}"
+      @next_step = @current_is_last ? "/test/#{related_test}/#{@questions.minimum(:number)}" : "/lesson/#{next_lesson}"
 
       @theme = 'dark'
       erb :lesson
