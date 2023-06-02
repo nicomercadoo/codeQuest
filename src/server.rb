@@ -89,7 +89,7 @@ class App < Sinatra::Application
         @lesson.update(account_nickname: current_user_nickname)
         @lesson.save
       end
-      
+
       # Verificar si la lección anterior ha sido completada
       if @lesson.number > 1 && Lesson.where(number: 1..(@lesson.number - 1), completed: false).exists?
         redirect '/home/lecciones_incompletas' # Redirigir al inicio si la lección anterior no está completada
@@ -145,7 +145,40 @@ class App < Sinatra::Application
     else
       redirect "/"
     end
-  end 
+  end
+
+  get '/answer_status/:status/:test_letter/:question_number' do
+    if request.cookies['logged_in'] == 'true'
+      @status = params[:status]
+      # @dir = params[:dir]
+      @test_letter = params[:test_letter]
+      @question_number = params[:question_number]
+      @theme = 'dark'
+
+      question = Question.find_by(number: @question_number)
+      related_test_letter = question.test_letter
+      # Se obtienen todas las preguntas que estan relacionadas con el test
+      questions = Question.where(test_letter: related_test_letter)
+      # Se obtiene la ultima pregunta
+      last_question_in_group = questions.last.number
+      # Se verifica si la pregunta actual es la ultima
+      current_is_last = question.number == last_question_in_group
+      # Se obtiene la (supuesta) proxima pregunta
+      @next_question_number = question.number + 1
+
+      if !current_is_last && @next_question_number <= questions.maximum(:number)
+        @url_redirect = "/test/#{@test_letter}/#{@next_question_number}"
+      else
+        @url_redirect = "/home"
+      end
+
+      erb :answer_status
+
+    else
+      redirect "/"
+    end
+
+  end
 
   post '/signup' do
     # Retrieve the form data
@@ -203,7 +236,7 @@ class App < Sinatra::Application
       response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
       redirect '/home'
     else
-      redirect '/?error=Invalid-email-or-password'
+      redirect '/?error=Invalid-nickname-or-password'
     end
   end
 
@@ -232,8 +265,10 @@ class App < Sinatra::Application
       # Encuentra la opción seleccionada por el usuario
       selected_option = Option.find(selected_option_number)
 
+      correct_option = selected_option.correct
+
       # Verifica si la opción seleccionada es correcta
-      if selected_option.correct
+      if correct_option
 
         current_user_nickname = request.cookies['logged_in_nickname']
         answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
@@ -248,7 +283,7 @@ class App < Sinatra::Application
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
         if @question
           @question.well_answered = true
-          @question.save          
+          @question.save
         else
           # Si @question es nulo, maneja el caso de error
           redirect '/error_page'
@@ -259,26 +294,26 @@ class App < Sinatra::Application
           @test.update(completed: true)
         end
 
-        @questions = Question.where(test_letter: test_letter)
-        next_question_number = @question.number + 1
-        if next_question_number <= @questions.maximum(:number)
-          redirect "/test/#{test_letter}/#{next_question_number}"
-        else
-          redirect "/home"
-        end
       else
         # La opción seleccionada es incorrecta
-      
         current_user_nickname = request.cookies['logged_in_nickname']
         answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
         answer.save
-      
-        # TODO: Que no haga un redirect a otra página, sino que en el mismo test te diga que la opcion seleccionada es la incorrecta
-        redirect '/incorrect_response'
       end
+
+      @questions = Question.where(test_letter: test_letter)
+      next_question_number = @question.number
+
+      if next_question_number <= @questions.maximum(:number)
+        redirect "/answer_status/#{correct_option ? 'correct' : 'incorrect'}/#{test_letter}/#{@question.number}"
+      else
+        redirect "/home"
+      end
+
     else
       redirect "/"
     end
+
   end
 
   post '/logout' do

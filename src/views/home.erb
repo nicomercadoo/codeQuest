@@ -3,7 +3,7 @@
 <head>
   <title>codeQuest</title>
   <link rel="stylesheet" type="text/css" href="<%=url('home.css')%>">
-  <link rel="icon" type="image/png" href="/favicon2.png"> 
+  <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
 <% if @theme == 'light' %>
   <style>@import url('color-scheme-light.css');</style>
@@ -31,10 +31,10 @@
   <div class="button-stack">
 
     <% @tests.each do |test| %>
-    
+
     <% @questions = Question.where(test_letter: test.letter) %>
 
-    <% @lessons = Lesson.where(test_letter: test.letter) %>
+    <% @lessons = Lesson.where(test_letter: test.letter).order(:number) %>
     <div class="button-container">
       <button class="chapter-button" onclick="toggleDropdown('<%= test.letter %>')">
         <span class="chapter-title"><%= test.description %></span>
@@ -70,7 +70,7 @@
             </button>
           </form>
 
-        </ul>  
+        </ul>
       </div>
     </div>
     <% end %>

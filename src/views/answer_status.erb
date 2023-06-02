@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>codeQuest</title>
+  <link rel="stylesheet" type="text/css" href="<%=url('answer_status.css')%>">
+  <link rel="icon" type="image/png" href="/favicon2.png">
+</head>
+<% if @theme == 'light' %>
+  <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
+<% else %>
+  <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">
+<% end %>
+<body>
+  <header class="container">
+    <a href='/home'>
+      <h1 class="logo">
+        <img src="/favicon2.png" alt="Logo">
+        <span>codeQuest</span>
+      </h1>
+    </a>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="/home" class="nav-link">Inicio</a></li>
+        <li><a href="/profile" class="nav-link">Perfil</a></li>
+        <li><a href="/snippets" class="nav-link">Snippets</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Tu respuesta es</h1>
+    <%if @status == 'correct'%>
+    <p class="status">CORRECTA</p>
+    <p class="kaomoji">(/≧▽≦)/</p>
+    <%else%>
+    <p class="status">INCORRECTA</p>
+    <p class="kaomoji">(╯︵╰,)</p>
+    <%end%>
+    <a href="/test/<%=@test_letter%>/<%=@next_question_number%>"><button type="button" class="continue-button">Continuar</button></a>
+  </main>
+</body>
+</html>
+
