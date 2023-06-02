@@ -3,19 +3,18 @@
 
 body {
     background-color: var(--bg-color);
-    font-family: 'Metropolis';
     color: var(--text-color);
 }
 
 .rectangle {
-    width: 500px; 
+    width: 500px;
     height: 200px;
-    border: 2px solid var(--accent-color); 
+    border: 2px solid var(--accent-color);
     position: absolute;
-    top: 150px; 
-    left: 50%; 
+    top: 150px;
+    left: 50%;
     transform: translate(-50%, 0%);
-    border-radius: 20px; 
+    border-radius: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -43,7 +42,7 @@ body {
     color: var(--secondary-text-color);
     font-size: 16px;
     position: relative;
-    top: 270px; 
+    top: 270px;
     left: calc(50% - 250px);
     transition: transform 0.2s;
     cursor: pointer;
@@ -104,7 +103,7 @@ body {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
-  
+
 .next-question-button.active {
     visibility: visible;
     opacity: 1;

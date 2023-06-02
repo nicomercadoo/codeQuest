@@ -27,16 +27,18 @@
     </nav>
   </header>
 
-  <div class="text-container">
-    <h1><%= @lesson.title %></h1>
-    <p><%= @lesson.description %></p>
-  </div>
+  <main>
+    <div class="text-container">
+      <h1><%= @lesson.title %></h1>
+      <p><%= @lesson.description %></p>
+    </div>
 
-  <div class="continue-button-container">
-    <a href="<%= @next_step %>"><button type="button" class="continue-button"><%=@current_is_last ? "Pasar al Test" : "Siguiente"%></button></a>
-    <!-- TODO: Implementar -->
-    <!-- <a href="/home?from_lesson"><button type="button" class="to-home">Volver al Home</a> -->
-  </div>
+    <div class="continue-button-container">
+      <a href="<%= @next_step %>"><button type="button" class="continue-button"><%=@current_is_last ? "Pasar al Test" : "Siguiente"%></button></a>
+    </div>
+
+  </main>
+
 </body>
 </html>
 

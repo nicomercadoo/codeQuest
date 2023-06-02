@@ -1,28 +1,16 @@
 @import url('font-sets.css');
 @import url('common.css');
 
-body {
-    width: 100%;
-    float: left;
-}
-
 .text-container{
-    font-family: 'Metropolis';
     color: var(--text-color);
     width: 100%;
-    float: left;
-    height: 680px;
     margin-left: 20;
-}
-
-h1 {
-    text-align: center;
 }
 
 p {
     padding-top: 30px;
     text-align: left;
-    line-height: 1.5; 
+    line-height: 1.5;
     font-size: 25px;
     margin-left: 30px;
     margin-right: 30px;
@@ -40,8 +28,6 @@ p {
     display: grid;
     place-items: center;
     font-size: 25px;
-    margin-left: 50px;
-    margin-top: 50px;
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;

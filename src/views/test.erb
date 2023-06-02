@@ -27,29 +27,32 @@
     </nav>
   </header>
 
-  <div class="rectangle">
-    <div class="question">
-      <strong><%= @question.description %></strong>
-    </div>
-  </div>
+  <main>
 
-  <form action="/submit_answer" method="post">
-    <input type="hidden" name="question_number" value="<%= @question.number %>">
-    <input type="hidden" name="test_letter" value="<%= @test.letter %>">
-    <!-- Opciones de respuesta -->
-    <% @options.each do |option| %>
-      <div class="option-button">
-        <input type="radio" name="selected_option" value="<%= option.number %>">
-        <b><%= option.description %></b>
+    <div class="rectangle">
+      <div class="question">
+        <strong><%= @question.description %></strong>
       </div>
-    <% end %>
-  
-    <!-- Botón de envío -->
-    <div class="additional-button" id="additionalButton">
-      <input type="submit" value="Responder">
     </div>
-  </form>
-  
+
+    <form action="/submit_answer" method="post">
+      <input type="hidden" name="question_number" value="<%= @question.number %>">
+      <input type="hidden" name="test_letter" value="<%= @test.letter %>">
+      <!-- Opciones de respuesta -->
+      <% @options.each do |option| %>
+        <div class="option-button">
+          <input type="radio" name="selected_option" value="<%= option.number %>">
+          <b><%= option.description %></b>
+        </div>
+      <% end %>
+
+      <!-- Botón de envío -->
+      <div class="additional-button" id="additionalButton">
+        <input type="submit" value="Responder">
+      </div>
+    </form>
+  </main>
+
 
   <script>
   const additionalButton = document.getElementById('additionalButton');
