@@ -96,8 +96,6 @@ class App < Sinatra::Application
       end
       # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
-      # Se obtiene la letra del test
-      related_test = Test.find_by(letter: related_test_letter).letter
       # Se obtienen todas las preguntas y las lecciones que estan relacionadas con el test
       @questions = Question.where(test_letter: related_test_letter)
       @lessons = Lesson.where(test_letter: related_test_letter)
@@ -108,7 +106,7 @@ class App < Sinatra::Application
       # Se obtiene la (supuesta) proxima leccion
       next_lesson = @lesson.number + 1
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
-      @next_step = @current_is_last ? "/test/#{related_test}/#{@questions.minimum(:number)}" : "/lesson/#{next_lesson}"
+      @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{next_lesson}"
 
       @theme = 'dark'
       erb :lesson
@@ -150,26 +148,31 @@ class App < Sinatra::Application
   get '/answer_status/:status/:test_letter/:question_number' do
     if request.cookies['logged_in'] == 'true'
       @status = params[:status]
-      # @dir = params[:dir]
-      @test_letter = params[:test_letter]
-      @question_number = params[:question_number]
+      test_letter = params[:test_letter]
+      question_number = params[:question_number].to_i
       @theme = 'dark'
 
-      question = Question.find_by(number: @question_number)
-      related_test_letter = question.test_letter
+      # question = Question.find_by(number: @question_number)
+      # related_test_letter = question.test_letter
       # Se obtienen todas las preguntas que estan relacionadas con el test
-      questions = Question.where(test_letter: related_test_letter)
+      questions = Question.where(test_letter: test_letter)
       # Se obtiene la ultima pregunta
       last_question_in_group = questions.last.number
       # Se verifica si la pregunta actual es la ultima
-      current_is_last = question.number == last_question_in_group
+      current_is_last = question_number == last_question_in_group
       # Se obtiene la (supuesta) proxima pregunta
-      @next_question_number = question.number + 1
+      next_question_number = question_number + 1
 
-      if !current_is_last && @next_question_number <= questions.maximum(:number)
-        @url_redirect = "/test/#{@test_letter}/#{@next_question_number}"
+      @can_continue = !current_is_last && next_question_number <= questions.maximum(:number)
+
+      if @can_continue
+        @url_redirect = "/test/#{test_letter}/#{next_question_number}"
       else
-        @url_redirect = "/home"
+        @lessons = Lesson.where(test_letter: test_letter)
+        # Se obtiene la ultima leccion
+        last_lesson_in_group = @lessons.last.number
+        next_lesson = last_lesson_in_group + 1
+        @url_redirect = "/lesson/#{next_lesson}"
       end
 
       erb :answer_status

@@ -35,7 +35,14 @@
     <p class="status">INCORRECTA</p>
     <p class="kaomoji">(╯︵╰,)</p>
     <%end%>
-    <a href="/test/<%=@test_letter%>/<%=@next_question_number%>"><button type="button" class="continue-button">Continuar</button></a>
+    <section class="buttons-section">
+      <%if @can_continue%>
+      <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Continuar</button></a>
+      <%else%>
+      <a href="/home"><button type="button" class="continue-button">Volver a Home</button></a>
+      <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Siguiente Lección</button></a>
+      <%end%>
+    </section>
   </main>
 </body>
 </html>

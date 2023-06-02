@@ -27,9 +27,14 @@ h1 {
   font-weight: bold;
 }
 
+.buttons-section {
+  margin-top: 5em;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
 .continue-button {
-  margin: 5em;
-  padding: none;
   height: 80px;
   width: 350px;
   background-color: var(--primary-color);
