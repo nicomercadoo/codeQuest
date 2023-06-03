@@ -52,7 +52,7 @@ class App < Sinatra::Application
 
   get '/home' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'dark'
+      @theme = 'light'
       @tests = Test.all
       erb :home, locals: { tests: @tests }
     else
@@ -62,7 +62,7 @@ class App < Sinatra::Application
 
   get '/profile' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'dark'
+      @theme = 'light'
       erb :profile
     else
       redirect "/"
@@ -71,7 +71,7 @@ class App < Sinatra::Application
 
   get '/snippets' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'dark'
+      @theme = 'light'
       erb :snippets
     else
       redirect "/"
@@ -108,7 +108,7 @@ class App < Sinatra::Application
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{next_lesson}"
 
-      @theme = 'dark'
+      @theme = 'light'
       erb :lesson
     else
       redirect "/"
@@ -135,7 +135,7 @@ class App < Sinatra::Application
         # Encuentra la pregunta asociada al question_number y al test
         @options = Option.where(question_number: @question.number)
 
-        @theme = 'dark'
+        @theme = 'light'
         erb :test, locals: { test: @test, question: @question, options: @options }
       else
         redirect "/"
@@ -150,7 +150,7 @@ class App < Sinatra::Application
       @status = params[:status]
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
-      @theme = 'dark'
+      @theme = 'light'
 
       # question = Question.find_by(number: @question_number)
       # related_test_letter = question.test_letter

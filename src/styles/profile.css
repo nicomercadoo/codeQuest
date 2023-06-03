@@ -1,6 +1,6 @@
 @import url('font-sets.css');
 @import url('common.css');
-
+  
 .profile-section {
     display: flex;
     flex-direction: column;
@@ -8,6 +8,7 @@
     text-align: left;
     margin-bottom: 70px;
     margin-top: 1px;
+    width: 100%;
 }
 
 .section-title {

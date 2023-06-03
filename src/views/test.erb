@@ -28,50 +28,53 @@
   </header>
 
   <main>
-
-    <div class="rectangle">
+    <!-- Pregunta -->
+    <div class="question-box">
       <div class="question">
-        <strong><%= @question.description %></strong>
+        <b><%= @question.description %></b>
       </div>
     </div>
-
     <form action="/submit_answer" method="post">
-      <input type="hidden" name="question_number" value="<%= @question.number %>">
-      <input type="hidden" name="test_letter" value="<%= @test.letter %>">
+      <input name="question_number" value="<%= @question.number %>" hidden>
+      <input name="test_letter" value="<%= @test.letter %>" hidden>
       <!-- Opciones de respuesta -->
       <% @options.each do |option| %>
-        <div class="option-button">
-          <input type="radio" name="selected_option" value="<%= option.number %>">
+        <label class="option-button">
+          <input type="radio" name="selected_option" value="<%= option.number %>" hidden>
           <b><%= option.description %></b>
-        </div>
+        </label>
       <% end %>
-
       <!-- Botón de envío -->
-      <div class="additional-button" id="additionalButton">
-        <input type="submit" value="Responder">
+      <div class="answer-button" id="answerButton">
+        <button type="submit"><b>Responder</b></button>
       </div>
     </form>
   </main>
 
-
   <script>
-  const additionalButton = document.getElementById('additionalButton');
-  const optionButtons = document.querySelectorAll('.option-button');
-  const nextQuestion = document.getElementById('nextQuestion');
-
-  optionButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-      additionalButton.classList.remove('active', 'additional-button-animation');
-      setTimeout(function() {
-        additionalButton.classList.add('active', 'additional-button-animation');
-      }, 10);
+    const answerButton = document.getElementById('answerButton');
+    const optionButtons = document.querySelectorAll('.option-button');
+  
+    optionButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Remove the 'selected' class from all option buttons
+        optionButtons.forEach(function(btn) {
+          btn.classList.remove('selected');
+        });
+  
+        // Add the 'selected' class to the clicked option button
+        button.classList.add('selected');
+        
+        answerButton.classList.remove('active', 'answer-button-animation');
+        setTimeout(function() {
+          answerButton.classList.add('active', 'answer-button-animation');
+        }, 10);
+      });
     });
-  });
-
-  additionalButton.addEventListener('click', function() {
-    additionalButton.classList.toggle('active');
-    nextQuestion.classList.toggle('active');
-  });
-</script>
+  
+    answerButton.addEventListener('click', function() {
+      answerButton.classList.toggle('active');
+    });
+  </script>  
 </body>
 </html>

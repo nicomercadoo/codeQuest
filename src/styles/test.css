@@ -6,7 +6,7 @@ body {
     color: var(--text-color);
 }
 
-.rectangle {
+.question-box {
     width: 500px;
     height: 200px;
     border: 2px solid var(--accent-color);
@@ -44,16 +44,39 @@ body {
     position: relative;
     top: 270px;
     left: calc(50% - 250px);
-    transition: transform 0.2s;
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: transform 0.2s;
 }
+
 
 .option-button:hover {
     transform: scale(1.15);
 }
 
-.additional-button {
+.option-button::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border: 2px solid transparent;
+    border-radius: 13px;
+    transition: border-color 0.2s;
+}
+  
+.option-button.selected::before {
+    border-color: var(--accent-color);
+}
+  
+.option-button input[type="radio"]:checked + .custom-radio {
+    background-color: var(--accent-color);
+    outline: 2px solid var(--accent-color);
+}
+  
+.answer-button {
     width: 300px;
     height: 50px;
     background-color: var(--accent-color);
@@ -74,37 +97,22 @@ body {
     transition: opacity 0.2s;
 }
 
-.additional-button.active {
+.answer-button button {
+    width: 300px;
+    height: 50px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    outline: inherit;
+}
+  
+.answer-button.active {
     visibility: visible;
     opacity: 1;
-  }
-
-.additional-button-animation:hover {
-    transform: translateX(-50%) scale(1.15);
 }
 
-.next-question-button {
-    width: 200px;
-    height: 50px;
-    background-color: var(--primary-color);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--secondary-text-color);
-    font-size: 16px;
-    position: fixed;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  }
-
-.next-question-button.active {
-    visibility: visible;
-    opacity: 1;
+.answer-button-animation:hover {
+    transform: translateX(-50%);
 }
