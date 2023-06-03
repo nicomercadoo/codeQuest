@@ -52,11 +52,7 @@
     position: relative;
     overflow: hidden;
     caret-color: gray;
-    opacity: 0;
-}
-
-.title-field.show {
-    opacity: 1;
+    visibility: hidden;
 }
 
 .title-field input {
@@ -130,6 +126,7 @@
     position: relative;
     overflow: hidden;
     caret-color: gray;
+    visibility: hidden;
 }
 
 .input-field::placeholder {
@@ -147,12 +144,8 @@
     position: fixed;
     bottom: -55px;
     left: 50%;
-    transform: translateX(-50%);
-    opacity: 0; 
-}
-
-.button-container.show {
-    opacity: 1; 
+    transform: translateX(-50%); 
+    visibility: hidden;
 }
     
 .save-button {

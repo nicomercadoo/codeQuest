@@ -32,34 +32,28 @@
     <div class="title-field">
       <input type="text" placeholder="Titulo del snippet" />
     </div>
+    <div class="input-field">
+      <div class="line-count" id="lineCount">1</div>
+      <textarea class="text-area" id="textInput" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
+    </div>
     <div class="button-container">
       <button class="save-button">Guardar</button>
     </div>
   </div>
   <script>
+    function toggleVisibility(element) {
+      element.style.visibility = element.style.visibility === 'visible' ? 'hidden' : 'visible';
+    }
+
     function showInput() {
-      const inputContainer = document.getElementById('inputContainer');
       const titleField = document.querySelector('.title-field');
-      const inputElement = inputContainer.querySelector('.input-field');
+      const inputField = document.querySelector('.input-field');
       const buttonContainer = document.querySelector('.button-container');
 
-      if (inputElement) {
-        inputContainer.removeChild(inputElement);
-        titleField.classList.remove('show');
-        buttonContainer.classList.remove('show'); 
-      } else {
-        // Input box doesn't exist, create and append it
-        const newInputElement = document.createElement('div');
-        newInputElement.classList.add('input-field');
-        newInputElement.innerHTML = `
-          <div class="line-count" id="lineCount">1</div>
-          <textarea class="text-area" id="textInput" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
-        `;
-        inputContainer.appendChild(newInputElement);
-        titleField.classList.add('show');
-        buttonContainer.classList.add('show'); 
-      }
-    }
+      toggleVisibility(titleField);
+      toggleVisibility(inputField);
+      toggleVisibility(buttonContainer);
+    } 
 
     function updateLineCount() {
       const textarea = document.getElementById('textInput');
