@@ -29,18 +29,18 @@
   <main>
     <h1>Tu respuesta es</h1>
     <%if @status == 'correct'%>
-    <p class="status">CORRECTA</p>
-    <p class="kaomoji">(/≧▽≦)/</p>
+      <p class="status">CORRECTA</p>
+      <p class="kaomoji">(/≧▽≦)/</p>
     <%else%>
-    <p class="status">INCORRECTA</p>
-    <p class="kaomoji">(╯︵╰,)</p>
+      <p class="status">INCORRECTA</p>
+      <p class="kaomoji">(╯︵╰,)</p>
     <%end%>
     <section class="buttons-section">
       <%if @can_continue%>
-      <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Continuar</button></a>
+        <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Continuar</button></a>
       <%else%>
-      <a href="/home"><button type="button" class="continue-button">Volver a Home</button></a>
-      <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Siguiente Lección</button></a>
+        <a href="/home"><button type="button" class="continue-button">Volver a Inicio</button></a>
+        <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Siguiente lección</button></a>
       <%end%>
     </section>
   </main>

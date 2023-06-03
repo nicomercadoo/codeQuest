@@ -27,19 +27,22 @@
       </ul>
     </nav>
   </header>
- <button class="new-snippet-button" onclick="showInput()">Crear snippet</button>
-  <div id="inputContainer">
-    <div class="title-field">
-      <input type="text" placeholder="Titulo del snippet" />
+
+  <main>
+    <button class="new-snippet-button" onclick="showInput()">Crear snippet</button>
+    <div id="inputContainer">
+      <div class="title-field">
+        <input type="text" placeholder="Titulo del snippet" />
+      </div>
+      <div class="input-field">
+        <div class="line-count" id="lineCount">1</div>
+        <textarea class="text-area" id="textInput" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
+      </div>
+      <div class="button-container">
+        <button class="save-button">Guardar</button>
+      </div>
     </div>
-    <div class="input-field">
-      <div class="line-count" id="lineCount">1</div>
-      <textarea class="text-area" id="textInput" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
-    </div>
-    <div class="button-container">
-      <button class="save-button">Guardar</button>
-    </div>
-  </div>
+  </main>  
   <script>
     function toggleVisibility(element) {
       element.style.visibility = element.style.visibility === 'visible' ? 'hidden' : 'visible';

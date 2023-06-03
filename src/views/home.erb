@@ -30,52 +30,47 @@
 
   <main>
     <div class="button-stack">
-
+      
       <% @tests.each do |test| %>
 
       <% @questions = Question.where(test_letter: test.letter) %>
 
       <% @lessons = Lesson.where(test_letter: test.letter).order(:number) %>
-      <div class="button-container">
         <button class="chapter-button" onclick="toggleDropdown('<%= test.letter %>')">
           <span class="chapter-title"><%= test.description %></span>
-          <div class="additional-text"><%= @lessons.count + 1 %> actividades</div>
+          <div class="activity-number"><%= @lessons.count + 1 %> actividades</div>
         </button>
-        <div class="introduction-dropdown" id="<%= test.letter %>">
-          <ul class="dropdown-content">
-
-            <% @lessons.each do |lesson| %>
+        
+        <div class="dropdown-menu" id="<%= test.letter %>">
+          <% @lessons.each do |lesson| %>
             <li>
               <form action="/home" method="post">
-                <input type="hidden" name="lesson_number" value="<%= lesson.number %>">
+                <input name="lesson_number" value="<%= lesson.number %>" hidden>
                 <button type="submit" class="card lesson-card">
                   <div class="card-content">
-                    <h2 class="card-title"><%= lesson.title %></h2>
+                    <h2><%= lesson.title %></h2>
                   </div>
                   <div class="card-divider"></div>
                   <span class="number"><%= lesson.number %></span>
                 </button>
               </form>
             </li>
-            <% end %>
+          <% end %>
 
-            <form action="/home" method="post">
-              <input type="hidden" name="test_letter" value="<%= test.letter %>">
-              <input type="hidden" name="question_number" value="<%= @questions.minimum(:number) %>">
-              <button type="submit" class="card test-card">
-                <div class="card-content">
-                  <h2 class="card-title">Test</h2>
-                </div>
-                <div class="card-divider"></div>
-                <span class="number"><%= test.letter %></span>
-              </button>
-            </form>
-
-          </ul>
+          <form action="/home" method="post">
+            <input name="test_letter" value="<%= test.letter %>" hidden>
+            <input name="question_number" value="<%= @questions.minimum(:number) %>" hidden>
+            <button type="submit" class="card test-card">
+              <div class="card-content">
+                <h2>Test</h2>
+              </div>
+              <div class="card-divider"></div>
+              <span class="number"><%= test.letter %></span>
+            </button>
+          </form>
         </div>
-      </div>
       <% end %>
-    </div>
+    </div>  
   </main>
 
   <script>

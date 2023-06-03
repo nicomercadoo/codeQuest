@@ -1,10 +1,7 @@
 @import url('font-sets.css');
 @import url('common.css');
 
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-}
+/* Styles for the question */
 
 .question-box {
     width: 500px;
@@ -29,6 +26,8 @@ body {
     height: 100%;
 }
 
+/* Styles for the option buttons */
+
 .option-button {
     width: 500px;
     height: 50px;
@@ -49,7 +48,6 @@ body {
     outline: none;
     transition: transform 0.2s;
 }
-
 
 .option-button:hover {
     transform: scale(1.15);
@@ -75,6 +73,8 @@ body {
     background-color: var(--accent-color);
     outline: 2px solid var(--accent-color);
 }
+
+/* Styles for the answer button */
   
 .answer-button {
     width: 300px;
@@ -111,8 +111,4 @@ body {
 .answer-button.active {
     visibility: visible;
     opacity: 1;
-}
-
-.answer-button-animation:hover {
-    transform: translateX(-50%);
 }

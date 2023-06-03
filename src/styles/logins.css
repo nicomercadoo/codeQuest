@@ -1,19 +1,14 @@
 @import url('font-sets.css');
 @import url("color-scheme-light.css");
 
-/* Styles for the entire login screen */
+/* Styles for the entire login screens */
 
 body {
   margin: 0;
-  padding: 0;
   font-family: 'Metropolis';
   font-weight: normal;
-}
-
-.container {
-  display: flex;
+  display: flex; 
   height: 100vh;
-  background-color: var(--bg-color);
 }
 
 .left-section {
@@ -28,7 +23,6 @@ body {
 }
 
 .logo {
-  font-family: 'Metropolis';
   font-weight: 600;
   font-size: 48px;
   margin-bottom: 15px;
@@ -43,10 +37,8 @@ body {
 }
 
 .description {
-  font-family: 'Metropolis';
   font-style: italic;
   font-size: 24px;
-  margin-bottom: 40px;
 }
 
 .right-section {
@@ -54,8 +46,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--bg-color);
 }
-
 
 .form {
   display: flex;
@@ -92,10 +84,6 @@ body {
 
 /* Styles for the buttons */
 
-.form button {
-  cursor: pointer;
-}
-
 .button-wrapper {
   display: flex;
   flex-direction: column;
@@ -104,12 +92,14 @@ body {
 }
 
 .first-button {
+  cursor: pointer;
   background-color: var(--primary-color);
   color: var(--secondary-text-color);
   transition: transform 0.2s;
 }
 
 .second-button {
+  cursor: pointer;
   background-color: var(--secondary-color);
   color: var(--accent-color);
   outline: var(--accent-color) solid 2px;
@@ -149,7 +139,7 @@ body {
   font-family: 'Metropolis';
   margin: 45px auto;
   padding: 15px 25px;
-  border: none;
+  border: none;   
   border-radius: 15px;
   background-color: var(--primary-color);
   color: var(--secondary-text-color);
@@ -168,5 +158,4 @@ body {
   font-size: 30px;
   line-height: 20px;
   cursor: pointer;
-  transition: 0.4s;
 }
