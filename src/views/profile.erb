@@ -69,7 +69,11 @@
       <h2 class="section-title">Modo oscuro</h2>
       <div class="section-line"></div>
       <div class="button-form-container">
-        <button class="change-button" id="darkModeButton">Activar</button>
+        <% if @theme == 'light' %>
+          <form action= "/profile" method="post"><button class="change-button" type="submit" id="darkModeButton"> Activar</button></form>
+        <% else %>
+          <form action= "/profile" method="post"><button class="change-button" type="submit" id="darkModeButton"> Desactivar</button></form>
+        <% end %>
       </div>
     </div>
   </main>

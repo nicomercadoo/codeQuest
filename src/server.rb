@@ -52,7 +52,11 @@ class App < Sinatra::Application
 
   get '/home' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'light'
+      if request.cookies['theme_light'] == 'true'
+        @theme = 'light'
+      else 
+        @theme = 'dark'
+      end
       @tests = Test.all
       erb :home, locals: { tests: @tests }
     else
@@ -62,7 +66,11 @@ class App < Sinatra::Application
 
   get '/profile' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'light'
+      if request.cookies['theme_light'] == 'true'
+        @theme = 'light'
+      else 
+        @theme = 'dark'
+      end
       erb :profile
     else
       redirect "/"
@@ -71,7 +79,11 @@ class App < Sinatra::Application
 
   get '/snippets' do
     if request.cookies['logged_in'] == 'true'
-      @theme = 'light'
+      if request.cookies['theme_light'] == 'true'
+        @theme = 'light'
+      else 
+        @theme = 'dark'
+      end
       erb :snippets
     else
       redirect "/"
@@ -108,7 +120,11 @@ class App < Sinatra::Application
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{next_lesson}"
 
-      @theme = 'light'
+      if request.cookies['theme_light'] == 'true'
+        @theme = 'light'
+      else 
+        @theme = 'dark'
+      end
       erb :lesson
     else
       redirect "/"
@@ -135,7 +151,11 @@ class App < Sinatra::Application
         # Encuentra la pregunta asociada al question_number y al test
         @options = Option.where(question_number: @question.number)
 
-        @theme = 'light'
+        if request.cookies['theme_light'] == 'true'
+          @theme = 'light'
+        else 
+          @theme = 'dark'
+        end
         erb :test, locals: { test: @test, question: @question, options: @options }
       else
         redirect "/"
@@ -150,7 +170,11 @@ class App < Sinatra::Application
       @status = params[:status]
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
-      @theme = 'light'
+      if request.cookies['theme_light'] == 'true'
+        @theme = 'light'
+      else 
+        @theme = 'dark'
+      end
 
       # question = Question.find_by(number: @question_number)
       # related_test_letter = question.test_letter
@@ -221,6 +245,7 @@ class App < Sinatra::Application
       if account.save
         response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
         response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
+        response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)  # Establecer la cookie del tema
         redirect '/home'
       else
         erb :signup, locals: { error_message: "Error al crear cuenta" }
@@ -236,7 +261,11 @@ class App < Sinatra::Application
 
     if account
       response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
-      response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
+      response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7) # Establecer la cookie del nickname
+      unless request.cookies.include?('theme_light')
+        response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
+      end
+      
       redirect '/home'
     else
       redirect '/?error=Invalid-nickname-or-password'
@@ -321,7 +350,18 @@ class App < Sinatra::Application
 
   post '/logout' do
     response.delete_cookie('logged_in')
+    response.delete_cookie('logged_in_nickname')
     redirect '/'
+  end
+  
+  post '/profile' do
+    if request.cookies['theme_light'] == 'true'
+      response.set_cookie('theme_light', value: 'false', httponly: true, expires: Time.now + 24*60*60*365)
+    else
+      response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
+    end
+    
+    redirect '/profile'
   end
 
 end
