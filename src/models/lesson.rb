@@ -1,9 +1,10 @@
 class Lesson < ActiveRecord::Base
   validates :number, presence: true
   validates :title, presence: true
-  validates :completed, presence: true
   validates :description, presence: true
-  belongs_to :account
-  belongs_to :test, foreign_key: 'test_letter', primary_key: 'letter'
+  validates :test_letter, presence: true
+
+  has_and_belongs_to_many :accounts, join_table: :accounts_lessons
+  belongs_to :test, foreign_key: 'test_letter'
 end
 

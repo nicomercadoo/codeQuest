@@ -5,6 +5,8 @@ class Account < ActiveRecord::Base
   validates :nickname, presence: true
   validates :progress, presence: true
 
-  has_many :answers
-  has_many :lessons
+  has_and_belongs_to_many :options
+  has_and_belongs_to_many :lessons, join_table: :accounts_lessons
+  has_and_belongs_to_many :tests
+  has_and_belongs_to_many :questions
 end

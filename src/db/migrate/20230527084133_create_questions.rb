@@ -1,10 +1,9 @@
 class CreateQuestions < ActiveRecord::Migration[7.0]
   def change
-    create_table :questions, id: false do |t|
-      t.integer :number, primary_key: true
+    create_table :questions do |t|
+      t.integer :number
       t.text :description
-      t.boolean :well_answered, default: false
-      t.string :test_letter, limit: 1
+      t.string :test_letter
 
       t.timestamps
     end

@@ -1,13 +1,13 @@
 class CreateTests < ActiveRecord::Migration[7.0]
   def change
-    create_table :tests, id: false do |t|
-      t.string :letter, limit: 1, primary_key: true
+    create_table :tests do |t|
+      t.string :letter, limit: 1, unique: true # Clave que usaremos como única
       t.string :description
-      t.boolean :completed, default: false
       t.integer :cant_questions, default: 0
-      t.integer :acerted_answers, default: 0
 
       t.timestamps
     end
+
+    add_index :tests, :letter, unique: true
   end
 end

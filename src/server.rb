@@ -9,7 +9,6 @@ require_relative 'models/account'
 require_relative 'models/lesson'
 require_relative 'models/test'
 require_relative 'models/option'
-require_relative 'models/answer'
 require_relative 'models/question'
 
 class App < Sinatra::Application
@@ -90,24 +89,31 @@ class App < Sinatra::Application
     end
   end
 
-  get '/lesson/:lesson_number' do
+  get '/lesson/:test_letter/:lesson_number' do
     if request.cookies['logged_in'] == 'true'
+      test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
-      @lesson = Lesson.find_by(number: lesson_number)
+  
+      @test = Test.find_by(letter: test_letter)
+      @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
+
       current_user_nickname = request.cookies['logged_in_nickname']
       if @lesson
+
         # Marcar la lección como completada
-        @lesson.update(completed: true)
-        @lesson.update(account_nickname: current_user_nickname)
-        @lesson.save
+        account_lesson.update(lesson_completed: true)
+
       end
 
-      # Verificar si la lección anterior ha sido completada
-      if @lesson.number > 1 && Lesson.where(number: 1..(@lesson.number - 1), completed: false).exists?
-        redirect '/home/lecciones_incompletas' # Redirigir al inicio si la lección anterior no está completada
-      end
+      previous_lesson_number = @lesson.number - 1
       # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
+
+      if previous_lesson_number > 0
+        previous_lesson_completed = Lesson.where(test_letter: related_test_letter, number: previous_lesson_number, completed: true).exists?
+        redirect '/home/lecciones_incompletas' unless previous_lesson_completed
+      end
+      
       # Se obtienen todas las preguntas y las lecciones que estan relacionadas con el test
       @questions = Question.where(test_letter: related_test_letter)
       @lessons = Lesson.where(test_letter: related_test_letter)
@@ -118,7 +124,7 @@ class App < Sinatra::Application
       # Se obtiene la (supuesta) proxima leccion
       next_lesson = @lesson.number + 1
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
-      @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{next_lesson}"
+      @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
 
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
@@ -276,7 +282,8 @@ class App < Sinatra::Application
   post '/home' do
     if params[:lesson_number]
       lesson_number = params[:lesson_number]
-      redirect "/lesson/#{lesson_number}"
+      test_letter = params[:test_letter]
+      redirect "/lesson/#{test_letter}/#{lesson_number}"
     else
       test_letter = params[:test_letter]
       question_number = params[:question_number]
