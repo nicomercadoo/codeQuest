@@ -149,13 +149,13 @@ class App < Sinatra::Application
       questions = Question.where(test_letter: test_letter)
 
       # Verificar si todas las lecciones relacionadas con el test están completadas
-      if @test.lessons.exists?(completed: false)
-        redirect '/home/lecciones_incompletas' # Redirigir al inicio si alguna lección relacionada no está completada
-      end
+      # if @test.lessons.exists?(completed: false)
+      #  redirect '/home/lecciones_incompletas' # Redirigir al inicio si alguna lección relacionada no está completada
+      #end
 
       if questions.exists?(number: question_number)
         # Encuentra la pregunta asociada al question_number y al test
-        @options = Option.where(question_number: @question.number)
+        @options = Option.where(question_number: @question.number, test_letter: @test.letter)
 
         if request.cookies['theme_light'] == 'true'
           @theme = 'light'
@@ -295,11 +295,11 @@ class App < Sinatra::Application
     if request.cookies['logged_in'] == 'true'
       question_number = params[:question_number]
       test_letter = params[:test_letter]
+      selected_option_number = params[:selected_option]
 
       @test = Test.find_by(letter: test_letter)
       @question = Question.find_by(number: question_number)
 
-      selected_option_number = params[:selected_option]
 
       # Encuentra la opción seleccionada por el usuario
       selected_option = Option.find(selected_option_number)
@@ -310,12 +310,20 @@ class App < Sinatra::Application
       if correct_option
 
         current_user_nickname = request.cookies['logged_in_nickname']
-        answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
-        answer.save
+        current_user = Account.find_by(nickname: current_user_nickname)
+
+        # Los incluye en la tabla accounts_options
+        current_user.options << selected_option
+        current_user.questions << @question
 
         if @test
-          unless Question.where(test_letter: @test.letter, number: @question.number, well_answered: true).exists?
-            @test.increment!(:acerted_answers)  # Incrementar el contador acerted_answers del test en 1
+          unless Question.joins(:accounts_questions)
+            .where(test_letter: @test.letter, number: @question.number)
+            .where(accounts_questions: { account_id: current_user.id, well_answered: true })
+            .exists?
+
+            current_user.accounts_tests.find_by(test_id: @test.id).increment!(:correct_questions)
+            # Incrementar el contador acerted_answers del test en 1
           end
         end
 
@@ -336,8 +344,11 @@ class App < Sinatra::Application
       else
         # La opción seleccionada es incorrecta
         current_user_nickname = request.cookies['logged_in_nickname']
-        answer = Answer.new(description: selected_option.description, account_nickname: current_user_nickname)
-        answer.save
+        current_user = Account.find_by(nickname: current_user_nickname)
+
+        # Los incluye en la tabla accounts_options
+        current_user.options << selected_option
+        current_user.questions << @question
       end
 
       @questions = Question.where(test_letter: test_letter)

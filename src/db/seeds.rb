@@ -167,28 +167,3 @@ option_e13 = Option.create(number: 1, description: "A través de importación di
 option_e14 = Option.create(number: 2, description: "A través de la definición de tipos de datos personalizados", correct: false, question_number: question_e5.number, test_letter: test_e.letter)
 option_e15 = Option.create(number: 3, description: "A través de la utilización de lenguajes de programación externos", correct: false, question_number: question_e5.number, test_letter: test_e.letter)
 
-
-tests = [test_a, test_b, test_c, test_d, test_e]
-lessons = [lesson_a1, lesson_a2, lesson_a3, lesson_a4, lesson_a5, lesson_b1, lesson_b2, lesson_b3, lesson_b4, lesson_b5, lesson_c1, lesson_c2, lesson_c3, lesson_c4, lesson_c5, lesson_d1, lesson_d2, lesson_d3, lesson_d4, lesson_d5, lesson_e1, lesson_e2, lesson_e3, lesson_e4, lesson_e5]
-questions = [question_a1, question_a2, question_a3, question_a4, question_a5, question_b1, question_b2, question_b3, question_b4, question_b5, question_c1, question_c2, question_c3, question_c4, question_c5, question_d1, question_d2, question_d3, question_d4, question_d5, question_e1, question_e2, question_e3, question_e4, question_e5]
-options = [option_a1, option_a2, option_a3, option_a4, option_a5, option_a6, option_a7, option_a8, option_a9, option_a10, option_a11, option_a12, option_a13, option_a14, option_a15, option_b1, option_b2, option_b3, option_b4, option_b5, option_b6, option_b7, option_b8, option_b9, option_b10, option_b11, option_b12, option_b13, option_b14, option_b15, option_c1, option_c2, option_c3, option_c4, option_c5, option_c6, option_c7, option_c8, option_c9, option_c10, option_c11, option_c12, option_c13, option_c14, option_c15, option_d1, option_d2, option_d3, option_d4, option_d5, option_d6, option_d7, option_d8, option_d9, option_d10, option_d11, option_d12, option_d13, option_d14, option_d15, option_e1, option_e2, option_e3, option_e4, option_e5, option_e6, option_e7, option_e8, option_e9, option_e10, option_e11, option_e12, option_e13, option_e14, option_e15]
-
-tests.each { |test| dosa.tests << test }
-lessons.each { |lesson| dosa.lessons << lesson }
-questions.each { |question| dosa.questions << question }
-options.each { |option| dosa.options << option }
-
-tests.each { |test| juani.tests << test }
-lessons.each { |lesson| juani.lessons << lesson }
-questions.each { |question| juani.questions << question }
-options.each { |option| juani.options << option }
-
-tests.each { |test| sosa.tests << test }
-lessons.each { |lesson| sosa.lessons << lesson }
-questions.each { |question| sosa.questions << question }
-options.each { |option| sosa.options << option }
-
-tests.each { |test| niko.tests << test }
-lessons.each { |lesson| niko.lessons << lesson }
-questions.each { |question| niko.questions << question }
-options.each { |option| niko.options << option }
