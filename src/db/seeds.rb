@@ -1,11 +1,9 @@
-Test.destroy_all
-Lesson.destroy_all
-Account.destroy_all
-Question.destroy_all
-Option.destroy_all
+AccountTest = Class.new(ActiveRecord::Base)
+AccountLesson = Class.new(ActiveRecord::Base)
+AccountQuestion = Class.new(ActiveRecord::Base)
+AccountOption = Class.new(ActiveRecord::Base)
 
 # Cuentas de los dev
-
 dosa = Account.create(name: 'Agustín Dosantos', email: 'agustind994@gmail.com', password: 'Boca2023', nickname: 'Dosaagu', progress: 0, theme_light: true)
 juani = Account.create(name: 'Juani Villanueva', email: 'juani2002villa@gmail.com', password: 'Bocapasion123', nickname: 'Juani', progress: 0, theme_light: true)
 sosa = Account.create(name: 'Santiago Sosa Moressi', email: 'santiagososamoressi@gmail.com', password: 'Bocapasion123', nickname: 'Santi', progress: 0, theme_light: true)
@@ -125,7 +123,7 @@ option_d2 = Option.create(number: 2, description: "Utilizando sentencias if-else
 option_d3 = Option.create(number: 3, description: "Utilizando sentencias switch-case", correct: false, question_number: question_d1.number, test_letter: test_d.letter)
 option_d4 = Option.create(number: 1, description: "Un enfoque de programación basado en monoides", correct: true, question_number: question_d2.number, test_letter: test_d.letter)
 option_d5 = Option.create(number: 2, description: "Un enfoque de programación basado en bucles", correct: false, question_number: question_d2.number, test_letter: test_d.letter)
-option_d6 = Option.create(number: 3, description: "Un enfoque de programación basado en condicionales", correct: false, question_number: question_d2.number, test_letter: test_a.letter)
+option_d6 = Option.create(number: 3, description: "Un enfoque de programación basado en condicionales", correct: false, question_number: question_d2.number, test_letter: test_d.letter)
 option_d7 = Option.create(number: 1, description: "Utilizando la función 'readFile'", correct: true, question_number: question_d3.number, test_letter: test_d.letter)
 option_d8 = Option.create(number: 2, description: "Utilizando la función 'writeFile'", correct: false, question_number: question_d3.number, test_letter: test_d.letter)
 option_d9 = Option.create(number: 3, description: "Utilizando la función 'openFile'", correct: false, question_number: question_d3.number, test_letter: test_d.letter)
@@ -167,3 +165,23 @@ option_e13 = Option.create(number: 1, description: "A través de importación di
 option_e14 = Option.create(number: 2, description: "A través de la definición de tipos de datos personalizados", correct: false, question_number: question_e5.number, test_letter: test_e.letter)
 option_e15 = Option.create(number: 3, description: "A través de la utilización de lenguajes de programación externos", correct: false, question_number: question_e5.number, test_letter: test_e.letter)
 
+accounts = [dosa, niko, sosa, juani]
+tests = [test_a, test_b, test_c, test_d, test_e]
+lessons = [lesson_a1, lesson_a2, lesson_a3, lesson_a4, lesson_a5, lesson_b1, lesson_b2, lesson_b3, lesson_b4, lesson_b5, lesson_c1, lesson_c2, lesson_c3, lesson_c4, lesson_c5, lesson_d1, lesson_d2, lesson_d3, lesson_d4, lesson_d5, lesson_e1, lesson_e2, lesson_e3, lesson_e4, lesson_e5]
+questions = [question_a1, question_a2, question_a3, question_a4, question_a5, question_b1, question_b2, question_b3, question_b4, question_b5, question_c1, question_c2, question_c3, question_c4, question_c5, question_d1, question_d2, question_d3, question_d4, question_d5, question_e1, question_e2, question_e3, question_e4, question_e5]
+
+
+
+accounts.each do |account|
+    lessons.each do |lesson|
+        AccountLesson.create(account_id: account.id, lesson_id: lesson.id)
+    end
+
+    questions.each do |question|
+        AccountQuestion.create(account_id: account.id, question_id: question.id)
+    end
+
+    tests.each do |test|
+        AccountTest.create(account_id: account.id, test_id: test.id)
+    end
+end

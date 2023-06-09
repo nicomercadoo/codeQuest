@@ -10,7 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_08_064947) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_09_050625) do
+  create_table "account_lessons", force: :cascade do |t|
+    t.boolean "lesson_completed", default: false
+    t.integer "account_id"
+    t.integer "lesson_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_lessons_on_account_id"
+    t.index ["lesson_id"], name: "index_account_lessons_on_lesson_id"
+  end
+
+  create_table "account_options", force: :cascade do |t|
+    t.integer "account_id"
+    t.integer "option_id"
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_options_on_account_id"
+    t.index ["option_id"], name: "index_account_options_on_option_id"
+    t.index ["question_id"], name: "index_account_options_on_question_id"
+  end
+
+  create_table "account_questions", force: :cascade do |t|
+    t.boolean "well_answered", default: false
+    t.integer "account_id"
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_questions_on_account_id"
+    t.index ["question_id"], name: "index_account_questions_on_question_id"
+  end
+
+  create_table "account_tests", force: :cascade do |t|
+    t.boolean "test_completed", default: false
+    t.integer "correct_questions", default: 0
+    t.integer "account_id"
+    t.integer "test_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_tests_on_account_id"
+    t.index ["test_id"], name: "index_account_tests_on_test_id"
+  end
+
   create_table "accounts", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -20,30 +62,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_064947) do
     t.boolean "theme_light", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "accounts_lessons", id: false, force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "lesson_id", null: false
-    t.boolean "lesson_completed", default: false
-  end
-
-  create_table "accounts_options", id: false, force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "option_id", null: false
-  end
-
-  create_table "accounts_questions", id: false, force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "question_id", null: false
-    t.boolean "well_answered", default: false
-  end
-
-  create_table "accounts_tests", id: false, force: :cascade do |t|
-    t.integer "account_id", null: false
-    t.integer "test_id", null: false
-    t.boolean "test_completed", default: false
-    t.integer "correct_questions", default: 0
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -82,4 +100,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_064947) do
     t.index ["letter"], name: "index_tests_on_letter", unique: true
   end
 
+  add_foreign_key "account_lessons", "accounts"
+  add_foreign_key "account_lessons", "lessons"
+  add_foreign_key "account_options", "accounts"
+  add_foreign_key "account_options", "options"
+  add_foreign_key "account_options", "questions"
+  add_foreign_key "account_questions", "accounts"
+  add_foreign_key "account_questions", "questions"
+  add_foreign_key "account_tests", "accounts"
+  add_foreign_key "account_tests", "tests"
 end

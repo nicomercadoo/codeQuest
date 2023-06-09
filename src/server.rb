@@ -10,6 +10,11 @@ require_relative 'models/lesson'
 require_relative 'models/test'
 require_relative 'models/option'
 require_relative 'models/question'
+require_relative 'models/account_lesson'
+require_relative 'models/account_test'
+require_relative 'models/account_option'
+require_relative 'models/account_question'
+
 
 class App < Sinatra::Application
   def initialize(app = nil)
@@ -93,38 +98,42 @@ class App < Sinatra::Application
     if request.cookies['logged_in'] == 'true'
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
-  
+
       @test = Test.find_by(letter: test_letter)
       @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
-      current_user_nickname = request.cookies['logged_in_nickname']
-      if @lesson
-
-        # Marcar la lección como completada
-        account_lesson.update(lesson_completed: true)
-
-      end
-
-      previous_lesson_number = @lesson.number - 1
+      
       # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
-
-      if previous_lesson_number > 0
-        previous_lesson_completed = Lesson.where(test_letter: related_test_letter, number: previous_lesson_number, completed: true).exists?
-        redirect '/home/lecciones_incompletas' unless previous_lesson_completed
-      end
       
       # Se obtienen todas las preguntas y las lecciones que estan relacionadas con el test
       @questions = Question.where(test_letter: related_test_letter)
       @lessons = Lesson.where(test_letter: related_test_letter)
+
       # Se obtiene la ultima leccion
       last_lesson_in_group = @lessons.last.number
+      
       # Se verifica si la leccion actual es la ultima
       @current_is_last = @lesson.number == last_lesson_in_group
+      
       # Se obtiene la (supuesta) proxima leccion
       next_lesson = @lesson.number + 1
+      
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
+      
+      current_account_id = request.cookies['logged_in_id']
+      account = Account.find(current_account_id)
+      lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
+      
+      if lesson
+        accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
+
+        if accounts_lesson
+          # Actualizar el valor de lesson_completed
+          accounts_lesson.update(lesson_completed: true)
+        end
+      end
 
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
@@ -144,15 +153,22 @@ class App < Sinatra::Application
 
       # Encuentra el test y la pregunta asociados a los nombres
       @test = Test.find_by(letter: test_letter)
-      @question = Question.find_by(number: question_number)
+      @question = Question.find_by(number: question_number, test_letter: test_letter)
 
       questions = Question.where(test_letter: test_letter)
 
-      # Verificar si todas las lecciones relacionadas con el test están completadas
-      # if @test.lessons.exists?(completed: false)
-      #  redirect '/home/lecciones_incompletas' # Redirigir al inicio si alguna lección relacionada no está completada
-      #end
+      lessons = Lesson.where(test_letter: test_letter)
+      current_account_id = request.cookies['logged_in_id']
+      account = Account.find(current_account_id)
 
+      # Verificar si todas las lecciones relacionadas con el test están completadas
+      lessons.each do |lesson|
+        previous_lessons_completed = AccountLesson.exists?(lesson_id: lesson.id, account_id: account.id, lesson_completed: true)
+        # Redirigir al inicio si alguna lección relacionada no está completada
+        redirect '/home/lecciones_incompletas' unless previous_lessons_completed 
+      end
+      
+      
       if questions.exists?(number: question_number)
         # Encuentra la pregunta asociada al question_number y al test
         @options = Option.where(question_number: @question.number, test_letter: @test.letter)
@@ -198,11 +214,11 @@ class App < Sinatra::Application
       if @can_continue
         @url_redirect = "/test/#{test_letter}/#{next_question_number}"
       else
-        @lessons = Lesson.where(test_letter: test_letter)
-        # Se obtiene la ultima leccion
-        last_lesson_in_group = @lessons.last.number
-        next_lesson = last_lesson_in_group + 1
-        @url_redirect = "/lesson/#{next_lesson}"
+        @lessons = Lesson.where(test_letter: test_letter.next)
+        next_lesson = @lessons.minimum(:number)
+
+
+        @url_redirect = "/lesson/#{test_letter.next}/#{next_lesson}"
       end
 
       erb :answer_status
@@ -250,7 +266,7 @@ class App < Sinatra::Application
       account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
       if account.save
         response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
-        response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
+        response.set_cookie('logged_in_id', value: account.id, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
         response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)  # Establecer la cookie del tema
         redirect '/home'
       else
@@ -267,7 +283,7 @@ class App < Sinatra::Application
 
     if account
       response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
-      response.set_cookie('logged_in_nickname', value: nickname, httponly: true, expires: Time.now + 24*60*60*7) # Establecer la cookie del nickname
+      response.set_cookie('logged_in_id', value: account.id, httponly: true, expires: Time.now + 24*60*60*7) # Establecer la cookie del nickname
       unless request.cookies.include?('theme_light')
         response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
       end
@@ -298,57 +314,47 @@ class App < Sinatra::Application
       selected_option_number = params[:selected_option]
 
       @test = Test.find_by(letter: test_letter)
-      @question = Question.find_by(number: question_number)
+      @question = Question.find_by(number: question_number, test_letter: test_letter)
 
 
       # Encuentra la opción seleccionada por el usuario
-      selected_option = Option.find(selected_option_number)
+      selected_option = Option.find_by(number: selected_option_number, test_letter: test_letter, question_number: question_number)
 
       correct_option = selected_option.correct
 
+      current_account_id = request.cookies['logged_in_id']
+      current_account = Account.find(current_account_id)
+
+
+      existing_account_option = AccountOption.find_by(account_id: current_account.id, question_id: @question.id)
+
+      # Me fijo si ya contestó esa pregunta
+      if existing_account_option
+        # Actualizo la tabla
+        existing_account_option.update(option_id: selected_option.id)
+      else
+        # Creo la opción en la tabla accounts_options
+        AccountOption.create(option_id: selected_option.id, account_id: current_account.id, question_id: @question.id)
+      end
+
       # Verifica si la opción seleccionada es correcta
       if correct_option
-
-        current_user_nickname = request.cookies['logged_in_nickname']
-        current_user = Account.find_by(nickname: current_user_nickname)
-
-        # Los incluye en la tabla accounts_options
-        current_user.options << selected_option
-        current_user.questions << @question
-
-        if @test
-          unless Question.joins(:accounts_questions)
-            .where(test_letter: @test.letter, number: @question.number)
-            .where(accounts_questions: { account_id: current_user.id, well_answered: true })
-            .exists?
-
-            current_user.accounts_tests.find_by(test_id: @test.id).increment!(:correct_questions)
-            # Incrementar el contador acerted_answers del test en 1
-          end
-        end
-
+        
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
         if @question
-          @question.well_answered = true
-          @question.save
+          existing_account_question = AccountQuestion.find_by(account_id: current_account.id, question_id: @question.id)
+          existing_account_question.update(well_answered: true)
         else
           # Si @question es nulo, maneja el caso de error
           redirect '/error_page'
         end
 
-        if @test && !Question.where(test_letter: @test.letter, well_answered: false).exists?
+        if @test && !AccountQuestion.where(account_id: current_account_id, question_id: @question.id, well_answered: false).exists?
           # Todas las preguntas del test han sido respondidas correctamente
-          @test.update(completed: true)
+          existing_account_test = AccountTest.find_by(account_id: current_account.id, test_id: @test.id)
+          existing_account_test.update(test_completed: true)
         end
 
-      else
-        # La opción seleccionada es incorrecta
-        current_user_nickname = request.cookies['logged_in_nickname']
-        current_user = Account.find_by(nickname: current_user_nickname)
-
-        # Los incluye en la tabla accounts_options
-        current_user.options << selected_option
-        current_user.questions << @question
       end
 
       @questions = Question.where(test_letter: test_letter)
@@ -368,7 +374,7 @@ class App < Sinatra::Application
 
   post '/logout' do
     response.delete_cookie('logged_in')
-    response.delete_cookie('logged_in_nickname')
+    response.delete_cookie('logged_in_id')
     redirect '/'
   end
   

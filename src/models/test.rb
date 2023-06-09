@@ -6,5 +6,6 @@ class Test < ActiveRecord::Base
   has_many :lessons
   has_many :questions
   has_many :options
-  has_and_belongs_to_many :accounts
+  has_many :accounts, through: :accounts_tests
+  has_many :accounts_tests
 end
