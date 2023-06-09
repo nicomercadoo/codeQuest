@@ -66,12 +66,12 @@
 }
   
 .option-button.selected::before {
-    border-color: var(--accent-color);
+    border-color: var(--bg-color);
 }
   
 .option-button input[type="radio"]:checked + .custom-radio {
-    background-color: var(--accent-color);
-    outline: 2px solid var(--accent-color);
+    background-color: var(--bg-color);
+    outline: 2px solid var(--bg-color);
 }
 
 /* Styles for the answer button */
