@@ -352,7 +352,7 @@ class App < Sinatra::Application
       existing_account_test = AccountTest.find_by(account_id: current_account.id, test_id: @test.id)
       
 
-      if @test && !AccountQuestion.where(account_id: current_account_id, question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
+      if !AccountQuestion.where(account_id: current_account_id, question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
         # Todas las preguntas del test han sido respondidas correctamente
         
         existing_account_test.update(test_completed: true)
