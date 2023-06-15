@@ -3,4 +3,12 @@ class AccountLesson < ActiveRecord::Base
 
   belongs_to :account
   belongs_to :lesson
+
+  after_commit :actualizar_progreso_account
+
+  private
+
+  def actualizar_progreso_account
+    account.actualizar_progreso
+  end
 end

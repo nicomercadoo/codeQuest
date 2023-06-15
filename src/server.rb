@@ -68,6 +68,8 @@ class App < Sinatra::Application
         @theme = 'dark'
       end
       @tests = Test.all
+      @lessons = Lesson.all
+      @account = Account.all
       erb :home, locals: { tests: @tests }
     else
       redirect "/"
@@ -323,6 +325,7 @@ class App < Sinatra::Application
 
       @test = Test.find_by(letter: test_letter)
       @question = Question.find_by(number: question_number, test_letter: test_letter)
+      @questions = Question.all
 
 
       # Encuentra la opción seleccionada por el usuario
@@ -345,24 +348,40 @@ class App < Sinatra::Application
         AccountOption.create(option_id: selected_option.id, account_id: current_account.id, question_id: @question.id)
       end
 
+      # Obtengo todas las respuestas de la cuenta
+      answers = AccountOption.where(account_id: current_account.id)
+      count_correct = 0
+      answers.each do |answer|
+        count_correct += 1 if answer.option.correct
+      end
+      # Busco el account_test relacionado a la question de la option
+      related_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
+      related_account_test.update_column(:correct_questions, count_correct)
+
       # Verifica si la opción seleccionada es correcta
       if correct_option
 
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
         if @question
           existing_account_question = AccountQuestion.find_by(account_id: current_account.id, question_id: @question.id)
-          existing_account_question.update(well_answered: true)
+          existing_account_question.update(well_answered: true)         
         else
           # Si @question es nulo, maneja el caso de error
           redirect '/error_page'
         end
+        existing_account_test = AccountTest.find_by(account_id: current_account.id, test_id: @test.id)
+      
 
-        if @test && !AccountQuestion.where(account_id: current_account_id, question_id: @question.id, well_answered: false).exists?
+        if @test && !AccountQuestion.where(account_id: current_account_id, question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
           # Todas las preguntas del test han sido respondidas correctamente
-          existing_account_test = AccountTest.find_by(account_id: current_account.id, test_id: @test.id)
+          
           existing_account_test.update(test_completed: true)
+        else
+          existing_account_test.update(test_completed: false)
         end
-
+      else
+        existing_account_question = AccountQuestion.find_by(account_id: current_account.id, question_id: @question.id)
+        existing_account_question.update(well_answered: false)
       end
 
       @questions = Question.where(test_letter: test_letter)

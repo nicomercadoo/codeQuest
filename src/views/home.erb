@@ -31,7 +31,9 @@
   <main>
 
     <div class="progress-container">
-      <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+      <% @id = session[:account_id] %>
+      <% @account_progress = Account.find(@id).progress %>
+      <div id="progress-bar" class="progress-bar" style="width: <%= @account_progress %>%"></div>
       <div class="haskell-logo">  
         <img src="haskell-logo.png" alt="Logo">
       </div>  
