@@ -2,6 +2,8 @@ require 'sinatra/base'
 require 'bundler/setup'
 require 'logger'
 require 'sinatra/activerecord'
+require 'sinatra/base'
+require 'rack/session/cookie'
 
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 
@@ -20,6 +22,8 @@ class App < Sinatra::Application
   def initialize(app = nil)
     super()
   end
+
+  use Rack::Session::Cookie, key: 'rack.session', expire_after: 2592000, secret: 'ENCRIPTAR PORFA'
 
   configure :production, :development do
     enable :logging
@@ -41,7 +45,7 @@ class App < Sinatra::Application
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
 
   get '/' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true
       redirect '/home'
     else
       @theme = 'light'
@@ -55,7 +59,7 @@ class App < Sinatra::Application
   end
 
   get '/home' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
       else 
@@ -69,7 +73,7 @@ class App < Sinatra::Application
   end
 
   get '/profile' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true 
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
       else 
@@ -82,7 +86,7 @@ class App < Sinatra::Application
   end
 
   get '/snippets' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
       else 
@@ -95,7 +99,7 @@ class App < Sinatra::Application
   end
 
   get '/lesson/:test_letter/:lesson_number' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
 
@@ -122,8 +126,7 @@ class App < Sinatra::Application
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
       
-      current_account_id = request.cookies['logged_in_id']
-      account = Account.find(current_account_id)
+      account = Account.find(session[:account_id])
       lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
       
       if lesson
@@ -147,7 +150,7 @@ class App < Sinatra::Application
   end
 
   get '/test/:test_letter/:question_number' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true
       test_letter = params[:test_letter]
       question_number = params[:question_number]
 
@@ -158,8 +161,7 @@ class App < Sinatra::Application
       questions = Question.where(test_letter: test_letter)
 
       lessons = Lesson.where(test_letter: test_letter)
-      current_account_id = request.cookies['logged_in_id']
-      account = Account.find(current_account_id)
+      account = Account.find(session[:account_id])
 
       # Verificar si todas las lecciones relacionadas con el test están completadas
       lessons.each do |lesson|
@@ -188,7 +190,7 @@ class App < Sinatra::Application
   end
 
   get '/answer_status/:status/:test_letter/:question_number' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true
       @status = params[:status]
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
@@ -264,10 +266,27 @@ class App < Sinatra::Application
         redirect '/signup?error=Nickname-already-exists'
       end
       account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
+
       if account.save
-        response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
-        response.set_cookie('logged_in_id', value: account.id, httponly: true, expires: Time.now + 24*60*60*7)  # Establecer la cookie del nickname
+        session[:logged_in] = true
+        session[:account_id] = account.id
+
+        Lesson.all.each do |lesson|
+          AccountLesson.create(account_id: account.id, lesson_id: lesson.id)
+        end
+  
+        Question.all.each do |question|
+          AccountQuestion.create(account_id: account.id, question_id: question.id)
+        end
+  
+        Test.all.each do |test|
+          AccountTest.create(account_id: account.id, test_id: test.id)
+        end
+
+        
         response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)  # Establecer la cookie del tema
+        
+
         redirect '/home'
       else
         erb :signup, locals: { error_message: "Error al crear cuenta" }
@@ -282,8 +301,8 @@ class App < Sinatra::Application
     account = Account.find_by(nickname: nickname, password: password)
 
     if account
-      response.set_cookie('logged_in', value: 'true', httponly: true, expires: Time.now + 24*60*60*7)
-      response.set_cookie('logged_in_id', value: account.id, httponly: true, expires: Time.now + 24*60*60*7) # Establecer la cookie del nickname
+      session[:logged_in] = true
+      session[:account_id] = account.id
       unless request.cookies.include?('theme_light')
         response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
       end
@@ -308,7 +327,7 @@ class App < Sinatra::Application
   end
 
   post '/submit_answer' do
-    if request.cookies['logged_in'] == 'true'
+    if session[:logged_in] == true
       question_number = params[:question_number]
       test_letter = params[:test_letter]
       selected_option_number = params[:selected_option]
@@ -322,7 +341,7 @@ class App < Sinatra::Application
 
       correct_option = selected_option.correct
 
-      current_account_id = request.cookies['logged_in_id']
+      current_account_id = session[:account_id]
       current_account = Account.find(current_account_id)
 
 
@@ -373,8 +392,8 @@ class App < Sinatra::Application
   end
 
   post '/logout' do
-    response.delete_cookie('logged_in')
-    response.delete_cookie('logged_in_id')
+    session.delete(:logged_in)
+    session.delete(:account_id)
     redirect '/'
   end
   

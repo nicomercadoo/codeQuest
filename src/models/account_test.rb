@@ -1,5 +1,5 @@
 class AccountTest < ActiveRecord::Base
-  validates :test_completed, presence: true
+  validates :test_completed, inclusion: { in: [true, false] }
   validates :correct_questions, presence: true
   
   belongs_to :account
