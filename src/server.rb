@@ -349,6 +349,17 @@ class App < Sinatra::Application
         AccountOption.create(option_id: selected_option.id, account_id: current_account.id, question_id: @question.id)
       end
 
+      existing_account_test = AccountTest.find_by(account_id: current_account.id, test_id: @test.id)
+      
+
+      if @test && !AccountQuestion.where(account_id: current_account_id, question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
+        # Todas las preguntas del test han sido respondidas correctamente
+        
+        existing_account_test.update(test_completed: true)
+      else
+        existing_account_test.update(test_completed: false)
+      end
+
       # Obtengo todas las respuestas de la cuenta
       answers = AccountOption.where(account_id: current_account.id, option_id: @options.where(test_letter: test_letter))
       count_correct = 0
@@ -369,16 +380,6 @@ class App < Sinatra::Application
         else
           # Si @question es nulo, maneja el caso de error
           redirect '/error_page'
-        end
-        existing_account_test = AccountTest.find_by(account_id: current_account.id, test_id: @test.id)
-      
-
-        if @test && !AccountQuestion.where(account_id: current_account_id, question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
-          # Todas las preguntas del test han sido respondidas correctamente
-          
-          existing_account_test.update(test_completed: true)
-        else
-          existing_account_test.update(test_completed: false)
         end
       else
         existing_account_question = AccountQuestion.find_by(account_id: current_account.id, question_id: @question.id)
