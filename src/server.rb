@@ -326,6 +326,7 @@ class App < Sinatra::Application
       @test = Test.find_by(letter: test_letter)
       @question = Question.find_by(number: question_number, test_letter: test_letter)
       @questions = Question.all
+      @options = Option.all
 
 
       # Encuentra la opción seleccionada por el usuario
@@ -349,7 +350,7 @@ class App < Sinatra::Application
       end
 
       # Obtengo todas las respuestas de la cuenta
-      answers = AccountOption.where(account_id: current_account.id)
+      answers = AccountOption.where(account_id: current_account.id, option_id: @options.where(test_letter: test_letter))
       count_correct = 0
       answers.each do |answer|
         count_correct += 1 if answer.option.correct
