@@ -12,9 +12,9 @@ end
 gem 'sinatra-activerecord'
 gem 'sqlite3'
 gem 'rake'
+gem 'rack-session'
 
 group :test do
   gem 'rspec'
 end
-# Gemfile
-gem 'rack-session'
+

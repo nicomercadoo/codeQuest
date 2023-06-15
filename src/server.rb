@@ -23,11 +23,13 @@ class App < Sinatra::Application
     super()
   end
 
-  use Rack::Session::Cookie, key: 'rack.session', expire_after: 2592000, secret: 'ENCRIPTAR PORFA'
+  use Rack::Session::Cookie,  key: 'rack.session',
+                              expire_after: 60 * 60, #1 hora                              ,
+                              secret: '93b88de68f9a312d4e33b6c62a58229016b001af8ce01ced7884ae26e03708cd53eaba82ecd3f1a140b21e6e573ae7391efcaa2a81190840e3fe5702daa2e66a'
 
   configure :production, :development do
     enable :logging
-
+    enable :session
     logger = Logger.new(STDOUT)
     logger.level = Logger::DEBUG if development?
     set :logger, logger
@@ -62,7 +64,7 @@ class App < Sinatra::Application
     if session[:logged_in] == true
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
-      else 
+      else
         @theme = 'dark'
       end
       @tests = Test.all
@@ -73,26 +75,13 @@ class App < Sinatra::Application
   end
 
   get '/profile' do
-    if session[:logged_in] == true 
-      if request.cookies['theme_light'] == 'true'
-        @theme = 'light'
-      else 
-        @theme = 'dark'
-      end
-      erb :profile
-    else
-      redirect "/"
-    end
-  end
-
-  get '/snippets' do
     if session[:logged_in] == true
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
-      else 
+      else
         @theme = 'dark'
       end
-      erb :snippets
+      erb :profile
     else
       redirect "/"
     end
@@ -106,29 +95,29 @@ class App < Sinatra::Application
       @test = Test.find_by(letter: test_letter)
       @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
-      
+
       # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
-      
+
       # Se obtienen todas las preguntas y las lecciones que estan relacionadas con el test
       @questions = Question.where(test_letter: related_test_letter)
       @lessons = Lesson.where(test_letter: related_test_letter)
 
       # Se obtiene la ultima leccion
       last_lesson_in_group = @lessons.last.number
-      
+
       # Se verifica si la leccion actual es la ultima
       @current_is_last = @lesson.number == last_lesson_in_group
-      
+
       # Se obtiene la (supuesta) proxima leccion
       next_lesson = @lesson.number + 1
-      
+
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
-      
+
       account = Account.find(session[:account_id])
       lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
-      
+
       if lesson
         accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
 
@@ -140,7 +129,7 @@ class App < Sinatra::Application
 
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
-      else 
+      else
         @theme = 'dark'
       end
       erb :lesson
@@ -167,17 +156,17 @@ class App < Sinatra::Application
       lessons.each do |lesson|
         previous_lessons_completed = AccountLesson.exists?(lesson_id: lesson.id, account_id: account.id, lesson_completed: true)
         # Redirigir al inicio si alguna lección relacionada no está completada
-        redirect '/home/lecciones_incompletas' unless previous_lessons_completed 
+        redirect '/home/lecciones_incompletas' unless previous_lessons_completed
       end
-      
-      
+
+
       if questions.exists?(number: question_number)
         # Encuentra la pregunta asociada al question_number y al test
         @options = Option.where(question_number: @question.number, test_letter: @test.letter)
 
         if request.cookies['theme_light'] == 'true'
           @theme = 'light'
-        else 
+        else
           @theme = 'dark'
         end
         erb :test, locals: { test: @test, question: @question, options: @options }
@@ -196,7 +185,7 @@ class App < Sinatra::Application
       question_number = params[:question_number].to_i
       if request.cookies['theme_light'] == 'true'
         @theme = 'light'
-      else 
+      else
         @theme = 'dark'
       end
 
@@ -274,18 +263,18 @@ class App < Sinatra::Application
         Lesson.all.each do |lesson|
           AccountLesson.create(account_id: account.id, lesson_id: lesson.id)
         end
-  
+
         Question.all.each do |question|
           AccountQuestion.create(account_id: account.id, question_id: question.id)
         end
-  
+
         Test.all.each do |test|
           AccountTest.create(account_id: account.id, test_id: test.id)
         end
 
-        
+
         response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)  # Establecer la cookie del tema
-        
+
 
         redirect '/home'
       else
@@ -306,7 +295,7 @@ class App < Sinatra::Application
       unless request.cookies.include?('theme_light')
         response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
       end
-      
+
       redirect '/home'
     else
       redirect '/?error=Invalid-nickname-or-password'
@@ -358,7 +347,7 @@ class App < Sinatra::Application
 
       # Verifica si la opción seleccionada es correcta
       if correct_option
-        
+
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
         if @question
           existing_account_question = AccountQuestion.find_by(account_id: current_account.id, question_id: @question.id)
@@ -396,14 +385,14 @@ class App < Sinatra::Application
     session.delete(:account_id)
     redirect '/'
   end
-  
+
   post '/profile' do
     if request.cookies['theme_light'] == 'true'
       response.set_cookie('theme_light', value: 'false', httponly: true, expires: Time.now + 24*60*60*365)
     else
       response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
     end
-    
+
     redirect '/profile'
   end
 
