@@ -177,7 +177,7 @@ class App < Sinatra::Application
 
       if questions.exists?(number: question_number)
         # Encuentra la pregunta asociada al question_number y al test
-        @options = Option.where(question_number: @question.number, test_letter: @test.letter)
+        @options = Option.where(question_number: @question.number, test_letter: @test.letter).shuffle
 
         erb :test, locals: { test: @test, question: @question, options: @options }
       else
