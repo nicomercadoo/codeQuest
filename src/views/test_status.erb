@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>codeQuest</title>
-  <link rel="stylesheet" type="text/css" href="<%=url('answer_status.css')%>">
+  <link rel="stylesheet" type="text/css" href="<%=url('test_status.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
 <% if @theme == 'light' %>
@@ -27,16 +27,22 @@
     </nav>
   </header>
   <main>
-    <h1>Tu respuesta es</h1>
-    <%if @status == 'correct'%>
-      <p class="status">CORRECTA</p>
+    <h1>Tu test está</h1>
+    <%if @test_completed%>
+      <p class="status">APROBADO</p>
       <p class="kaomoji">(/≧▽≦)/</p>
     <%else%>
-      <p class="status">INCORRECTA</p>
+      <p class="status">DESAPROBADO</p>
       <p class="kaomoji">(╯︵╰,)</p>
     <%end%>
     <section class="buttons-section">
-      <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Continuar</button></a>
+      <%if @test_completed && !@final_test %>
+        <a href="/home"><button type="button" class="continue-button">Volver a Inicio</button></a>
+        <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Siguiente lección</button></a>
+      <%else%>
+        <a href="/home"><button type="button" class="continue-button">Volver a Inicio</button></a>
+        <a href="<%=@url_retry%>"><button type="button" class="continue-button">Reintentar</button></a>
+      <%end%>
     </section>
   </main>
 </body>

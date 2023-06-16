@@ -85,7 +85,7 @@ class App < Sinatra::Application
       else
         @theme = 'dark'
       end
-      
+
       erb :profile
     else
       redirect "/"
@@ -97,7 +97,7 @@ class App < Sinatra::Application
 
       if session[:account_theme] == true
         @theme = 'light'
-      else 
+      else
         @theme = 'dark'
       end
 
@@ -150,7 +150,7 @@ class App < Sinatra::Application
 
       if session[:account_theme] == true
         @theme = 'light'
-      else 
+      else
         @theme = 'dark'
       end
 
@@ -169,9 +169,9 @@ class App < Sinatra::Application
       # Verificar si todas las lecciones relacionadas con el test están completadas
       lessons.each do |lesson|
         previous_lessons_completed = AccountLesson.exists?(lesson_id: lesson.id, account_id: account.id, lesson_completed: true)
-        
+
         # Redirigir al inicio si alguna lección relacionada no está completada
-        redirect '/home?error=Previous-lessons-incompleted' unless previous_lessons_completed 
+        redirect '/home?error=Previous-lessons-incompleted' unless previous_lessons_completed
       end
 
 
@@ -188,12 +188,55 @@ class App < Sinatra::Application
     end
   end
 
+
+
   get '/answer_status/:status/:test_letter/:question_number' do
     if session[:logged_in] == true
 
       @status = params[:status]
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
+
+      if session[:account_theme] == true
+        @theme = 'light'
+      else
+        @theme = 'dark'
+      end
+
+      # question = Question.find_by(number: @question_number)
+      # related_test_letter = question.test_letter
+      # Se obtienen todas las preguntas que estan relacionadas con el test
+      questions = Question.where(test_letter: test_letter)
+      # Se obtiene la ultima pregunta
+      last_question_in_group = questions.last.number
+      # Se verifica si la pregunta actual es la ultima
+      current_is_last = question_number == last_question_in_group
+      # Se obtiene la (supuesta) proxima pregunta
+      next_question_number = question_number + 1
+
+      @can_continue = !current_is_last && next_question_number <= questions.maximum(:number)
+
+      if @can_continue
+        @url_redirect = "/test/#{test_letter}/#{next_question_number}"
+      else
+
+        @lessons = Lesson.where(test_letter: test_letter.next)
+        next_lesson = @lessons.minimum(:number)
+        @url_redirect = "/test_status/#{test_letter}"
+      end
+
+      erb :answer_status
+
+    else
+      redirect "/"
+    end
+
+  end
+
+  get '/test_status/:test_letter' do
+    if session[:logged_in] == true
+
+      test_letter = params[:test_letter]
 
       if session[:account_theme] == true
         @theme = 'light'
@@ -209,7 +252,7 @@ class App < Sinatra::Application
       existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
       if !AccountQuestion.where(account_id: current_account_id, question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
         # Todas las preguntas del test han sido respondidas correctamente
-        
+
         existing_account_test.update(test_completed: true)
       else
         existing_account_test.update(test_completed: false)
@@ -225,40 +268,23 @@ class App < Sinatra::Application
       related_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
       related_account_test.update_column(:correct_questions, count_correct)
 
-      # question = Question.find_by(number: @question_number)
-      # related_test_letter = question.test_letter
-      # Se obtienen todas las preguntas que estan relacionadas con el test
-      questions = Question.where(test_letter: test_letter)
-      # Se obtiene la ultima pregunta
-      last_question_in_group = questions.last.number
-      # Se verifica si la pregunta actual es la ultima
-      current_is_last = question_number == last_question_in_group
-      # Se obtiene la (supuesta) proxima pregunta
-      next_question_number = question_number + 1
-
-      @can_continue = !current_is_last && next_question_number <= questions.maximum(:number)
       @test_completed = existing_account_test.test_completed
-      
-
       @final_test = test_letter == Test.last.letter
+      @lessons = Lesson.where(test_letter: test_letter)
+      first_lesson_current_test = @lessons.minimum(:number)
+      @lessons_next_test = Lesson.where(test_letter: test_letter.next)
+      next_lesson = @lessons_next_test.minimum(:number)
+      @url_retry = "/test/#{test_letter}/#{first_lesson_current_test}"
+      @url_redirect = "/lesson/#{test_letter.next}/#{next_lesson}"
 
-      if @can_continue
-        @url_redirect = "/test/#{test_letter}/#{next_question_number}"
-      elsif @test_completed
-        @lessons = Lesson.where(test_letter: test_letter.next)
-        next_lesson = @lessons.minimum(:number)
-        @url_redirect = "/lesson/#{test_letter.next}/#{next_lesson}"
-      else
-        @url_redirect = "/test/#{test_letter}/1"
-      end
-
-      erb :answer_status
+      erb :test_status
 
     else
       redirect "/"
     end
 
   end
+
 
   post '/signup' do
     # Retrieve the form data
@@ -330,7 +356,7 @@ class App < Sinatra::Application
       session[:logged_in] = true
       session[:account_id] = account.id
       session[:account_theme] = account.theme_light
-      
+
       redirect '/home'
     else
       redirect '/?error=Invalid-nickname-or-password'
@@ -387,7 +413,7 @@ class App < Sinatra::Application
         # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
         if @question
           existing_account_question = AccountQuestion.find_by(account_id: current_account_id, question_id: @question.id)
-          existing_account_question.update(well_answered: true)         
+          existing_account_question.update(well_answered: true)
         else
           # Si @question es nulo, maneja el caso de error
           redirect '/error_page'
@@ -422,34 +448,34 @@ class App < Sinatra::Application
   post '/profile' do
     if session[:logged_in] == true
       account = Account.find(session[:account_id])
-  
+
       if params[:nicknameInput]
         account.update(nickname: params[:nicknameInput])
       end
-  
+
       if params[:emailInput]
         account.update(email: params[:emailInput])
       end
-  
+
       if params[:passwordInput]
         account.update(password: params[:passwordInput])
       end
-  
+
       if params[:theme] == 'dark'
         account.update(theme_light: true)
-        session[:account_theme] = true  
+        session[:account_theme] = true
       end
-  
+
       if params[:theme] == 'light'
         account.update(theme_light: false)
-        session[:account_theme] = false  
+        session[:account_theme] = false
       end
-      
+
       redirect "/profile"
     else
       redirect "/"
     end
   end
-  
+
 
 end
