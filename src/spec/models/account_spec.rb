@@ -16,7 +16,7 @@ describe Account do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', theme_light: 'dark')
         # Assert
-        expect(account.valid?).to be_truthy
+        expect(account.valid? && account.correct_format_of_fields?).to be_truthy
       end
     end
     context 'not valid situations' do
@@ -24,28 +24,28 @@ describe Account do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@yieil.com', password: 'Juanito32', nickname: 'juanito', theme_light: 'dark')
         # Assert
-        expect(account.valid?).to be_falsey
+        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
       end
 
       it 'should be invalid (password blame)' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'juanito3', nickname: 'juanito', theme_light: 'dark')
         # Assert
-        expect(account.valid?).to be_falsey
+        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
       end
 
       it 'should be invalid (nickname blame)' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'ju anito', theme_light: 'dark')
         # Assert
-        expect(account.valid?).to be_falsey
+        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
       end
 
       it 'should be invalid (name blame)' do
         # Arrange
         account = Account.new(name: 'Juanit0', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', theme_light: 'dark')
         # Assert
-        expect(account.valid?).to be_falsey
+        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
       end
     end
   end

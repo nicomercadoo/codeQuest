@@ -5,7 +5,6 @@ class Account < ActiveRecord::Base
   validates :nickname, presence: true
   validates :progress, presence: true
   validates :theme_light, inclusion: { in: [true, false] }
-  validates :correct_format_of_fields?
 
   has_many :account_lessons
   has_many :lessons, through: :account_lessons
@@ -17,7 +16,7 @@ class Account < ActiveRecord::Base
   has_many :tests, through: :account_tests
 
 
-  after_commit :update_progress
+  after_commit :actualizar_progreso
 
   def correct_format_of_fields?
     valid_email_format = /^[a-zA-Z0-9_.+-]+@(gmail|outlook|hotmail|live)\.[a-z.]+$/
@@ -28,7 +27,7 @@ class Account < ActiveRecord::Base
     valid_email_format.match(email) && valid_password_format.match(password) && valid_name_format.match(name) && valid_nickname_format.match(nickname)
   end
 
-  def update_progress
+  def actualizar_progreso
     # Lógica para actualizar el progreso de la cuenta
 
     # Los capítulos valen el 100% del progreso (1 cap 100%, 2 caps 50%, etc)
