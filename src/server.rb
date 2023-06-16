@@ -24,7 +24,7 @@ class App < Sinatra::Application
   end
 
   use Rack::Session::Cookie,  key: 'rack.session',
-                              expire_after: 60 * 60, #1 hora                              ,
+                              expire_after: 60 * 60 * 24 * 7, #1 semana                            ,
                               secret: '93b88de68f9a312d4e33b6c62a58229016b001af8ce01ced7884ae26e03708cd53eaba82ecd3f1a140b21e6e573ae7391efcaa2a81190840e3fe5702daa2e66a'
 
   configure :production, :development do
@@ -62,14 +62,15 @@ class App < Sinatra::Application
 
   get '/home' do
     if session[:logged_in] == true
-      if request.cookies['theme_light'] == 'true'
+
+      if session[:account_theme] == true
         @theme = 'light'
       else
         @theme = 'dark'
       end
+
       @tests = Test.all
-      @lessons = Lesson.all
-      @account = Account.all
+
       erb :home, locals: { tests: @tests }
     else
       redirect "/"
@@ -78,11 +79,13 @@ class App < Sinatra::Application
 
   get '/profile' do
     if session[:logged_in] == true
-      if request.cookies['theme_light'] == 'true'
+
+      if session[:account_theme] == true
         @theme = 'light'
       else
         @theme = 'dark'
       end
+      
       erb :profile
     else
       redirect "/"
@@ -91,6 +94,13 @@ class App < Sinatra::Application
 
   get '/lesson/:test_letter/:lesson_number' do
     if session[:logged_in] == true
+
+      if session[:account_theme] == true
+        @theme = 'light'
+      else 
+        @theme = 'dark'
+      end
+
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
 
@@ -129,11 +139,6 @@ class App < Sinatra::Application
         end
       end
 
-      if request.cookies['theme_light'] == 'true'
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
       erb :lesson
     else
       redirect "/"
@@ -142,6 +147,13 @@ class App < Sinatra::Application
 
   get '/test/:test_letter/:question_number' do
     if session[:logged_in] == true
+
+      if session[:account_theme] == true
+        @theme = 'light'
+      else 
+        @theme = 'dark'
+      end
+
       test_letter = params[:test_letter]
       question_number = params[:question_number]
 
@@ -157,8 +169,9 @@ class App < Sinatra::Application
       # Verificar si todas las lecciones relacionadas con el test están completadas
       lessons.each do |lesson|
         previous_lessons_completed = AccountLesson.exists?(lesson_id: lesson.id, account_id: account.id, lesson_completed: true)
+        
         # Redirigir al inicio si alguna lección relacionada no está completada
-        redirect '/home/lecciones_incompletas' unless previous_lessons_completed
+        redirect '/home?error=Previous-lessons-incompleted' unless previous_lessons_completed 
       end
 
 
@@ -166,11 +179,6 @@ class App < Sinatra::Application
         # Encuentra la pregunta asociada al question_number y al test
         @options = Option.where(question_number: @question.number, test_letter: @test.letter)
 
-        if request.cookies['theme_light'] == 'true'
-          @theme = 'light'
-        else
-          @theme = 'dark'
-        end
         erb :test, locals: { test: @test, question: @question, options: @options }
       else
         redirect "/"
@@ -182,14 +190,17 @@ class App < Sinatra::Application
 
   get '/answer_status/:status/:test_letter/:question_number' do
     if session[:logged_in] == true
+
       @status = params[:status]
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
-      if request.cookies['theme_light'] == 'true'
+
+      if session[:account_theme] == true
         @theme = 'light'
       else
         @theme = 'dark'
       end
+
       @test = Test.find_by(letter: test_letter)
       @questions = Question.all
       @options = Option.all
@@ -284,6 +295,7 @@ class App < Sinatra::Application
       if account.save
         session[:logged_in] = true
         session[:account_id] = account.id
+        session[:account_theme] = account.theme_light
 
         Lesson.all.each do |lesson|
           AccountLesson.create(account_id: account.id, lesson_id: lesson.id)
@@ -296,10 +308,6 @@ class App < Sinatra::Application
         Test.all.each do |test|
           AccountTest.create(account_id: account.id, test_id: test.id)
         end
-
-
-        response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)  # Establecer la cookie del tema
-
 
         redirect '/home'
       else
@@ -317,10 +325,8 @@ class App < Sinatra::Application
     if account
       session[:logged_in] = true
       session[:account_id] = account.id
-      unless request.cookies.include?('theme_light')
-        response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
-      end
-
+      session[:account_theme] = account.theme_light
+      
       redirect '/home'
     else
       redirect '/?error=Invalid-nickname-or-password'
@@ -405,17 +411,41 @@ class App < Sinatra::Application
   post '/logout' do
     session.delete(:logged_in)
     session.delete(:account_id)
+    session.delete(:account_theme)
     redirect '/'
   end
 
   post '/profile' do
-    if request.cookies['theme_light'] == 'true'
-      response.set_cookie('theme_light', value: 'false', httponly: true, expires: Time.now + 24*60*60*365)
+    if session[:logged_in] == true
+      account = Account.find(session[:account_id])
+  
+      if params[:nicknameInput]
+        account.update(nickname: params[:nicknameInput])
+      end
+  
+      if params[:emailInput]
+        account.update(email: params[:emailInput])
+      end
+  
+      if params[:passwordInput]
+        account.update(password: params[:passwordInput])
+      end
+  
+      if params[:theme] == 'dark'
+        account.update(theme_light: true)
+        session[:account_theme] = true  
+      end
+  
+      if params[:theme] == 'light'
+        account.update(theme_light: false)
+        session[:account_theme] = false  
+      end
+      
+      redirect "/profile"
     else
-      response.set_cookie('theme_light', value: 'true', httponly: true, expires: Time.now + 24*60*60*365)
+      redirect "/"
     end
-
-    redirect '/profile'
   end
+  
 
 end

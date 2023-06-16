@@ -4,7 +4,7 @@ class Account < ActiveRecord::Base
   validates :password, presence: true
   validates :nickname, presence: true
   validates :progress, presence: true
-  validates :theme_light, presence: true
+  validates :theme_light, inclusion: { in: [true, false] }
 
   has_many :account_lessons
   has_many :lessons, through: :account_lessons 

@@ -39,6 +39,13 @@
       </div>  
     </div>
 
+    <% if params[:error] == "Previous-lessons-incompleted" %>
+      <div class="floating-box">
+          <p>Completa todas las lecciones para acceder al test.</p>
+          <a href="/home"><button>Aceptar</button></a>
+      </div>
+    <% end %>
+
     <div class="section-line"></div>
 
     <div class="button-stack">
@@ -75,7 +82,7 @@
             <input name="question_number" value="<%= @questions.minimum(:number) %>" hidden>
             <button type="submit" class="card test-card">
               <div class="card-content">
-                <h2>Test</h2>
+                <h2> <%= test.description %> </h2>
               </div>
               <div class="card-divider"></div>
               <span class="number"><%= test.letter %></span>
