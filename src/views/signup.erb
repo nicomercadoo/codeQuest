@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>codeQuest</title>
+  <link rel="stylesheet" type="text/css" href="<%=url('logins.css')%>" >
+  <link rel="icon" type="image/png" href="/favicon2.png">
+</head>
+<body>
+  <div class="left-section">
+    <div class="logo">
+      <img src="/favicon2.png" alt="codeQuest">
+      <h1 class="logo">codeQuest</h1>
+    </div>
+    <p class="description">La nueva forma de aprender Haskell!</p>
+  </div>
+
+  <div class="right-section">
+    <% if params[:error] %>
+      <div class="floating-box">
+        <span class="close-button" onclick="this.parentElement.style.display='none';">×</span>
+        <% if params[:error] == "Account-already-exists" %>
+          <p>Esta cuenta ya está registrada. Por favor, inicia sesión.</p>
+          <a href="/"><button>Iniciar sesión</button></a>
+        <% elsif params[:error] == "Nickname-already-exists" %>
+          <p>El nickname ya está en uso. Por favor, elige otro.</p>
+          <a href="/signup"><button>Intenta de nuevo</button></a>
+        <% end %>
+      </div>
+    <% end %>
+    <form class="form" method="post">
+      <input type="text" name="name" placeholder="Nombre" required>
+      <input type="text" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
+      <input type="text" name="nickname" placeholder="Nickname" required>
+      <div class="button-wrapper">
+        <button type="submit" class="first-button">Crear cuenta</button>
+        <a href="/"><button type="button" class="second-button">Volver a iniciar sesión</button></a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

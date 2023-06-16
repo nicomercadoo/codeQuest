@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>codeQuest</title>
+  <link rel="stylesheet" type="text/css" href="<%=url('test_status.css')%>">
+  <link rel="icon" type="image/png" href="/favicon2.png">
+</head>
+<% if @theme == 'light' %>
+  <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
+<% else %>
+  <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">
+<% end %>
+<body>
+  <header class="container">
+    <a href='/home'>
+      <h1 class="logo">
+        <img src="/favicon2.png" alt="Logo">
+        <span>codeQuest</span>
+      </h1>
+    </a>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="/home" class="nav-link">Inicio</a></li>
+        <li><a href="/profile" class="nav-link">Perfil</a></li>
+        <%# <li><a href="/snippets" class="nav-link">Snippets</a></li> %>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Tu test está</h1>
+    <%if @test_completed%>
+      <p class="status">APROBADO</p>
+      <p class="kaomoji">(⁠ﾉ⁠≧⁠∇⁠≦⁠)⁠ﾉ⁠ ﾐ⁠ ⁠┻⁠━⁠┻</p>
+    <%else%>
+      <p class="status">DESAPROBADO</p>
+      <p class="kaomoji">(⁠ノ⁠ಠ⁠益⁠ಠ⁠)⁠ノ⁠彡⁠┻⁠━⁠┻</p>
+    <%end%>
+    <section class="buttons-section">
+      <%if @test_completed && !@final_test %>
+        <a href="/home"><button type="button" class="continue-button">Volver a Inicio</button></a>
+        <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Siguiente lección</button></a>
+      <%else%>
+        <a href="/home"><button type="button" class="continue-button">Volver a Inicio</button></a>
+        <a href="<%=@url_retry%>"><button type="button" class="continue-button">Reintentar</button></a>
+      <%end%>
+    </section>
+  </main>
+</body>
+</html>
+

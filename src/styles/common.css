@@ -1,0 +1,127 @@
+@import url('font-sets.css');
+
+body {
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  width: 100%;
+  font-family: 'Metropolis';
+}
+
+main {
+  padding-top: 30px;
+  padding-right: 80px;
+  padding-left: 80px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 40px;
+}
+
+li, a, button {
+  font-family: 'Metropolis';
+  font-weight: bold;
+  color: var(--secondary-text-color);
+  text-decoration: none;
+}
+
+/* Styles for the header */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--primary-color);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-family: 'Metropolis';
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--secondary-text-color);
+}
+
+.logo img {
+  width: 30px; 
+  height: auto; 
+  margin-right: 10px; 
+}
+
+.logo span {
+  display: inline-block;
+}
+
+.nav-links ul {
+  list-style: none;
+}
+
+.nav-links ul li {
+  display: inline-block;
+  padding: 10px 20px;
+
+}
+
+.nav-link {
+  font-family: 'Metropolis';
+  font-weight: bold;
+  color: var(--secondary-text-color);
+  transition: all 0.4s;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  height: 2px;
+  width: 100%;
+  background-color: var(--secondary-text-color);
+  display: block;
+  position: relative;
+  left: 0;
+  bottom: -8px;
+  transition: all 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-link:hover::after{
+  opacity: 1;
+}
+
+.current-page::after {
+  content: '';
+  height: 2px;
+  width: 100%;
+  background-color: var(--secondary-text-color);
+  display: block;
+  position: relative;
+  left: 0;
+  bottom: -8px;
+  pointer-events: none;
+}
+
+.no-style-button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.no-style-button:hover {
+  text-decoration: none;
+}

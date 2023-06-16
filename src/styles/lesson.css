@@ -1,0 +1,50 @@
+@import url('font-sets.css');
+@import url('common.css');
+
+/* Styles for the lesson itself */
+
+.text-container{
+    color: var(--text-color);
+    width: 100%;
+    margin-left: 20;
+}
+
+p {
+    padding-top: 30px;
+    text-align: left;
+    line-height: 1.5;
+    font-size: 25px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+/* Styles for the next lesson button */
+
+.continue-button-container {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+}
+
+.continue-button {
+    height: 80px;
+    width: 350px;
+    background-color: var(--primary-color);
+    color: var(--secondary-text-color);
+    border: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.continue-button:hover {
+    transform: scale(1.1);
+}

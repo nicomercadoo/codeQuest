@@ -1,0 +1,4 @@
+.vscode/
+
+src/db/*.sqlite3
+src/db/schema.rb

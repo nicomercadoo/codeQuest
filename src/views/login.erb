@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>codeQuest</title>
+  <link rel="stylesheet" type="text/css" href="<%=url('logins.css')%>">
+  <link rel="icon" type="image/png" href="/favicon2.png">
+</head>
+<body>
+  <div class="left-section">
+    <div class="logo">
+      <img src="/favicon2.png" alt="codeQuest">
+      <h1 class="logo">codeQuest</h1>
+    </div>
+    <p class="description">La nueva forma de aprender Haskell!</p>
+  </div>
+  
+  <div class="right-section">
+    <% if params[:error] %>
+      <div class="floating-box">
+        <span class="close-button" onclick="this.parentElement.style.display='none';">×</span>
+        <p>Esta cuenta no está registrada. Por favor, crea primero la cuenta.</p>
+        <a href="/signup"><button>Crear una cuenta</button></a>
+      </div>
+    <% end %>
+    <form class="form" method="post">
+      <input type="text" name="nickname" placeholder="Nickname" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
+      <div class="button-wrapper">
+        <button type="submit" class="first-button">Iniciar sesión</button>
+        <a href="/signup"><button type="button" class="second-button">Crear una cuenta</button></a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
