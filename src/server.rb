@@ -237,15 +237,19 @@ class App < Sinatra::Application
       next_question_number = question_number + 1
 
       @can_continue = !current_is_last && next_question_number <= questions.maximum(:number)
+      @test_completed = existing_account_test.test_completed
+      
+
+      @final_test = test_letter == Test.last.letter
 
       if @can_continue
         @url_redirect = "/test/#{test_letter}/#{next_question_number}"
-      else
+      elsif @test_completed
         @lessons = Lesson.where(test_letter: test_letter.next)
         next_lesson = @lessons.minimum(:number)
-
-
         @url_redirect = "/lesson/#{test_letter.next}/#{next_lesson}"
+      else
+        @url_redirect = "/test/#{test_letter}/1"
       end
 
       erb :answer_status

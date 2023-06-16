@@ -38,9 +38,20 @@
     <section class="buttons-section">
       <%if @can_continue%>
         <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Continuar</button></a>
-      <%else%>
+      <%elsif @test_completed%>
+        <h2>El resultado del test es</h2>
+        <p class="status">APROBADO</p>
         <a href="/home"><button type="button" class="continue-button">Volver a Inicio</button></a>
-        <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Siguiente lección</button></a>
+        <%if !@final_test%>
+          <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Siguiente Lección</button></a>
+        <%end%>
+      <%else%>
+        <h2>El resultado del test es</h2>
+        <p class="status">DESAPROBADO</p>
+        <a href="/home"><button type="button" class="continue-button">Volver a Inicio</button></a>
+        <%if !@final_test%>
+          <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Reintentar</button></a>
+        <%end%>
       <%end%>
     </section>
   </main>
