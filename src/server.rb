@@ -203,8 +203,6 @@ class App < Sinatra::Application
         @theme = 'dark'
       end
 
-      # question = Question.find_by(number: @question_number)
-      # related_test_letter = question.test_letter
       # Se obtienen todas las preguntas que estan relacionadas con el test
       questions = Question.where(test_letter: test_letter)
       # Se obtiene la ultima pregunta
