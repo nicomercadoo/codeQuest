@@ -2,3 +2,7 @@
 
 src/db/*.sqlite3
 src/db/schema.rb
+
+# macOS files
+
+.DS_Store
