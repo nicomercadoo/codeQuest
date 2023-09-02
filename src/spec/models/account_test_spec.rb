@@ -19,6 +19,23 @@ describe AccountTest do
       expect(account_test).not_to be_valid
     end
 
+    it "increases progress correctly when test is completed" do
+      test = Test.find_or_create_by(letter: 'A', description: "Description", cant_questions: 5)
+      test.save
+
+      account_test = AccountTest.new(test_completed: false, account_id: 1, test_id: 1)
+      account_test.save
+    
+      account = Account.find_by(id: 1)
+      initial_progress = account.progress
+    
+      account_test.update(test_completed: true)
+      account_test.send(:actualizar_progreso_account) # Llamar al método usando send ya que es privado
+      account.reload
+    
+      expect(account.progress).to be > initial_progress
+    end
+
   end
 
 end
