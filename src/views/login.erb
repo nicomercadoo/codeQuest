@@ -26,10 +26,23 @@
       <input type="text" name="nickname" placeholder="Nickname" required>
       <input type="password" name="password" placeholder="Contraseña" required>
       <div class="button-wrapper">
+        <a id="popup" href="#" class="password">Olvidé mi contraseña</a>
+        <div id="popup-box" class="hidden">
+          <p>Intenta recordarla 😃💀</p>
+        </div>
+        <br></br>
         <button type="submit" class="first-button">Iniciar sesión</button>
         <a href="/signup"><button type="button" class="second-button">Crear una cuenta</button></a>
       </div>
     </form>
   </div>
+  <script>
+    const popup = document.getElementById("popup");
+    const popupBox = document.getElementById("popup-box");
+
+    popup.addEventListener("click", () => {
+      popupBox.classList.toggle("hidden");
+    })   
+  </script>
 </body>
 </html>

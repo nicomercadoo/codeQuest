@@ -106,6 +106,17 @@ body {
   transition: transform 0.2s;
 }
 
+.password {
+  cursor: pointer;
+  background-color: var(--bg-color);
+  color: var(--primary-color);
+  transition: transform 0.2s;
+} 
+
+.hidden {
+  display: none;
+}
+
 .first-button:hover {
   transform: scale(1.11);
 }
