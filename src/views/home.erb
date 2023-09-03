@@ -34,9 +34,9 @@
       <% @id = session[:account_id] %>
       <% @account_progress = Account.find(@id).progress %>
       <div id="progress-bar" class="progress-bar" style="width: <%= @account_progress %>%"></div>
-      <div class="haskell-logo">  
+      <div class="haskell-logo">
         <img src="haskell-logo.png" alt="Logo">
-      </div>  
+      </div>
     </div>
 
     <% if params[:error] == "Previous-lessons-incompleted" %>
@@ -49,7 +49,7 @@
     <div class="section-line"></div>
 
     <div class="button-stack">
-      
+
       <% @tests.each do |test| %>
 
       <% @questions = Question.where(test_letter: test.letter) %>
@@ -59,7 +59,7 @@
           <span class="chapter-title"><%= test.description %></span>
           <div class="activity-number"><%= @lessons.count + 1 %> actividades</div>
         </button>
-        
+
         <div class="dropdown-menu" id="<%= test.letter %>">
           <% @lessons.each do |lesson| %>
             <li>
@@ -68,7 +68,7 @@
                 <input name="test_letter" value="<%= test.letter %>" hidden>
                 <button type="submit" class="card lesson-card">
                   <div class="card-content">
-                    <h2><%= lesson.title %></h2>
+                    <span class="description"><%= lesson.title %></span>
                   </div>
                   <div class="card-divider"></div>
                   <span class="number"><%= lesson.number %></span>
@@ -90,7 +90,7 @@
           </form>
         </div>
       <% end %>
-    </div>  
+    </div>
   </main>
 
   <script>
