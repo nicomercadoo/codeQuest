@@ -4,12 +4,12 @@
 /* Styles for the progress bar section */
 
 .progress-container {
-    position: relative; 
+    position: relative;
     background-color: rgb(192, 192, 192);
-    width: 50%; 
-    max-width: 500px; 
+    width: 50%;
+    max-width: 500px;
     border-radius: 15px;
-    margin: 20px auto; 
+    margin: 20px auto;
 }
 
 .progress-bar {
@@ -19,17 +19,17 @@
 }
 
 .haskell-logo {
-    position: absolute; 
-    right: 0; 
-    top: 60%; 
+    position: absolute;
+    right: 0;
+    top: 60%;
     left: 101%;
-    transform: translateY(-50%); 
+    transform: translateY(-50%);
 }
 
 .haskell-logo img {
-    width: 30px; 
-    height: auto; 
-    margin-right: 10px; 
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
 }
 
 .section-line {
@@ -175,6 +175,10 @@
     align-items: flex-start;
 }
 
+.card-content .description {
+    font-size: 24px;
+}
+
 .lesson-card {
     width: 600px;
     height: 80px;
@@ -214,7 +218,7 @@
   font-family: 'Metropolis';
   margin: 45px auto;
   padding: 15px 25px;
-  border: none;   
+  border: none;
   border-radius: 15px;
   background-color: var(--primary-color);
   color: var(--secondary-text-color);
