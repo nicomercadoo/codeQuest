@@ -19,3 +19,4 @@ group :test do
 end
 
 gem 'simplecov'
+gem 'asciidoctor'
