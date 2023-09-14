@@ -13,11 +13,19 @@ main {
   padding-top: 30px;
   padding-right: 80px;
   padding-left: 80px;
+  padding-bottom: 30px;
 }
 
 h1 {
   text-align: center;
   font-size: 40px;
+}
+
+h2 {
+  text-align: left;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 15px;
 }
 
 li, a, button {
@@ -54,9 +62,9 @@ header {
 }
 
 .logo img {
-  width: 30px; 
-  height: auto; 
-  margin-right: 10px; 
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
 }
 
 .logo span {
