@@ -28,7 +28,7 @@
       </div>
     <% end %>
     <form class="form" method="post">
-      <input type="text" name="name" placeholder="Nombre" required>
+      <input type="text" name="name" placeholder="Nombre" required autofocus>
       <input type="text" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Contraseña" required>
       <input type="text" name="nickname" placeholder="Nickname" required>
@@ -38,5 +38,11 @@
       </div>
     </form>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Focus on the name input when the page loads
+        document.getElementById("username").focus();
+    });
+  </script>
 </body>
 </html>
