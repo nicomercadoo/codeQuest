@@ -29,6 +29,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    asciidoctor (2.0.20)
     concurrent-ruby (1.2.2)
     diff-lcs (1.5.0)
     docile (1.4.0)
@@ -80,6 +81,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  asciidoctor
   multi_json
   rack-session
   rack-test
