@@ -19,3 +19,5 @@ group :test do
 end
 
 gem 'simplecov'
+
+gem 'rack-test'

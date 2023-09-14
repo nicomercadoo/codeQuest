@@ -22,7 +22,7 @@ describe AccountLesson do
       lesson = Lesson.find_or_create_by(number: 1, title: "Title", description: "Description", test_letter: 'A')
       lesson.save
 
-      account_lesson = AccountLesson.new(lesson_completed: false, account_id: 1, lesson_id: 1)
+      account_lesson = AccountLesson.find_or_create_by(lesson_completed: false, account_id: 1, lesson_id: 1)
       account_lesson.save
     
       account = Account.find_by(id: 1)

@@ -20,10 +20,12 @@ describe AccountTest do
     end
 
     it "increases progress correctly when test is completed" do
+      account = Account.find_or_create_by(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', theme_light: 'dark')
+
       test = Test.find_or_create_by(letter: 'A', description: "Description", cant_questions: 5)
       test.save
 
-      account_test = AccountTest.new(test_completed: false, account_id: 1, test_id: 1)
+      account_test = AccountTest.find_or_create_by(test_completed: false, correct_questions: 0, account_id: 1, test_id: 1)
       account_test.save
     
       account = Account.find_by(id: 1)
