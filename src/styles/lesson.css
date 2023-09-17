@@ -5,14 +5,30 @@
 
 .text-container{
     color: var(--text-color);
-    width: 100%;
-    padding: 30px;
+    width: auto;
+    padding: 0px 200px;
 }
 
 p {
+    font-family: 'Open Sans';
     text-align: left;
     line-height: 1.5;
     font-size: 17px;
+}
+pre {
+    user-select: text;
+    color: var(--primary-color);
+    padding: 10px;
+    font-family: 'Cascadia Code';
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 1.45;
+    text-rendering: optimizeSpeed;
+    background-color: #ededed;
+    /* border-radius: 10px; */
+    border-color: #e3e3e3;
+    border-width: 1px;
+    border-style: solid;
 }
 
 /* Styles for the next lesson button */
@@ -21,6 +37,7 @@ p {
     position: relative;
     display: flex;
     justify-content: center;
+    margin: 60px 0px 30px 0px ;
 }
 
 .continue-button {

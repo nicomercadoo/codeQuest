@@ -4,6 +4,7 @@ require 'logger'
 require 'sinatra/activerecord'
 require 'sinatra/base'
 require 'rack/session/cookie'
+require 'asciidoctor'
 
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 
@@ -43,8 +44,16 @@ class App < Sinatra::Application
     end
   end
 
+  def log (msg, thing)
+    logger.info '*******************'
+    logger.info "#{msg}: "
+    logger.info thing
+    logger.info '*******************'
+  end
+
   set :views, File.join(File.dirname(__FILE__), 'views')
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
+  lessons_folder = File.join(File.dirname(__FILE__), 'lessons')
 
   get '/' do
     if session[:logged_in] == true
@@ -118,6 +127,18 @@ class App < Sinatra::Application
 
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
+
+      # Se obtiene el contenido de la leccion
+      lesson_file_name = "L-#{test_letter.upcase}-#{lesson_number.upcase}.adoc"
+      lesson_file_path = File.join(lessons_folder, lesson_file_name)
+      lesson_file_content = File.read lesson_file_path, mode: 'r:utf-8'
+
+      # Se renderiza el contenido
+      stylesheet_path = url('lesson.css')
+      @lesson_html_body = Asciidoctor.convert lesson_file_content, safe: :safe, attributes: { 'showtitle' => true,'stylesheet' => stylesheet_path }
+      # @lesson_html_body = Asciidoctor.convert lesson_file_content, safe: :safe, standalone: true
+
+      log "lesson_asciidoc", @lesson_html_body
 
       @test = Test.find_by(letter: test_letter)
       @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
@@ -489,6 +510,8 @@ class App < Sinatra::Application
       redirect "/"
     end
   end
+
+
 
 
 end
