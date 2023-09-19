@@ -2,16 +2,9 @@
 
 == ¿Qué es Haskell?
 
-Haskell es un lenguaje de programación puramente funcional. Se diferencia de varias formas:
+Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
 
-- Haskell es un lenguaje de programación funcional puro. Cuando se invoca una función usando los mismos argumentos devolverá el mismo resultado cada vez.
-- Haskell es perezoso. Las evaluaciones se realizan solo cuando es necesario.
-- Haskell proporciona un sistema de tipado moderno con características sofisticadas, como clases de tipos y tipos de datos algebraicos generalizados.
-- Haskell provee un sistema tipográfico moderno con funciones de última generación, como clases tipográficas y tipos de datos algebraicos generalizados.
-
-Haskell es divertido de usar porque tratar con funciones puras hace que el código sea mucho más fácil de razonar, y el sistema de tipo avanzado ayuda a detectar errores tontos y profundos.
-
-== Primera Función
+== Primera Funcion
 
 Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
 
