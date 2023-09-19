@@ -13,10 +13,12 @@ require_relative 'models/lesson'
 require_relative 'models/test'
 require_relative 'models/option'
 require_relative 'models/question'
+require_relative 'models/snippet'
 require_relative 'models/account_lesson'
 require_relative 'models/account_test'
 require_relative 'models/account_option'
 require_relative 'models/account_question'
+require_relative 'models/account_snippet'
 
 
 class App < Sinatra::Application
@@ -397,6 +399,20 @@ class App < Sinatra::Application
     end
   end
 
+  post '/snippets' do
+    if session[:logged_in] == true
+      account = Account.find(session[:account_id])
+  
+      if params[:snippet_code]
+        snippet = Snippet.create(code: params[:snippet_code], description: params[:snippet_description])
+        AccountSnippet.create(account_id: session[:account_id], snippet_id: snippet.id)
+      end
+    
+    else
+      redirect "/"
+    end
+  end
+  
 
   post '/home' do
     if params[:lesson_number]
