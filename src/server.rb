@@ -407,7 +407,7 @@ class App < Sinatra::Application
         snippet = Snippet.create(code: params[:snippet_code], description: params[:snippet_description])
         AccountSnippet.create(account_id: session[:account_id], snippet_id: snippet.id)
       end
-    
+      erb :snippets
     else
       redirect "/"
     end
