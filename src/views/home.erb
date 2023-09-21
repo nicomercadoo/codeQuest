@@ -30,6 +30,9 @@
 
   <main>
 
+    <h2 class="progress-title">Progreso</h2>
+    <div class="section-line"></div>
+
     <div class="progress-container">
       <% @id = session[:account_id] %>
       <% @account_progress = Account.find(@id).progress %>
@@ -46,6 +49,7 @@
       </div>
     <% end %>
 
+    <h2 class="section-title">Lecciones</h2>
     <div class="section-line"></div>
 
     <div class="button-stack">
@@ -92,7 +96,6 @@
       <% end %>
     </div>
   </main>
-
   <script>
     function toggleDropdown(letter) {
       var dropdown = document.getElementById(letter);
