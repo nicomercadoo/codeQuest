@@ -30,50 +30,45 @@
 
   <main>
     <form action="/snippets" method="post">
-      <button type="button" class="new-snippet-button" onclick="showInput()">Crear snippet</button>
-      <div id="inputContainer">
-        <div class="title-field">
-          <input type="text" name="snippet_description" placeholder="Descripción del snippet" />
-        </div>
-        <div class="input-field">
-          <div class="line-count" id="lineCount">1</div>
-          <textarea class="text-area" id="textInput" name="snippet_code" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
-        </div>
-        <div class="button-container">
-          <button class="save-button" type="submit">Guardar</button>
+      <div class="snippet-section">
+        <h2 class="section-title">Crear snippet</h2>
+        <div class="section-line"></div>
+        <div id="inputContainer">
+          <div class="title-field">
+            <input type="text" name="snippet_description" placeholder="Descripción del snippet" />
+          </div>
+          <div class="input-field">
+            <textarea class="text-area" id="textInput" name="snippet_code" placeholder="Ingresa tu snippet"></textarea>
+          </div>
+          <div class="save-button-container">
+            <button class="save-button" type="submit">Guardar</button>
+          </div>
         </div>
       </div>
-      <input type="hidden" name="authenticity_token" value="<%= session[:csrf] %>">
     </form>
+    <div class="snippet-section">
+      <h2 class="snippet-list-title">Tus snippets</h2>
+      <div class="section-line">
+      <div class="button-stack">
+        <button class="snippet-button">
+          <span class="snippet-title">Test 1</span>
+        </button>
+        <button class="snippet-button">
+          <span class="snippet-title">Test 2</span>
+        </button>
+      </div>    
+    </div>     
   </main>
-  
-  <script>
-    function toggleVisibility(element) {
-      element.style.visibility = element.style.visibility === 'visible' ? 'hidden' : 'visible';
-    }
+  <%# <script>
+    function toggleDropdown(letter) {
+      var dropdown = document.getElementById(letter);
 
-    function showInput() {
-      const titleField = document.querySelector('.title-field');
-      const inputField = document.querySelector('.input-field');
-      const buttonContainer = document.querySelector('.button-container');
-
-      toggleVisibility(titleField);
-      toggleVisibility(inputField);
-      toggleVisibility(buttonContainer);
-    } 
-
-    function updateLineCount() {
-      const textarea = document.getElementById('textInput');
-      const lineCount = document.getElementById('lineCount');
-      const lines = textarea.value.split('\n');
-      let lineNumbers = '';
-
-      for (let i = 0; i < lines.length; i++) {
-        lineNumbers += (i + 1) + ' \n';
+      if (dropdown.style.display === 'block') {
+        dropdown.style.display = 'none';
+      } else {
+        dropdown.style.display = 'block';
       }
-
-      lineCount.textContent = lineNumbers;
-    }
-  </script>
+    };
+  </script> %>
 </body>
 </html>
