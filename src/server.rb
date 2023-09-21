@@ -18,7 +18,6 @@ require_relative 'models/account_lesson'
 require_relative 'models/account_test'
 require_relative 'models/account_option'
 require_relative 'models/account_question'
-require_relative 'models/account_snippet'
 
 
 class App < Sinatra::Application
@@ -74,12 +73,6 @@ class App < Sinatra::Application
   get '/home' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       @tests = Test.all
 
       erb :home, locals: { tests: @tests }
@@ -103,16 +96,15 @@ class App < Sinatra::Application
     end
   end
 
+  before '/snippets' do
+    redirect "/" unless session[:logged_in]
+    @snippets = Snippet.where(account_id: session[:account_id])
+  end
+
   get '/snippets' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
-      erb :snippets
+      erb :snippets, locals: { snippets: @snippets }
     else
       redirect "/"
     end
@@ -402,12 +394,12 @@ class App < Sinatra::Application
   post '/snippets' do
     if session[:logged_in] == true
       account = Account.find(session[:account_id])
-  
+
       if params[:snippet_code]
-        snippet = Snippet.create(code: params[:snippet_code], description: params[:snippet_description])
-        AccountSnippet.create(account_id: session[:account_id], snippet_id: snippet.id)
+        snippet = Snippet.create(code: params[:snippet_code], description: params[:snippet_description], account_id: session[:account_id])
       end
-      erb :snippets
+
+      erb :snippets, locals: { snippets: @snippets }
     else
       redirect "/"
     end

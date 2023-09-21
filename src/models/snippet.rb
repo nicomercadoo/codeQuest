@@ -1,7 +1,7 @@
 class Snippet < ActiveRecord::Base
   validates :code, presence: true
+  validates :account_id, presence: true
 
-  has_many :accounts, through: :account_snippets
-  has_many :account_snippets
+  belongs_to :account
 
 end

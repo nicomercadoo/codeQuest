@@ -5,7 +5,9 @@
   <link rel="stylesheet" type="text/css" href="<%=url('snippets.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% if @theme == 'light' %>
+<% @id = session[:account_id] %>
+<% @account_theme = Account.find(@id).theme_light %>
+<% if @account_theme %>
   <style>@import url('color-scheme-light.css');</style>
 <% else %>
   <style>@import url('color-scheme-dark.css');</style>
@@ -49,15 +51,14 @@
     <div class="snippet-section">
       <h2 class="snippet-list-title">Tus snippets</h2>
       <div class="section-line">
+        <% @snippets.each do |snippet| %>
       <div class="button-stack">
-        <button class="snippet-button">
-          <span class="snippet-title">Test 1</span>
-        </button>
-        <button class="snippet-button">
-          <span class="snippet-title">Test 2</span>
-        </button>
+        <div class="snippet-button">
+          <span class="snippet-title"><%= snippet.description %></span>
+        </div>
       </div>    
-    </div>     
+      <% end %>     
+    </div>
   </main>
   <%# <script>
     function toggleDropdown(letter) {
