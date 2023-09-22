@@ -51,25 +51,32 @@
     <div class="snippet-section">
       <h2 class="snippet-list-title">Tus snippets</h2>
       <div class="section-line">
-        <% @snippets.each do |snippet| %>
-      <div class="button-stack">
-        <div class="snippet-button">
-          <span class="snippet-title"><%= snippet.description %></span>
+      <% @snippets.each do |snippet| %>
+        <div class="button-stack">
+          <div class="snippet-button" onclick="toggleDropdown('<%= snippet.id %>')">
+            <span class="snippet-title"><%= snippet.description %></span>
+          </div>
+            <div id="dropdown-<%= snippet.id %>" class="dropdown" style="display: none">
+            <div class="dropdown-content">
+              <div class="snippet-code-box">
+                <p><%= snippet.code %></p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>    
-      <% end %>     
+      <% end %>
     </div>
   </main>
-  <%# <script>
-    function toggleDropdown(letter) {
-      var dropdown = document.getElementById(letter);
+  <script>
+    function toggleDropdown(snippetId) {
+      var dropdown = document.getElementById('dropdown-' + snippetId);
 
-      if (dropdown.style.display === 'block') {
-        dropdown.style.display = 'none';
-      } else {
-        dropdown.style.display = 'block';
+      if (dropdown.style.display === 'none') {
+        dropdown.style.display = 'block';  
+      } else {    
+        dropdown.style.display = 'none';    
       }
     };
-  </script> %>
+  </script>
 </body>
 </html>
