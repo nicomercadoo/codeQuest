@@ -2,16 +2,16 @@ AccountTest = Class.new(ActiveRecord::Base)
 AccountLesson = Class.new(ActiveRecord::Base)
 AccountQuestion = Class.new(ActiveRecord::Base)
 AccountOption = Class.new(ActiveRecord::Base)
-
+Account = Class.new(ActiveRecord::Base)
 
 # Test A
-test_a = Test.create(letter: "A", description: "Introducción a Haskell", cant_questions: 5)
+test_a = Test.create(letter: "A", description: "Introducción al curso", cant_questions: 5)
 
-lesson_a1 = Lesson.create(number: 1, title: "Introducción a Haskell", path: "L-A-1.adoc", test_letter: test_a.letter)
-lesson_a2 = Lesson.create(number: 2, title: "Tipos de datos en Haskell", path: "L-A-2.adoc", test_letter: test_a.letter)
-lesson_a3 = Lesson.create(number: 3, title: "Funciones en Haskell", path: "L-A-3.adoc", test_letter: test_a.letter)
-lesson_a4 = Lesson.create(number: 4, title: "Listas en Haskell", path: "L-A-4.adoc", test_letter: test_a.letter)
-lesson_a5 = Lesson.create(number: 5, title: "Recursión en Haskell", path: "L-A-5.adoc", test_letter: test_a.letter)
+lesson_a1 = Lesson.create(number: 1, title: "Introducción a Haskell", test_letter: test_a.letter)
+lesson_a2 = Lesson.create(number: 2, title: "Obtener el entorno", test_letter: test_a.letter)
+lesson_a3 = Lesson.create(number: 3, title: "Variables y funciones", test_letter: test_a.letter)
+lesson_a4 = Lesson.create(number: 4, title: "Valores de verdad", test_letter: test_a.letter)
+lesson_a5 = Lesson.create(number: 5, title: "Tipos básicos", test_letter: test_a.letter)
 
 question_a1 = Question.create(number: 1, description: "¿Qué es Haskell?", test_letter: test_a.letter)
 question_a2 = Question.create(number: 2, description: "¿Cuál de estos no es un tipo de dato en Haskell?", test_letter: test_a.letter)
@@ -38,11 +38,11 @@ option_a15 = Option.create(number: 3, description: "Un tipo de dato en Haskell",
 # Test B
 test_b = Test.create(letter: "B", description: "Conceptos básicos", cant_questions: 5)
 
-lesson_b1 = Lesson.create(number: 1, title: "Conceptos básicos", path: "L-B-1.adoc", test_letter: test_b.letter)
-lesson_b2 = Lesson.create(number: 2, title: "Estructuras de control en Haskell", path: "L-B-2.adoc", test_letter: test_b.letter)
-lesson_b3 = Lesson.create(number: 3, title: "Módulos en Haskell", path: "L-B-3.adoc", test_letter: test_b.letter)
-lesson_b4 = Lesson.create(number: 4, title: "Manipulación de cadenas", path: "L-B-4.adoc", test_letter: test_b.letter)
-lesson_b5 = Lesson.create(number: 5, title: "Programación funcional avanzada", path: "L-B-5.adoc", test_letter: test_b.letter)
+lesson_b1 = Lesson.create(number: 1, title: "Introducción a Haskell", test_letter: test_b.letter)
+lesson_b2 = Lesson.create(number: 2, title: "Obtener el entorno", test_letter: test_b.letter)
+lesson_b3 = Lesson.create(number: 3, title: "Variables y funciones", test_letter: test_b.letter)
+lesson_b4 = Lesson.create(number: 4, title: "Valores de verdad", test_letter: test_b.letter)
+lesson_b5 = Lesson.create(number: 5, title: "Tipos básicos", test_letter: test_b.letter)
 
 question_b1 = Question.create(number: 1, description: "¿Cuál es el principal objetivo de Haskell?", test_letter: test_b.letter)
 question_b2 = Question.create(number: 2, description: "¿Cómo se realiza una estructura condicional en Haskell?", test_letter: test_b.letter)
@@ -69,11 +69,11 @@ option_b15 = Option.create(number: 3, description: "La transformación de funcio
 # Test C
 test_c = Test.create(letter: "C", description: "Programación funcional", cant_questions: 5)
 
-lesson_c1 = Lesson.create(number: 1, title: "Programación funcional", path: "L-C-1.adoc", test_letter: test_c.letter)
-lesson_c2 = Lesson.create(number: 2, title: "Recursión", path: "L-C-2.adoc", test_letter: test_c.letter)
-lesson_c3 = Lesson.create(number: 3, title: "Composición de funciones", path: "L-C-3.adoc", test_letter: test_c.letter)
-lesson_c4 = Lesson.create(number: 4, title: "Manejo de listas", path: "L-C-4.adoc", test_letter: test_c.letter)
-lesson_c5 = Lesson.create(number: 5, title: "Programación monádica", path: "L-C-5.adoc", test_letter: test_c.letter)
+lesson_c1 = Lesson.create(number: 1, title: "Programación funcional", test_letter: test_c.letter)
+lesson_c2 = Lesson.create(number: 2, title: "Recursión", test_letter: test_c.letter)
+lesson_c3 = Lesson.create(number: 3, title: "Composición de funciones", test_letter: test_c.letter)
+lesson_c4 = Lesson.create(number: 4, title: "Manejo de listas", test_letter: test_c.letter)
+lesson_c5 = Lesson.create(number: 5, title: "Programación monádica", test_letter: test_c.letter)
 
 question_c1 = Question.create(number: 1, description: "¿Qué es la programación funcional?", test_letter: test_c.letter)
 question_c2 = Question.create(number: 2, description: "¿Cuál es el concepto central de la recursión?", test_letter: test_c.letter)
@@ -100,11 +100,11 @@ option_c15 = Option.create(number: 3, description: "Un operador lógico en Haske
 # Test D
 test_d = Test.create(letter: "D", description: "Programación intermedia", cant_questions: 5)
 
-lesson_d1 = Lesson.create(number: 1, title: "Manejo de excepciones en Haskell", path: "L-D-1.adoc", test_letter: test_d.letter)
-lesson_d2 = Lesson.create(number: 2, title: "Programación monádica", path: "L-D-2.adoc", test_letter: test_d.letter)
-lesson_d3 = Lesson.create(number: 3, title: "Lectura y escritura de archivos en Haskell", path: "L-D-3.adoc", test_letter: test_d.letter)
-lesson_d4 = Lesson.create(number: 4, title: "Estructuras de datos avanzadas en Haskell", path: "L-D-4.adoc", test_letter: test_d.letter)
-lesson_d5 = Lesson.create(number: 5, title: "Programación funcional lazzy", path: "L-D-5.adoc", test_letter: test_d.letter)
+lesson_d1 = Lesson.create(number: 1, title: "Manejo de excepciones en Haskell", test_letter: test_d.letter)
+lesson_d2 = Lesson.create(number: 2, title: "Programación monádica", test_letter: test_d.letter)
+lesson_d3 = Lesson.create(number: 3, title: "Lectura y escritura de archivos en Haskell", test_letter: test_d.letter)
+lesson_d4 = Lesson.create(number: 4, title: "Estructuras de datos avanzadas en Haskell", test_letter: test_d.letter)
+lesson_d5 = Lesson.create(number: 5, title: "Programación funcional lazzy", test_letter: test_d.letter)
 
 question_d1 = Question.create(number: 1, description: "¿Cómo se manejan las excepciones en haskell?", test_letter: test_d.letter)
 question_d2 = Question.create(number: 2, description: "¿Qué es la programación monádica?", test_letter: test_d.letter)
@@ -131,11 +131,11 @@ option_d15 = Option.create(number: 3, description: "La evaluación se realiza en
 # Test E
 test_e = Test.create(letter: "E", description: "Programación avanzada", cant_questions: 5)
 
-lesson_e1 = Lesson.create(number: 1, title: "Tipos de datos avanzados", path: "L-E-1.adoc", test_letter: test_e.letter)
-lesson_e2 = Lesson.create(number: 2, title: "Programación funcional reactiva", path: "L-E-2.adoc", test_letter: test_e.letter)
-lesson_e3 = Lesson.create(number: 3, title: "Programación concurrente", path: "L-E-3.adoc", test_letter: test_e.letter)
-lesson_e4 = Lesson.create(number: 4, title: "Optimización y rendimiento", path: "L-E-4.adoc", test_letter: test_e.letter)
-lesson_e5 = Lesson.create(number: 5, title: "Dependencias externas y extensiones", path: "L-E-5.adoc", test_letter: test_e.letter)
+lesson_e1 = Lesson.create(number: 1, title: "Tipos de datos avanzados", test_letter: test_e.letter)
+lesson_e2 = Lesson.create(number: 2, title: "Programación funcional reactiva", test_letter: test_e.letter)
+lesson_e3 = Lesson.create(number: 3, title: "Programación concurrente", test_letter: test_e.letter)
+lesson_e4 = Lesson.create(number: 4, title: "Optimización y rendimiento", test_letter: test_e.letter)
+lesson_e5 = Lesson.create(number: 5, title: "Dependencias externas y extensiones", test_letter: test_e.letter)
 
 question_e1 = Question.create(number: 1, description: "¿Cuáles son los tipos de datos avanzados en Haskell?", test_letter: test_e.letter)
 question_e2 = Question.create(number: 2, description: "¿Qué es la programación funcional reactiva?", test_letter: test_e.letter)

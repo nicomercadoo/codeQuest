@@ -113,21 +113,10 @@ class App < Sinatra::Application
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
 
-      # Se obtiene el contenido de la leccion
-      lesson_file_name = "L-#{test_letter.upcase}-#{lesson_number.upcase}.adoc"
-      lesson_file_path = File.join(lessons_folder, lesson_file_name)
-      lesson_file_content = File.read lesson_file_path, mode: 'r:utf-8'
-
-      # Se renderiza el contenido
-      stylesheet_path = url('lesson.css')
-      @lesson_html_body = Asciidoctor.convert lesson_file_content, safe: :safe, attributes: { 'showtitle' => true,'stylesheet' => stylesheet_path }
-      # @lesson_html_body = Asciidoctor.convert lesson_file_content, safe: :safe, standalone: true
-
-      log "lesson_asciidoc", @lesson_html_body
-
       @test = Test.find_by(letter: test_letter)
       @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
+      @lesson_html_body = @lesson.content
 
       # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
@@ -148,6 +137,7 @@ class App < Sinatra::Application
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
 
+      # Progreso
       account = Account.find(session[:account_id])
       lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
