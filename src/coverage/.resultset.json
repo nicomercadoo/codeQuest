@@ -247,6 +247,7 @@
           1,
           1,
           1,
+          1,
           null,
           null,
           1,
@@ -303,12 +304,6 @@
           3,
           null,
           2,
-          2,
-          null,
-          0,
-          null,
-          null,
-          2,
           null,
           2,
           null,
@@ -333,12 +328,11 @@
           null,
           1,
           0,
-          null,
-          0,
           0,
           null,
-          0,
           null,
+          1,
+          0,
           null,
           0,
           null,
@@ -620,6 +614,20 @@
           0,
           0,
           0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
           null,
           0,
           null,
@@ -765,6 +773,8 @@
           1,
           1,
           1,
+          1,
+          1,
           null,
           null,
           1,
@@ -863,6 +873,17 @@
           1,
           1,
           1,
+          null
+        ]
+      },
+      "/src/models/snippet.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
           null
         ]
       },
@@ -973,6 +994,7 @@
         "lines": [
           1,
           null,
+          1,
           1,
           1,
           1,
@@ -1248,6 +1270,32 @@
           null
         ]
       },
+      "/src/spec/models/snippet_spec.rb": {
+        "lines": [
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
       "/src/spec/models/test_spec.rb": {
         "lines": [
           1,
@@ -1280,6 +1328,6 @@
         ]
       }
     },
-    "timestamp": 1694995620
+    "timestamp": 1695631728
   }
 }
