@@ -5,7 +5,9 @@
   <link rel="stylesheet" type="text/css" href="<%=url('home.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% if @theme == 'light' %>
+<% @id = session[:account_id] %>
+<% @account_theme = Account.find(@id).theme_light %>
+<% if @account_theme %>
   <style>@import url('color-scheme-light.css');</style>
 <% else %>
   <style>@import url('color-scheme-dark.css');</style>
@@ -30,6 +32,9 @@
 
   <main>
 
+    <h2 class="progress-title">Progreso</h2>
+    <div class="section-line"></div>
+
     <div class="progress-container">
       <% @id = session[:account_id] %>
       <% @account_progress = Account.find(@id).progress %>
@@ -46,6 +51,7 @@
       </div>
     <% end %>
 
+    <h2 class="section-title">Lecciones</h2>
     <div class="section-line"></div>
 
     <div class="button-stack">
@@ -92,7 +98,6 @@
       <% end %>
     </div>
   </main>
-
   <script>
     function toggleDropdown(letter) {
       var dropdown = document.getElementById(letter);

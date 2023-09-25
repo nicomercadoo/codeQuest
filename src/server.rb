@@ -4,6 +4,7 @@ require 'logger'
 require 'sinatra/activerecord'
 require 'sinatra/base'
 require 'rack/session/cookie'
+require 'asciidoctor'
 
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 
@@ -12,6 +13,7 @@ require_relative 'models/lesson'
 require_relative 'models/test'
 require_relative 'models/option'
 require_relative 'models/question'
+require_relative 'models/snippet'
 require_relative 'models/account_lesson'
 require_relative 'models/account_test'
 require_relative 'models/account_option'
@@ -43,8 +45,16 @@ class App < Sinatra::Application
     end
   end
 
+  def log (msg, thing)
+    logger.info '*******************'
+    logger.info "#{msg}: "
+    logger.info thing
+    logger.info '*******************'
+  end
+
   set :views, File.join(File.dirname(__FILE__), 'views')
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
+  lessons_folder = File.join(File.dirname(__FILE__), 'lessons')
 
   get '/' do
     if session[:logged_in] == true
@@ -62,12 +72,6 @@ class App < Sinatra::Application
 
   get '/home' do
     if session[:logged_in] == true
-
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
 
       @tests = Test.all
 
@@ -92,16 +96,15 @@ class App < Sinatra::Application
     end
   end
 
+  before '/snippets' do
+    redirect "/" unless session[:logged_in]
+    @snippets = Snippet.where(account_id: session[:account_id])
+  end
+
   get '/snippets' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
-      erb :snippets
+      erb :snippets, locals: { snippets: @snippets }
     else
       redirect "/"
     end
@@ -118,6 +121,18 @@ class App < Sinatra::Application
 
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
+
+      # Se obtiene el contenido de la leccion
+      lesson_file_name = "L-#{test_letter.upcase}-#{lesson_number.upcase}.adoc"
+      lesson_file_path = File.join(lessons_folder, lesson_file_name)
+      lesson_file_content = File.read lesson_file_path, mode: 'r:utf-8'
+
+      # Se renderiza el contenido
+      stylesheet_path = url('lesson.css')
+      @lesson_html_body = Asciidoctor.convert lesson_file_content, safe: :safe, attributes: { 'showtitle' => true,'stylesheet' => stylesheet_path }
+      # @lesson_html_body = Asciidoctor.convert lesson_file_content, safe: :safe, standalone: true
+
+      log "lesson_asciidoc", @lesson_html_body
 
       @test = Test.find_by(letter: test_letter)
       @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
@@ -376,6 +391,20 @@ class App < Sinatra::Application
     end
   end
 
+  post '/snippets' do
+    if session[:logged_in] == true
+      account = Account.find(session[:account_id])
+
+      if params[:snippet_code]
+        snippet = Snippet.create(code: params[:snippet_code], description: params[:snippet_description], account_id: session[:account_id])
+      end
+
+      erb :snippets, locals: { snippets: @snippets }
+    else
+      redirect "/"
+    end
+  end
+  
 
   post '/home' do
     if params[:lesson_number]
@@ -489,6 +518,8 @@ class App < Sinatra::Application
       redirect "/"
     end
   end
+
+
 
 
 end

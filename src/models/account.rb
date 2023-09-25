@@ -14,6 +14,8 @@ class Account < ActiveRecord::Base
   has_many :questions, through: :account_questions
   has_many :account_tests
   has_many :tests, through: :account_tests
+  has_many :account_snippets
+  has_many :snippets
 
 
   after_commit :actualizar_progreso
