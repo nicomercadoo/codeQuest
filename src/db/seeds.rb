@@ -5,7 +5,7 @@ AccountOption = Class.new(ActiveRecord::Base)
 Account = Class.new(ActiveRecord::Base)
 
 # Test A
-test_a = Test.create(letter: "A", description: "Introducción al curso", cant_questions: 5)
+test_a = Test.create(letter: "A", description: "Introducción", cant_questions: 5)
 
 lesson_a1 = Lesson.create(number: 1, title: "Introducción a Haskell", test_letter: test_a.letter)
 lesson_a2 = Lesson.create(number: 2, title: "Obtener el entorno", test_letter: test_a.letter)

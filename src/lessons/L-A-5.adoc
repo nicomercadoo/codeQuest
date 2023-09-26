@@ -1,4 +1,4 @@
-= Introducción a Haskell
+= Tipos básicos
 
 == ¿Qué es Haskell?
 
