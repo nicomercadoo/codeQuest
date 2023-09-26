@@ -28,10 +28,15 @@ h2 {
   margin-bottom: 15px;
 }
 
-li, a, button {
+a, button {
   font-family: 'Metropolis';
   font-weight: bold;
-  color: var(--secondary-text-color);
+  color: var(--secondary-text-color); /*lo deja en blanco cuando está en tema claro, checkear*/
+  text-decoration: none;
+}
+
+li {
+  font-family: 'Metropolis';
   text-decoration: none;
 }
 

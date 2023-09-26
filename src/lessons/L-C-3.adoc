@@ -1,4 +1,4 @@
-= Variables y funciones
+= Introducción a Haskell
 
 == ¿Qué es Haskell?
 

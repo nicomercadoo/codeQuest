@@ -1,4 +1,4 @@
-= Introducción a Haskell
+= Valores de verdad
 
 == ¿Qué es Haskell?
 

@@ -1,6 +1,6 @@
-= Variables y funciones
+= Hola
 
-== ¿Qué es Haskell?
+== Internal Pointer Viriable
 
 Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
 
