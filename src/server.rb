@@ -72,7 +72,6 @@ class App < Sinatra::Application
 
   get '/home' do
     if session[:logged_in] == true
-
       @tests = Test.all
 
       erb :home, locals: { tests: @tests }

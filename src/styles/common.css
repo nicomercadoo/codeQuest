@@ -133,6 +133,7 @@ header {
   color: inherit;
   cursor: pointer;
   transition: all 0.4s;
+  color: var(--secondary-text-color);
 }
 
 .no-style-button:hover {
