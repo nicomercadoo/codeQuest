@@ -6,3 +6,5 @@ src/db/schema.rb
 # macOS files
 
 .DS_Store
+
+src/coverage/

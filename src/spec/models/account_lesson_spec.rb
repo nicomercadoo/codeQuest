@@ -19,7 +19,7 @@ describe AccountLesson do
       test = Test.find_or_create_by(letter: 'A', description: "Description", cant_questions: 5)
       test.save
 
-      lesson = Lesson.find_or_create_by(number: 1, title: "Title", description: "Description", test_letter: 'A')
+      lesson = Lesson.find_or_create_by(number: 1, title: "Title", test_letter: 'A')
       lesson.save
 
       account_lesson = AccountLesson.find_or_create_by(lesson_completed: false, account_id: 1, lesson_id: 1)
