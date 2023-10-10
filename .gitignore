@@ -2,9 +2,9 @@
 
 src/db/*.sqlite3
 src/db/schema.rb
+src/coverage/
 
 # macOS files
 
 .DS_Store
 
-src/coverage/
