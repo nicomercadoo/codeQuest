@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title>codeQuest</title> 
+    <link rel="stylesheet" type="text/css" href="/profile.css"> 
+    <link rel="icon" type="image/png" href="/favicon2.png"> 
+</head>
+<%if @theme == 'light'%>
+    <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
+<% else %>
+    <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">
+<% end %>
+<body>
+  <header class="container">
+    <a href='/home'>
+      <h1 class="logo">
+        <img src="favicon2.png" alt="Logo">
+        <span>codeQuest</span>
+      </h1>
+    </a>
+    <nav class="nav-links">
+      <ul>
+        <li><a href="/home" class="nav-link">Inicio</a></li>
+        <li><a href="/profile" class="nav-link">Perfil</a></li>
+        <li><a href="/snippets" class="nav-link">Snippets</a></li>
+        <li><a href="/resources" class="current-page">Recursos</a></li>
+        <li><form action="/logout" method="post"><button type="submit" class="nav-link no-style-button">Salir</button></form></li>
+      </ul>
+    </nav>
+  </header>
+</body>  
