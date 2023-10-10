@@ -101,6 +101,21 @@ class App < Sinatra::Application
     end
   end
 
+  get '/resources' do
+    if session[:logged_in] == true
+
+      if session[:account_theme] == true
+        @theme = 'light'
+      else
+        @theme = 'dark'
+      end
+
+      erb :resources
+    else
+      redirect "/"
+    end
+  end
+
   get '/lesson/:test_letter/:lesson_number' do
     if session[:logged_in] == true
 
