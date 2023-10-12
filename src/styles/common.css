@@ -23,15 +23,20 @@ h1 {
 
 h2 {
   text-align: left;
-  font-size: 20px;
+  font-size: 22px;
   margin-top: 30px;
   margin-bottom: 15px;
 }
 
-li, a, button {
+a, button {
   font-family: 'Metropolis';
   font-weight: bold;
-  color: var(--secondary-text-color);
+  color: var(--secondary-text-color); /*lo deja en blanco cuando está en tema claro, checkear*/
+  text-decoration: none;
+}
+
+li {
+  font-family: 'Metropolis';
   text-decoration: none;
 }
 
@@ -128,6 +133,7 @@ header {
   color: inherit;
   cursor: pointer;
   transition: all 0.4s;
+  color: var(--secondary-text-color);
 }
 
 .no-style-button:hover {

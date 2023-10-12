@@ -4,7 +4,7 @@ describe Lesson do
   context "validations" do
 
     it "is valid with valid attributes" do
-      lesson = Lesson.new(number: 1, title: "Introduction", description: "This is an introduction lesson", test_letter: "A")
+      lesson = Lesson.new(number: 1, title: "Introduction", test_letter: "A")
       expect(lesson).to be_valid
     end
 
@@ -15,11 +15,6 @@ describe Lesson do
 
     it "is not valid without a title" do
       lesson = Lesson.new(title: nil)
-      expect(lesson).not_to be_valid
-    end
-
-    it "is not valid without a description" do
-      lesson = Lesson.new(description: nil)
       expect(lesson).not_to be_valid
     end
 

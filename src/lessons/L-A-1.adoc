@@ -1,0 +1,33 @@
+= Introducción a Haskell
+
+== ¿De qué se trata este curso?
+
+Este curso es una introducción a Haskell. Aprenderás los conceptos básicos de Haskell y cómo usarlo para escribir programas funcionales.
+
+Haskell es un lenguaje de programación puramente funcional. Se diferencia de varias formas:
+
+- Haskell es un lenguaje de programación funcional puro. Cuando se invoca una función usando los mismos argumentos devolverá el mismo resultado cada vez.
+- Haskell es perezoso. Las evaluaciones se realizan solo cuando es necesario.
+- Haskell proporciona un sistema de tipado moderno con características sofisticadas, como clases de tipos y tipos de datos algebraicos generalizados.
+- Haskell provee un sistema tipográfico moderno con funciones de última generación, como clases tipográficas y tipos de datos algebraicos generalizados.
+
+Haskell es divertido de usar porque tratar con funciones puras hace que el código sea mucho más fácil de razonar, y el sistema de tipo avanzado ayuda a detectar errores tontos y profundos.
+
+
+[source,haskell]
+----
+plus :: Int -> Int -> Int
+plus a b = a + b
+----
+
+Otro ejemplo puede ser:
+
+[source,haskell]
+----
+doublePlus :: Int -> Int -> Int
+doublePlus a b = 2 * (a + b)
+----
+
+== Resumen
+
+Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.

@@ -86,7 +86,7 @@ RSpec.describe 'Sinatra App' do
     
     Test.find_or_create_by(letter: 'A', description: "Description", cant_questions: 5)
 
-    Lesson.find_or_create_by(number: 1, title: "Title", description: "Description", test_letter: 'A')
+    Lesson.find_or_create_by(number: 1, title: "Title", test_letter: 'A')
  
     # Configura una sesión simulada con el usuario autenticado
     session = { logged_in: true, account_theme: true, account_id: 1 }

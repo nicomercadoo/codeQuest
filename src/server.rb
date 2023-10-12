@@ -4,6 +4,7 @@ require 'logger'
 require 'sinatra/activerecord'
 require 'sinatra/base'
 require 'rack/session/cookie'
+require 'asciidoctor'
 
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 
@@ -12,6 +13,7 @@ require_relative 'models/lesson'
 require_relative 'models/test'
 require_relative 'models/option'
 require_relative 'models/question'
+require_relative 'models/snippet'
 require_relative 'models/account_lesson'
 require_relative 'models/account_test'
 require_relative 'models/account_option'
@@ -43,32 +45,31 @@ class App < Sinatra::Application
     end
   end
 
+  def log (msg, thing)
+    logger.info '*******************'
+    logger.info "#{msg}: "
+    logger.info thing
+    logger.info '*******************'
+  end
+
   set :views, File.join(File.dirname(__FILE__), 'views')
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
+  lessons_folder = File.join(File.dirname(__FILE__), 'lessons')
 
   get '/' do
     if session[:logged_in] == true
       redirect '/home'
     else
-      @theme = 'light'
       erb :login
     end
   end
 
   get '/signup' do
-    @theme = 'light'
     erb :signup
   end
 
   get '/home' do
     if session[:logged_in] == true
-
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       @tests = Test.all
 
       erb :home, locals: { tests: @tests }
@@ -80,28 +81,21 @@ class App < Sinatra::Application
   get '/profile' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       erb :profile
     else
       redirect "/"
     end
   end
 
+  before '/snippets' do
+    redirect "/" unless session[:logged_in]
+    @snippets = Snippet.where(account_id: session[:account_id])
+  end
+
   get '/snippets' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
-      erb :snippets
+      erb :snippets, locals: { snippets: @snippets }
     else
       redirect "/"
     end
@@ -110,18 +104,13 @@ class App < Sinatra::Application
   get '/lesson/:test_letter/:lesson_number' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
 
       @test = Test.find_by(letter: test_letter)
       @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
+      @lesson_html_body = @lesson.content
 
       # Se obtiene la letra del test que se corresponde con la leccion
       related_test_letter = @lesson.test_letter
@@ -142,6 +131,7 @@ class App < Sinatra::Application
       # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
       @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
 
+      # Progreso
       account = Account.find(session[:account_id])
       lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
@@ -162,12 +152,6 @@ class App < Sinatra::Application
 
   get '/test/:test_letter/:question_number' do
     if session[:logged_in] == true
-
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
 
       test_letter = params[:test_letter]
       question_number = params[:question_number]
@@ -212,12 +196,6 @@ class App < Sinatra::Application
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       # Se obtienen todas las preguntas que estan relacionadas con el test
       questions = Question.where(test_letter: test_letter)
       # Se obtiene la ultima pregunta
@@ -250,12 +228,6 @@ class App < Sinatra::Application
     if session[:logged_in] == true
 
       test_letter = params[:test_letter]
-
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
 
       @test = Test.find_by(letter: test_letter)
       @questions = Question.all
@@ -376,6 +348,20 @@ class App < Sinatra::Application
     end
   end
 
+  post '/snippets' do
+    if session[:logged_in] == true
+      account = Account.find(session[:account_id])
+
+      if params[:snippet_code]
+        snippet = Snippet.create(code: params[:snippet_code], description: params[:snippet_description], account_id: session[:account_id])
+      end
+
+      erb :snippets, locals: { snippets: @snippets }
+    else
+      redirect "/"
+    end
+  end
+  
 
   post '/home' do
     if params[:lesson_number]
@@ -489,6 +475,8 @@ class App < Sinatra::Application
       redirect "/"
     end
   end
+
+
 
 
 end

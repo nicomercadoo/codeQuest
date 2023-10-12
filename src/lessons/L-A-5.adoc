@@ -1,0 +1,27 @@
+= Tipos básicos
+
+== ¿Qué es Haskell?
+
+Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+
+== Primera Funcion
+
+Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+
+[source,haskell]
+----
+plus :: Int -> Int -> Int
+plus a b = a + b
+----
+
+Otro ejemplo puede ser:
+
+[source,haskell]
+----
+doublePlus :: Int -> Int -> Int
+doublePlus a b = 2 * (a + b)
+----
+
+== Resumen
+
+Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
