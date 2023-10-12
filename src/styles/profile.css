@@ -6,10 +6,11 @@
 .profile-section {
     display: flex;
     flex-direction: column;
-    align-items: flex;
+    align-items: flex-start;
+    text-align: left;
     margin-bottom: 70px;
     margin-top: 1px;
-    width: auto;
+    width: 100%;
 }
 
 .section-title {
@@ -27,8 +28,8 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.theme-button {
-    margin-top: 15px;
+.change-button {
+    margin-top: 10px;
     padding: 8px 16px;
     background-color: var(--primary-color);
     color: white;
@@ -38,7 +39,6 @@
     font-size: 16px;
     transition: transform 0.2s;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 348px;
 }
 
 .change-button:hover {
@@ -47,15 +47,13 @@
 
 .section-title,
 .change-button {
-    margin-left: 350px; 
+    margin-left: 350px;
 }
 
 .button-form-container {
-    margin-top: 5px;
-    position: relative;
     display: flex;
     align-items: center;
-    margin-left: 330px;
+    margin-left: 0;
 }
 
 /* Styles for the input of new data */

@@ -32,38 +32,13 @@
     margin-right: 10px;
 }
 
-.profile-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex;
-    margin-bottom: 70px;
-    margin-top: 1px;
-    width: auto;
-}
-
-.section-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 50px;
-    margin-left: 347px;
-    color: var(--primary-color);
-}
-
-.progress-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-left: 347px;
-    color: var(--primary-color);
-}
-
 .section-line {
     width: 700px;
     height: 2px;
     background-color: var(--accent-color);
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 35px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }

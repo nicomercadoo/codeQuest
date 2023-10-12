@@ -5,9 +5,7 @@
   <link rel="stylesheet" type="text/css" href="<%=url('test.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% @id = session[:account_id] %>
-<% @account_theme = Account.find(@id).theme_light %>
-<% if @account_theme %>
+<% if @theme == 'light' %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
 <% else %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">

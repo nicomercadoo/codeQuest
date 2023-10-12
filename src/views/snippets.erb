@@ -5,9 +5,7 @@
   <link rel="stylesheet" type="text/css" href="<%=url('snippets.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% @id = session[:account_id] %>
-<% @account_theme = Account.find(@id).theme_light %>
-<% if @account_theme %>
+<% if @theme == 'light' %>
   <style>@import url('color-scheme-light.css');</style>
 <% else %>
   <style>@import url('color-scheme-dark.css');</style>
@@ -31,52 +29,47 @@
   </header>
 
   <main>
-    <form action="/snippets" method="post">
-      <div class="snippet-section">
-        <h2 class="section-title">Crear snippet</h2>
-        <div class="section-line"></div>
-        <div id="inputContainer">
-          <div class="title-field">
-            <input type="text" name="snippet_description" placeholder="Descripción del snippet" />
-          </div>
-          <div class="input-field">
-            <textarea class="text-area" id="textInput" name="snippet_code" placeholder="Ingresa tu snippet"></textarea>
-          </div>
-          <div class="save-button-container">
-            <button class="save-button" type="submit">Guardar</button>
-          </div>
-        </div>
+    <button class="new-snippet-button" onclick="showInput()">Crear snippet</button>
+    <div id="inputContainer">
+      <div class="title-field">
+        <input type="text" placeholder="Titulo del snippet" />
       </div>
-    </form>
-    <div class="snippet-section">
-      <h2 class="snippet-list-title">Tus snippets</h2>
-      <div class="section-line">
-      <% @snippets.each do |snippet| %>
-        <div class="button-stack">
-          <div class="snippet-button" onclick="toggleDropdown('<%= snippet.id %>')">
-            <span class="snippet-title"><%= snippet.description %></span>
-          </div>
-            <div id="dropdown-<%= snippet.id %>" class="dropdown" style="display: none">
-            <div class="dropdown-content">
-              <div class="snippet-code-box">
-                <p><%= snippet.code %></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
+      <div class="input-field">
+        <div class="line-count" id="lineCount">1</div>
+        <textarea class="text-area" id="textInput" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
+      </div>
+      <div class="button-container">
+        <button class="save-button">Guardar</button>
+      </div>
     </div>
-  </main>
+  </main>  
   <script>
-    function toggleDropdown(snippetId) {
-      var dropdown = document.getElementById('dropdown-' + snippetId);
+    function toggleVisibility(element) {
+      element.style.visibility = element.style.visibility === 'visible' ? 'hidden' : 'visible';
+    }
 
-      if (dropdown.style.display === 'none') {
-        dropdown.style.display = 'block';  
-      } else {    
-        dropdown.style.display = 'none';    
+    function showInput() {
+      const titleField = document.querySelector('.title-field');
+      const inputField = document.querySelector('.input-field');
+      const buttonContainer = document.querySelector('.button-container');
+
+      toggleVisibility(titleField);
+      toggleVisibility(inputField);
+      toggleVisibility(buttonContainer);
+    } 
+
+    function updateLineCount() {
+      const textarea = document.getElementById('textInput');
+      const lineCount = document.getElementById('lineCount');
+      const lines = textarea.value.split('\n');
+      let lineNumbers = '';
+
+      for (let i = 0; i < lines.length; i++) {
+        lineNumbers += (i + 1) + ' \n';
       }
-    };
+
+      lineCount.textContent = lineNumbers;
+    }
   </script>
 </body>
 </html>
