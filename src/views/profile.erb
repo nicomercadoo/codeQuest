@@ -5,7 +5,9 @@
   <link rel="stylesheet" type="text/css" href="<%=url('profile.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% if @theme == 'light' %>
+<% @id = session[:account_id] %>
+<% @account_theme = Account.find(@id).theme_light %>
+<% if @account_theme %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
 <% else %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">
@@ -65,7 +67,7 @@
     <div class="profile-section">
       <h2 class="section-title">Modo oscuro</h2>
       <div class="section-line"></div>
-      <% if @theme == 'light' %>
+      <% if @account_theme %>
         <form action= "/profile" method="post">
           <button class="theme-button" type="submit">Activar</button>
           <input type="hidden" name="theme" value="light">

@@ -60,13 +60,11 @@ class App < Sinatra::Application
     if session[:logged_in] == true
       redirect '/home'
     else
-      @theme = 'light'
       erb :login
     end
   end
 
   get '/signup' do
-    @theme = 'light'
     erb :signup
   end
 
@@ -82,12 +80,6 @@ class App < Sinatra::Application
 
   get '/profile' do
     if session[:logged_in] == true
-
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
 
       erb :profile
     else
@@ -111,12 +103,6 @@ class App < Sinatra::Application
 
   get '/lesson/:test_letter/:lesson_number' do
     if session[:logged_in] == true
-
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
 
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
@@ -167,12 +153,6 @@ class App < Sinatra::Application
   get '/test/:test_letter/:question_number' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       test_letter = params[:test_letter]
       question_number = params[:question_number]
 
@@ -216,12 +196,6 @@ class App < Sinatra::Application
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       # Se obtienen todas las preguntas que estan relacionadas con el test
       questions = Question.where(test_letter: test_letter)
       # Se obtiene la ultima pregunta
@@ -254,12 +228,6 @@ class App < Sinatra::Application
     if session[:logged_in] == true
 
       test_letter = params[:test_letter]
-
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
 
       @test = Test.find_by(letter: test_letter)
       @questions = Question.all
