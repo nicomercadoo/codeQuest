@@ -47,6 +47,10 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 20px 10%;
+
+  > a {
+    color: var(--secondary-text-color);
+  }
 }
 
 .container {
