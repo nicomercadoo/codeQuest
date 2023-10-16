@@ -28,52 +28,57 @@
   </header>
 
   <main>
+    <!-- Titulo -->
+    <h1 id="test-title">Test <%= @test.letter %></h1>
     <!-- Pregunta -->
-    <div class="question-box">
-      <div class="question">
-        <b><%= @question.description %></b>
-      </div>
-    </div>
-    <form action="/submit_answer" method="post">
-      <input name="question_number" value="<%= @question.number %>" hidden>
-      <input name="test_letter" value="<%= @test.letter %>" hidden>
+    <section id="question-sec">
+      <%= @question.content %>
+    </section>
+    <!-- Respuesta -->
+    <section id="answer-sec">
       <!-- Opciones de respuesta -->
+      <h2>Tu respuesta:</h2>
       <% @options.each do |option| %>
-        <label class="option-button">
-          <input type="radio" name="selected_option" value="<%= option.number %>" hidden>
-          <b><%= option.description %></b>
-        </label>
+      <label class="option-button">
+        <input form="user-answer" type="radio" name="selected_option" value="<%= option.number %>" hidden>
+        <%= option.content %>
+      </label>
       <% end %>
       <!-- Botón de envío -->
-      <div class="answer-button" id="answerButton">
-        <button type="submit"><b>Responder</b></button>
-      </div>
-    </form>
+      <input form="user-answer" name="question_number" value="<%= @question.number %>" hidden>
+      <input form="user-answer" name="test_letter" value="<%= @test.letter %>" hidden>
+    </section>
+    <div class="answer-button-container" >
+      <button form="user-answer" type="submit" class="answer-button" id="answerButton" disabled="disabled"><b>Responder</b></button>
+    </div>
+    <form id="user-answer" action="/submit_answer" method="post" hidden></form>
+
   </main>
   <script>
     const answerButton = document.getElementById('answerButton');
     const optionButtons = document.querySelectorAll('.option-button');
-  
+
     optionButtons.forEach(function(button) {
       button.addEventListener('click', function() {
         // Remove the 'selected' class from all option buttons
         optionButtons.forEach(function(btn) {
           btn.classList.remove('selected');
         });
-  
+
         // Add the 'selected' class to the clicked option button
         button.classList.add('selected');
-        
-        answerButton.classList.remove('active', 'answer-button-animation');
+
+        answerButton.classList.remove('enabled', 'answer-button-animation');
         setTimeout(function() {
-          answerButton.classList.add('active', 'answer-button-animation');
+          answerButton.classList.add('enabled', 'answer-button-animation');
+          answerButton.removeAttribute('disabled');
         }, 10);
       });
     });
-  
+
     answerButton.addEventListener('click', function() {
-      answerButton.classList.toggle('active');
+      answerButton.classList.toggle('enabled');
     });
-  </script>  
+  </script>
 </body>
 </html>
