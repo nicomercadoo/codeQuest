@@ -49,6 +49,31 @@ header {
   padding: 20px 10%;
 }
 
+p {
+  font-family: 'Open Sans';
+  text-align: left;
+  line-height: 1.5;
+  font-size: 17px;
+}
+
+pre {
+  user-select: text;
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+  padding: 10px;
+  font-family: 'Cascadia Code';
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 1.45;
+  text-rendering: optimizeSpeed;
+  border-color: #e3e3e3;
+  border-width: 1px;
+  border-style: solid;
+  max-width: 100%;
+  min-width: 200px;
+  overflow-x: auto;
+}
+
 .container {
   display: flex;
   align-items: center;
