@@ -1,0 +1,16 @@
+// QUESTION 1 (TEST A)
+
+== ¿Qué devuelve la función?
+
+Dada la siguiente función:
+[source,haskell]
+----
+plus :: Int -> Int -> Int
+plus a b = a + b
+----
+
+Que devuelve la siguiente invocación?
+----
+plus 2 3
+
+----
