@@ -16,39 +16,19 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 8px;
+    margin-left: 350px;
     color: var(--primary-color);
 }
 
 .section-line {
-    width: 700px;
+    width: 50%;
     height: 2px;
     background-color: var(--accent-color);
     margin-left: 350px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.theme-button {
-    margin-top: 15px;
-    padding: 8px 16px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: transform 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 348px;
-}
-
-.change-button:hover {
-    transform: scale(1.11);
-}
-
-.section-title,
-.change-button {
-    margin-left: 350px; 
-}
+/* Styles for the input of new data */
 
 .button-form-container {
     margin-top: 5px;
@@ -57,8 +37,6 @@
     align-items: center;
     margin-left: 330px;
 }
-
-/* Styles for the input of new data */
 
 .text-form input {
     font-family: 'Metropolis';
@@ -80,7 +58,7 @@
 .save-button {
     margin-left: 20px;
     padding: 8px 16px;
-    background-color: #4CAF50;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 10px;
@@ -91,5 +69,25 @@
 }
 
 .save-button:hover {
+    transform: scale(1.11);
+}
+
+/* Styles for the change theme button */
+
+.theme-button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 348px;
+}
+
+.theme-button:hover {
     transform: scale(1.11);
 }

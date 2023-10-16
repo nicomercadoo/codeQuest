@@ -22,7 +22,7 @@
 }
 
 .section-line {
-    width: 700px;
+    width: 50%;
     height: 2px;
     background-color: var(--accent-color);
     margin-left: 350px;

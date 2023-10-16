@@ -31,7 +31,7 @@ h2 {
 a, button {
   font-family: 'Metropolis';
   font-weight: bold;
-  color: var(--secondary-text-color); /*lo deja en blanco cuando está en tema claro, checkear*/
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -47,10 +47,10 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 20px 10%;
+}
 
-  > a {
-    color: var(--secondary-text-color);
-  }
+header a {
+  color: var(--secondary-text-color);
 }
 
 .container {
@@ -128,7 +128,7 @@ header {
   pointer-events: none;
 }
 
-.no-style-button {
+.logout-button {
   border: none;
   background-color: transparent;
   padding: 0;
@@ -140,6 +140,6 @@ header {
   color: var(--secondary-text-color);
 }
 
-.no-style-button:hover {
+.logout-button:hover {
   text-decoration: none;
 }
