@@ -1,0 +1,48 @@
+@import url('font-sets.css');
+@import url('common.css');
+
+/* Styles for each section in the resources page */
+
+.resources-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 1px;
+    width: auto;
+    text-align: left;
+}
+
+.section-title {
+    margin-bottom: 8px;
+    color: var(--primary-color);
+    width: 698px;
+    text-align: left;
+}
+
+.section-line {
+    width: 50%;
+    height: 2px;
+    background-color: var(--accent-color);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resource-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    color: var(--primary-color);
+}
+
+.resource-list li {
+    font-size: 24px;
+    text-decoration: none;
+    margin: 0;
+    padding: 10px 15px;
+    color: var(--primary-color);
+}
+
+.resource-list li::marker {
+    color: var(--accent-color);
+}

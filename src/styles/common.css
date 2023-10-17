@@ -31,7 +31,7 @@ h2 {
 a, button {
   font-family: 'Metropolis';
   font-weight: bold;
-  color: var(--secondary-text-color); /*lo deja en blanco cuando está en tema claro, checkear*/
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -47,6 +47,35 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 20px 10%;
+  & a {
+    color: var(--secondary-text-color);
+  }
+}
+
+
+p {
+  font-family: 'Open Sans';
+  text-align: left;
+  line-height: 1.5;
+  font-size: 17px;
+}
+
+pre {
+  user-select: text;
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+  padding: 10px;
+  font-family: 'Cascadia Code';
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 1.45;
+  text-rendering: optimizeSpeed;
+  border-color: #e3e3e3;
+  border-width: 1px;
+  border-style: solid;
+  max-width: 100%;
+  min-width: 200px;
+  overflow-x: auto;
 }
 
 p {
@@ -72,6 +101,10 @@ pre {
   max-width: 100%;
   min-width: 200px;
   overflow-x: auto;
+}
+
+header a {
+  color: var(--secondary-text-color);
 }
 
 .container {
@@ -149,7 +182,7 @@ pre {
   pointer-events: none;
 }
 
-.no-style-button {
+.logout-button {
   border: none;
   background-color: transparent;
   padding: 0;
@@ -161,6 +194,6 @@ pre {
   color: var(--secondary-text-color);
 }
 
-.no-style-button:hover {
+.logout-button:hover {
   text-decoration: none;
 }
