@@ -4,36 +4,89 @@ AccountQuestion = Class.new(ActiveRecord::Base)
 AccountOption = Class.new(ActiveRecord::Base)
 Account = Class.new(ActiveRecord::Base)
 
+# lista de letras de los tests en el directorio /src/tests
+tests_letters = ('A'..'E').to_a
+
+tests_letters.each do |letter|
+    # Test
+    unless Dir.exist? "/src/tests/#{letter}"
+        next
+    end
+
+    test = nil
+    File.open("/src/tests/#{letter}/test-specs.txt", "r") do |f|
+        lines = f.readlines.map(&:chomp)
+        desc = lines[0][/description: (([[:ascii:]]|[á|é|í|ó|ú|ñ|Ñ])*)/,1]
+        cq = lines[1][/cant_questions: (\d)/,1].to_i
+
+        test = Test.create(letter: letter, description: desc, cant_questions: cq)
+    end
+
+    # Lesson
+    # Para cada test se crean las lecciones
+    l = 1
+    while File.exist?("/src/lessons/L-#{test.letter}-#{l}.adoc")
+        File.open ("/src/lessons/L-#{test.letter}-#{l}.adoc"), "r" do |f|
+            title = f.readline.chomp[/= (([[:ascii:]]|[á|é|í|ó|ú|ñ|Ñ])*)/,1]
+            lesson = Lesson.create(number: l, title: title, test_letter: test.letter)
+            l += 1
+        end
+    end
+
+    # Question
+    # Para cada test se crean las preguntas
+    q = 1
+    while File.exist?("/src/tests/A/Q-A-#{q}/Q-#{q}.adoc")
+        question = Question.create(number: q, description: "una descripcion", test_letter: test.letter)
+
+        # Option
+        # Para cada pregunta se crean las opciones
+        # Se asume la primera como correcta
+        o = 1
+        while File.exist?("/src/tests/A/Q-A-#{q}/Q-#{q}-O-#{o}.adoc")
+            option = Option.create(number: o, description: "una descripcion", correct: if o == 1 then true else false end, question_number: question.number, test_letter: test.letter)
+            o += 1
+        end
+        q += 1
+    end
+end
+
+
 # Test A
-test_a = Test.create(letter: "A", description: "Introducción", cant_questions: 5)
+# test_a = Test.create(letter: "A", description: "Introducción", cant_questions: 5)
 
-lesson_a1 = Lesson.create(number: 1, title: "Introducción a Haskell", test_letter: test_a.letter)
-lesson_a2 = Lesson.create(number: 2, title: "Obtener el entorno", test_letter: test_a.letter)
-lesson_a3 = Lesson.create(number: 3, title: "Variables y funciones", test_letter: test_a.letter)
-lesson_a4 = Lesson.create(number: 4, title: "Valores de verdad", test_letter: test_a.letter)
-lesson_a5 = Lesson.create(number: 5, title: "Tipos básicos", test_letter: test_a.letter)
+# lesson_a1 = Lesson.create(number: 1, title: "Introducción a Haskell", test_letter: test_a.letter)
+# lesson_a2 = Lesson.create(number: 2, title: "Obtener el entorno", test_letter: test_a.letter)
+# lesson_a3 = Lesson.create(number: 3, title: "Variables y funciones", test_letter: test_a.letter)
+# lesson_a4 = Lesson.create(number: 4, title: "Valores de verdad", test_letter: test_a.letter)
+# lesson_a5 = Lesson.create(number: 5, title: "Tipos básicos", test_letter: test_a.letter)
 
-question_a1 = Question.create(number: 1, description: "¿Qué es Haskell?", test_letter: test_a.letter)
-question_a2 = Question.create(number: 2, description: "¿Cuál de estos no es un tipo de dato en Haskell?", test_letter: test_a.letter)
-question_a3 = Question.create(number: 3, description: "¿Cómo se define una función?", test_letter: test_a.letter)
-question_a4 = Question.create(number: 4, description: "¿Cómo se crea una lista?", test_letter: test_a.letter)
-question_a5 = Question.create(number: 5, description: "¿Qué es la recursión?", test_letter: test_a.letter)
+# question_a1 = Question.create(number: 1, description: "¿Qué es Haskell?", test_letter: test_a.letter)
+# question_a2 = Question.create(number: 2, description: "¿Cuál de estos no es un tipo de dato en Haskell?", test_letter: test_a.letter)
+# question_a3 = Question.create(number: 3, description: "¿Cómo se define una función?", test_letter: test_a.letter)
+# question_a4 = Question.create(number: 4, description: "¿Cómo se crea una lista?", test_letter: test_a.letter)
+# question_a5 = Question.create(number: 5, description: "¿Qué es la recursión?", test_letter: test_a.letter)
 
-option_a1 = Option.create(number: 1, description: "Un lenguaje de programación funcional", correct: true, question_number: question_a1.number, test_letter: test_a.letter)
-option_a2 = Option.create(number: 2, description: "Un lenguaje de programación imperativo", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
-option_a3 = Option.create(number: 3, description: "Un lenguaje de programación orientado a objetos", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
-option_a4 = Option.create(number: 1, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
-option_a5 = Option.create(number: 2, description: "Bool", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
-option_a6 = Option.create(number: 3, description: "Arraylist", correct: true, question_number: question_a2.number, test_letter: test_a.letter)
-option_a7 = Option.create(number: 1, description: "Usando la palabra clave 'function'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
-option_a8 = Option.create(number: 2, description: "Usando el operador '=>'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
-option_a9 = Option.create(number: 3, description: "Usando el símbolo '->'", correct: true, question_number: question_a3.number, test_letter: test_a.letter)
-option_a10 = Option.create(number: 1, description: "Mediante un bucle", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
-option_a11 = Option.create(number: 2, description: "Usando la palabra clave 'list'", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
-option_a12 = Option.create(number: 3, description: "Mediante la notación de corchetes", correct: true, question_number: question_a4.number, test_letter: test_a.letter)
-option_a13 = Option.create(number: 1, description: "Un bucle que se llama a sí mismo", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
-option_a14 = Option.create(number: 2, description: "Una función que se llama a sí misma", correct: true, question_number: question_a5.number, test_letter: test_a.letter)
-option_a15 = Option.create(number: 3, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
+
+
+
+
+# option_a1 = Option.create(number: 1, description: "Un lenguaje de programación funcional", correct: true, question_number: question_a1.number, test_letter: test_a.letter)
+# option_a2 = Option.create(number: 2, description: "Un lenguaje de programación imperativo", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
+# option_a3 = Option.create(number: 3, description: "Un lenguaje de programación orientado a objetos", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
+# option_a16 = Option.create(number: 4, description: "alsdjflfk", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
+# option_a4 = Option.create(number: 1, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
+# option_a5 = Option.create(number: 2, description: "Bool", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
+# option_a6 = Option.create(number: 3, description: "Arraylist", correct: true, question_number: question_a2.number, test_letter: test_a.letter)
+# option_a7 = Option.create(number: 1, description: "Usando la palabra clave 'function'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
+# option_a8 = Option.create(number: 2, description: "Usando el operador '=>'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
+# option_a9 = Option.create(number: 3, description: "Usando el símbolo '->'", correct: true, question_number: question_a3.number, test_letter: test_a.letter)
+# option_a10 = Option.create(number: 1, description: "Mediante un bucle", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
+# option_a11 = Option.create(number: 2, description: "Usando la palabra clave 'list'", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
+# option_a12 = Option.create(number: 3, description: "Mediante la notación de corchetes", correct: true, question_number: question_a4.number, test_letter: test_a.letter)
+# option_a13 = Option.create(number: 1, description: "Un bucle que se llama a sí mismo", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
+# option_a14 = Option.create(number: 2, description: "Una función que se llama a sí misma", correct: true, question_number: question_a5.number, test_letter: test_a.letter)
+# option_a15 = Option.create(number: 3, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
 
 # Test B
 test_b = Test.create(letter: "B", description: "Conceptos básicos", cant_questions: 5)
@@ -51,7 +104,7 @@ question_b4 = Question.create(number: 4, description: "¿Cómo se concatenan cad
 question_b5 = Question.create(number: 5, description: "¿Cuál es el concepto de currificación en Haskell?", test_letter: test_b.letter)
 
 option_b1 = Option.create(number: 1, description: "Permitir la programación funcional", correct: true, question_number: question_b1.number, test_letter: test_b.letter)
-option_b2 = Option.create(number: 2, description: "Permitir la programación orientada a objetos", correct: false, question_number: question_a1.number, test_letter: test_b.letter)
+option_b2 = Option.create(number: 2, description: "Permitir la programación orientada a objetos", correct: false, question_number: question_b1.number, test_letter: test_b.letter)
 option_b3 = Option.create(number: 3, description: "Permitir la programación imperativa", correct: false, question_number: question_b1.number, test_letter: test_b.letter)
 option_b4 = Option.create(number: 1, description: "Mediante la estructura if-else", correct: true, question_number: question_b2.number, test_letter: test_b.letter)
 option_b5 = Option.create(number: 2, description: "Usando la palabra clave 'switch'", correct: false, question_number: question_b2.number, test_letter: test_b.letter)

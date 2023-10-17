@@ -49,23 +49,28 @@
         </div>
       </div>
     </form>
+    <div class="snippet-search">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar por descripción">
+      <button class="search-button" onclick="searchSnippets()">Buscar</button>
+    </div>
     <div class="snippet-section">
       <h2 class="snippet-list-title">Tus snippets</h2>
       <div class="section-line">
-      <% @snippets.each do |snippet| %>
         <div class="button-stack">
-          <div class="snippet-button" onclick="toggleDropdown('<%= snippet.id %>')">
-            <span class="snippet-title"><%= snippet.description %></span>
-          </div>
+          <% @snippets.each do |snippet| %>
+            <div class="snippet-button" onclick="toggleDropdown('<%= snippet.id %>')" data-title="<%= snippet.description %>">
+              <span class="snippet-title"><%= snippet.description %></span>
+            </div>
             <div id="dropdown-<%= snippet.id %>" class="dropdown" style="display: none">
-            <div class="dropdown-content">
-              <div class="snippet-code-box">
-                <p><%= snippet.code %></p>
+              <div class="dropdown-content">
+                <div class="snippet-code-box">
+                  <p><%= snippet.code %></p>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </main>
   <script>
@@ -79,5 +84,25 @@
       }
     };
   </script>
+  <script>
+    function searchSnippets() {
+      var searchInput = document.getElementById('searchInput');
+      var searchText = searchInput.value.toLowerCase();
+  
+      var snippetButtons = document.querySelectorAll('.snippet-button');
+  
+      snippetButtons.forEach(function(button) {
+        var snippetTitle = button.getAttribute('data-title').toLowerCase();
+        var snippetSection = button.closest('.snippet-button');
+  
+        if (snippetTitle.includes(searchText)) {
+          snippetSection.style.display = 'block'; // Muestra la sección
+        } else {
+          snippetSection.style.display = 'none'; // Oculta la sección
+        }
+      });
+    }
+  </script>
+  
 </body>
 </html>
