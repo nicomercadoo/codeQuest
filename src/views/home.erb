@@ -75,7 +75,7 @@
                 <input name="test_letter" value="<%= test.letter %>" hidden>
                 <button type="submit" class="card lesson-card">
                   <div class="card-content">
-                    <span class="description"><%= lesson.title %></span>
+                    <span class="title"><%= lesson.title %></span>
                   </div>
                   <div class="card-divider"></div>
                   <span class="number"><%= lesson.number %></span>
@@ -89,7 +89,7 @@
             <input name="question_number" value="<%= @questions.minimum(:number) %>" hidden>
             <button type="submit" class="card test-card">
               <div class="card-content">
-                <h2> <%= test.description %> </h2>
+                <span class="title">Test</span>
               </div>
               <div class="card-divider"></div>
               <span class="number"><%= test.letter %></span>
