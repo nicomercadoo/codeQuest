@@ -17,5 +17,27 @@ class Lesson < ActiveRecord::Base
     stylesheet_path = "/src/stylesheets/lesson.css"
     Asciidoctor.convert lesson_file_content, safe: :safe, attributes: { 'showtitle' => true,'stylesheet' => stylesheet_path }
   end
+
+  def getNextLesson
+    # Se obtiene la letra del test que se corresponde con la leccion
+    related_test_letter = test_letter
+
+    # Se obtienen todas las preguntas y las lecciones que estan relacionadas con el test
+    @questions = Question.where(test_letter: related_test_letter)
+    @lessons = Lesson.where(test_letter: related_test_letter)
+
+    # Se obtiene la ultima leccion
+    last_lesson_in_group = @lessons.last.number
+
+    # Se verifica si la leccion actual es la ultima
+    @current_is_last = number == last_lesson_in_group
+
+    # Se obtiene la (supuesta) proxima leccion
+    next_lesson = number + 1
+
+    # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
+    @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
+  end
+
 end
 

@@ -37,7 +37,7 @@
     </div>
 
     <div class="continue-button-container">
-      <a href="<%= @next_step %>"><button type="button" class="continue-button" onclick="updateProgress()"><%=@current_is_last ? "Hacer el Test" : "Siguiente"%></button></a>
+      <a href="<%= @lesson.getNextLesson %>"><button type="button" class="continue-button" onclick="updateProgress()"><%=@current_is_last ? "Hacer el Test" : "Siguiente"%></button></a>
     </div>
   </main>
 
