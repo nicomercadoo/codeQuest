@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Account < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true
@@ -16,7 +18,6 @@ class Account < ActiveRecord::Base
   has_many :tests, through: :account_tests
   has_many :account_snippets
   has_many :snippets
-
 
   after_commit :actualizar_progreso
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Lesson < ActiveRecord::Base
   validates :number, presence: true
   validates :title, presence: true
@@ -10,12 +12,13 @@ class Lesson < ActiveRecord::Base
   # Retorna el contenido de una leccion.
   def content
     # Se lee el archivo de la lección
-    lesson_file_path = File.join("/src/lessons", "L-#{test_letter}-#{number}.adoc")
+    lesson_file_path = File.join('/src/lessons', "L-#{test_letter}-#{number}.adoc")
     lesson_file_content = File.read lesson_file_path, mode: 'r:utf-8'
 
     # Se renderiza el contenido
-    stylesheet_path = "/src/stylesheets/lesson.css"
-    Asciidoctor.convert lesson_file_content, safe: :safe, attributes: { 'showtitle' => true,'stylesheet' => stylesheet_path }
+    stylesheet_path = '/src/stylesheets/lesson.css'
+    Asciidoctor.convert lesson_file_content, safe: :safe,
+                                             attributes: { 'showtitle' => true, 'stylesheet' => stylesheet_path }
   end
 
   def getNextLesson
@@ -38,6 +41,4 @@ class Lesson < ActiveRecord::Base
     # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
     @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
   end
-
 end
-

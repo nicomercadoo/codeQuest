@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Test < ActiveRecord::Base
   validates :letter, presence: true
   validates :description, presence: true

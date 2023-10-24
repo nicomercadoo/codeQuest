@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 require 'bundler/setup'
 require 'logger'
 require 'sinatra/activerecord'
-require 'sinatra/base'
 require 'rack/session/cookie'
 require 'asciidoctor'
 
@@ -19,24 +20,22 @@ require_relative 'models/account_test'
 require_relative 'models/account_option'
 require_relative 'models/account_question'
 
-
 class App < Sinatra::Application
-  def initialize(app = nil)
+  def initialize(_app = nil)
     super()
   end
 
   use Rack::Session::Cookie,  key: 'rack.session',
-                              expire_after: 60 * 60 * 24 * 7, #1 semana                            ,
+                              expire_after: 60 * 60 * 24 * 7, # 1 semana                            ,
                               secret: '93b88de68f9a312d4e33b6c62a58229016b001af8ce01ced7884ae26e03708cd53eaba82ecd3f1a140b21e6e573ae7391efcaa2a81190840e3fe5702daa2e66a'
 
   configure :production, :development do
     enable :logging
     enable :session
-    logger = Logger.new(STDOUT)
+    logger = Logger.new($stdout)
     logger.level = Logger::DEBUG if development?
     set :logger, logger
   end
-
 
   configure :development do
     register Sinatra::Reloader
@@ -45,7 +44,7 @@ class App < Sinatra::Application
     end
   end
 
-  def log (msg, thing)
+  def log(msg, thing)
     logger.info '*******************'
     logger.info "#{msg}: "
     logger.info thing
@@ -54,7 +53,7 @@ class App < Sinatra::Application
 
   set :views, File.join(File.dirname(__FILE__), 'views')
   set :public_folder, File.join(File.dirname(__FILE__), 'styles')
-  lessons_folder = File.join(File.dirname(__FILE__), 'lessons')
+  File.join(File.dirname(__FILE__), 'lessons')
 
   get '/' do
     if session[:logged_in] == true
@@ -74,7 +73,7 @@ class App < Sinatra::Application
 
       erb :home, locals: { tests: @tests }
     else
-      redirect "/"
+      redirect '/'
     end
   end
 
@@ -83,12 +82,12 @@ class App < Sinatra::Application
 
       erb :profile
     else
-      redirect "/"
+      redirect '/'
     end
   end
 
   before '/snippets' do
-    redirect "/" unless session[:logged_in]
+    redirect '/' unless session[:logged_in]
     @snippets = Snippet.where(account_id: session[:account_id])
   end
 
@@ -97,7 +96,7 @@ class App < Sinatra::Application
 
       erb :snippets, locals: { snippets: @snippets }
     else
-      redirect "/"
+      redirect '/'
     end
   end
 
@@ -106,7 +105,7 @@ class App < Sinatra::Application
 
       erb :resources
     else
-      redirect "/"
+      redirect '/'
     end
   end
 
@@ -118,7 +117,7 @@ class App < Sinatra::Application
 
       @test = Test.find_by(letter: test_letter)
       @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
-  
+
       @lesson_html_body = @lesson.content
 
       # Progreso
@@ -128,15 +127,13 @@ class App < Sinatra::Application
       if lesson
         accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
 
-        if accounts_lesson
-          # Actualizar el valor de lesson_completed
-          accounts_lesson.update(lesson_completed: true)
-        end
+        # Actualizar el valor de lesson_completed
+        accounts_lesson&.update(lesson_completed: true)
       end
 
       erb :lesson
     else
-      redirect "/"
+      redirect '/'
     end
   end
 
@@ -157,12 +154,12 @@ class App < Sinatra::Application
 
       # Verificar si todas las lecciones relacionadas con el test están completadas
       lessons.each do |lesson|
-        previous_lessons_completed = AccountLesson.exists?(lesson_id: lesson.id, account_id: account.id, lesson_completed: true)
+        previous_lessons_completed = AccountLesson.exists?(lesson_id: lesson.id, account_id: account.id,
+                                                           lesson_completed: true)
 
         # Redirigir al inicio si alguna lección relacionada no está completada
         redirect '/home?error=Previous-lessons-incompleted' unless previous_lessons_completed
       end
-
 
       if questions.exists?(number: question_number)
         # Encuentra la pregunta asociada al question_number y al test
@@ -170,14 +167,12 @@ class App < Sinatra::Application
 
         erb :test, locals: { test: @test, question: @question, options: @options }
       else
-        redirect "/"
+        redirect '/'
       end
     else
-      redirect "/"
+      redirect '/'
     end
   end
-
-
 
   get '/answer_status/:status/:test_letter/:question_number' do
     if session[:logged_in] == true
@@ -202,16 +197,15 @@ class App < Sinatra::Application
       else
 
         @lessons = Lesson.where(test_letter: test_letter.next)
-        next_lesson = @lessons.minimum(:number)
+        @lessons.minimum(:number)
         @url_redirect = "/test_status/#{test_letter}"
       end
 
       erb :answer_status
 
     else
-      redirect "/"
+      redirect '/'
     end
-
   end
 
   get '/test_status/:test_letter' do
@@ -225,7 +219,8 @@ class App < Sinatra::Application
 
       current_account_id = session[:account_id]
       existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
-      if !AccountQuestion.where(account_id: current_account_id, question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
+      if !AccountQuestion.where(account_id: current_account_id,
+                                question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
         # Todas las preguntas del test han sido respondidas correctamente
 
         existing_account_test.update(test_completed: true)
@@ -255,11 +250,9 @@ class App < Sinatra::Application
       erb :test_status
 
     else
-      redirect "/"
+      redirect '/'
     end
-
   end
-
 
   post '/signup' do
     # Retrieve the form data
@@ -273,18 +266,10 @@ class App < Sinatra::Application
     valid_name_format = /(?=(?:^\D*$)+)/
     valid_nickname_format = /(?=(?:^\S*$)+)/
 
-    unless (email =~ valid_email_format)
-      redirect '/signup?Invalid-email'
-    end
-    unless password =~ valid_password_format
-      redirect '/signup?Invalid-password'
-    end
-    unless name =~ valid_name_format
-      redirect '/signup?Invalid-name'
-    end
-    unless nickname =~ valid_nickname_format
-      redirect '/signup?Invalid-nickname'
-    end
+    redirect '/signup?Invalid-email' unless email =~ valid_email_format
+    redirect '/signup?Invalid-password' unless password =~ valid_password_format
+    redirect '/signup?Invalid-name' unless name =~ valid_name_format
+    redirect '/signup?Invalid-nickname' unless nickname =~ valid_nickname_format
 
     account = Account.find_by(email: email, password: password)
     account_with_nickname = Account.find_by(nickname: nickname)
@@ -292,9 +277,7 @@ class App < Sinatra::Application
     if account
       redirect '/signup?error=Account-already-exists'
     else
-      if account_with_nickname
-        redirect '/signup?error=Nickname-already-exists'
-      end
+      redirect '/signup?error=Nickname-already-exists' if account_with_nickname
       account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
 
       if account.save
@@ -316,7 +299,7 @@ class App < Sinatra::Application
 
         redirect '/home'
       else
-        erb :signup, locals: { error_message: "Error al crear cuenta" }
+        erb :signup, locals: { error_message: 'Error al crear cuenta' }
       end
     end
   end
@@ -340,18 +323,18 @@ class App < Sinatra::Application
 
   post '/snippets' do
     if session[:logged_in] == true
-      account = Account.find(session[:account_id])
+      Account.find(session[:account_id])
 
       if params[:snippet_code]
-        snippet = Snippet.create(code: params[:snippet_code], description: params[:snippet_description], account_id: session[:account_id])
+        Snippet.create(code: params[:snippet_code], description: params[:snippet_description],
+                       account_id: session[:account_id])
       end
 
       erb :snippets, locals: { snippets: @snippets }
     else
-      redirect "/"
+      redirect '/'
     end
   end
-  
 
   post '/home' do
     if params[:lesson_number]
@@ -376,14 +359,13 @@ class App < Sinatra::Application
       @questions = Question.all
       @options = Option.all
 
-
       # Encuentra la opción seleccionada por el usuario
-      selected_option = Option.find_by(number: selected_option_number, test_letter: test_letter, question_number: question_number)
+      selected_option = Option.find_by(number: selected_option_number, test_letter: test_letter,
+                                       question_number: question_number)
 
       correct_option = selected_option.correct
 
       current_account_id = session[:account_id]
-
 
       existing_account_option = AccountOption.find_by(account_id: current_account_id, question_id: @question.id)
 
@@ -418,13 +400,12 @@ class App < Sinatra::Application
       if next_question_number <= @questions.maximum(:number)
         redirect "/answer_status/#{correct_option ? 'correct' : 'incorrect'}/#{test_letter}/#{@question.number}"
       else
-        redirect "/home"
+        redirect '/home'
       end
 
     else
-      redirect "/"
+      redirect '/'
     end
-
   end
 
   post '/logout' do
@@ -438,17 +419,11 @@ class App < Sinatra::Application
     if session[:logged_in] == true
       account = Account.find(session[:account_id])
 
-      if params[:nicknameInput]
-        account.update(nickname: params[:nicknameInput])
-      end
+      account.update(nickname: params[:nicknameInput]) if params[:nicknameInput]
 
-      if params[:emailInput]
-        account.update(email: params[:emailInput])
-      end
+      account.update(email: params[:emailInput]) if params[:emailInput]
 
-      if params[:passwordInput]
-        account.update(password: params[:passwordInput])
-      end
+      account.update(password: params[:passwordInput]) if params[:passwordInput]
 
       if params[:theme] == 'dark'
         account.update(theme_light: true)
@@ -460,13 +435,9 @@ class App < Sinatra::Application
         session[:account_theme] = false
       end
 
-      redirect "/profile"
+      redirect '/profile'
     else
-      redirect "/"
+      redirect '/'
     end
   end
-
-
-
-
 end

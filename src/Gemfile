@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 ruby '2.7.5'
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 gem 'multi_json'
 
@@ -9,15 +11,16 @@ github 'sinatra/sinatra' do
   gem 'sinatra-contrib'
 end
 
+gem 'rack-session'
+gem 'rake'
 gem 'sinatra-activerecord'
 gem 'sqlite3'
-gem 'rake'
-gem 'rack-session'
 
 group :test do
   gem 'rspec'
 end
 
-gem 'simplecov'
 gem 'asciidoctor'
 gem 'rack-test'
+gem 'rubocop'
+gem 'simplecov'

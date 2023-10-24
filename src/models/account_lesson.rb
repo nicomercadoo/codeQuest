@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AccountLesson < ActiveRecord::Base
   validates :lesson_completed, inclusion: { in: [true, false] }
 
