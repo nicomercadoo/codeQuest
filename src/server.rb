@@ -104,12 +104,6 @@ class App < Sinatra::Application
   get '/resources' do
     if session[:logged_in] == true
 
-      if session[:account_theme] == true
-        @theme = 'light'
-      else
-        @theme = 'dark'
-      end
-
       erb :resources
     else
       redirect "/"
