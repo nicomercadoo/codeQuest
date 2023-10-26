@@ -26,19 +26,19 @@ class Lesson < ActiveRecord::Base
     related_test_letter = test_letter
 
     # Se obtienen todas las preguntas y las lecciones que estan relacionadas con el test
-    @questions = Question.where(test_letter: related_test_letter)
-    @lessons = Lesson.where(test_letter: related_test_letter)
+    questions = Question.where(test_letter: related_test_letter)
+    lessons = Lesson.where(test_letter: related_test_letter)
 
     # Se obtiene la ultima leccion
-    last_lesson_in_group = @lessons.last.number
+    last_lesson_in_group = lessons.last.number
 
     # Se verifica si la leccion actual es la ultima
-    @current_is_last = number == last_lesson_in_group
+    current_is_last = number == last_lesson_in_group
 
     # Se obtiene la (supuesta) proxima leccion
     next_lesson = number + 1
 
     # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
-    @next_step = @current_is_last ? "/test/#{related_test_letter}/#{@questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
+    next_step = current_is_last ? "/test/#{related_test_letter}/#{questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
   end
 end

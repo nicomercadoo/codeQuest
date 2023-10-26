@@ -115,14 +115,12 @@ class App < Sinatra::Application
       test_letter = params[:test_letter]
       lesson_number = params[:lesson_number]
 
-      @test = Test.find_by(letter: test_letter)
-      @lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
+      lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
-      @lesson_html_body = @lesson.content
+      lesson_html_body = lesson.content
 
       # Progreso
       account = Account.find(session[:account_id])
-      lesson = Lesson.find_by(test_letter: test_letter, number: lesson_number)
 
       if lesson
         accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
@@ -131,7 +129,7 @@ class App < Sinatra::Application
         accounts_lesson&.update(lesson_completed: true)
       end
 
-      erb :lesson
+      erb :lesson, locals: { lesson: lesson, lesson_content: lesson_html_body }
     else
       redirect '/'
     end
@@ -174,38 +172,21 @@ class App < Sinatra::Application
     end
   end
 
-  get '/answer_status/:status/:test_letter/:question_number' do
+  get '/:status/:test_letter/:question_number' do
     if session[:logged_in] == true
 
-      @status = params[:status]
+      status = params[:status]
       test_letter = params[:test_letter]
       question_number = params[:question_number].to_i
 
-      # Se obtienen todas las preguntas que estan relacionadas con el test
-      questions = Question.where(test_letter: test_letter)
-      # Se obtiene la ultima pregunta
-      last_question_in_group = questions.last.number
-      # Se verifica si la pregunta actual es la ultima
-      current_is_last = question_number == last_question_in_group
-      # Se obtiene la (supuesta) proxima pregunta
-      next_question_number = question_number + 1
+      question = Question.find_by(test_letter: test_letter, number: question_number)
 
-      @can_continue = !current_is_last && next_question_number <= questions.maximum(:number)
-
-      if @can_continue
-        @url_redirect = "/test/#{test_letter}/#{next_question_number}"
-      else
-
-        @lessons = Lesson.where(test_letter: test_letter.next)
-        @lessons.minimum(:number)
-        @url_redirect = "/test_status/#{test_letter}"
-      end
-
-      erb :answer_status
+      erb :answer_status, locals: { status: status, question: question }
 
     else
-      redirect '/'
+      redirect "/"
     end
+
   end
 
   get '/test_status/:test_letter' do
@@ -398,7 +379,7 @@ class App < Sinatra::Application
       next_question_number = @question.number
 
       if next_question_number <= @questions.maximum(:number)
-        redirect "/answer_status/#{correct_option ? 'correct' : 'incorrect'}/#{test_letter}/#{@question.number}"
+        redirect "/#{correct_option ? 'correct' : 'incorrect'}/#{test_letter}/#{@question.number}"
       else
         redirect '/home'
       end

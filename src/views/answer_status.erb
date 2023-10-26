@@ -30,7 +30,7 @@
   </header>
   <main>
     <h1>Tu respuesta es</h1>
-    <%if @status == 'correct'%>
+    <%if status == 'correct'%>
       <p class="status">CORRECTA</p>
       <p class="kaomoji">(/≧▽≦)/</p>
     <%else%>
@@ -38,9 +38,9 @@
       <p class="kaomoji">(╯︵╰,)</p>
     <%end%>
     <section class="buttons-section">
-      <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Continuar</button></a>
+      <a href="<%= question.aswered %>"><button type="button" class="continue-button">Continuar</button></a>
     </section>
-  </main>
+  </main>  
 </body>
 </html>
 

@@ -22,4 +22,26 @@ class Question < ActiveRecord::Base
     Asciidoctor.convert question_file_content, safe: :safe,
                                                attributes: { 'showtitle' => true, 'stylesheet' => stylesheet_path }
   end
+
+  def aswered
+    # Se obtienen todas las preguntas que estan relacionadas con el test
+    questions = Question.where(test_letter: test_letter)
+    # Se obtiene la ultima pregunta
+    last_question_in_group = questions.last.number
+    # Se verifica si la pregunta actual es la ultima
+    current_is_last = number == last_question_in_group
+    # Se obtiene la (supuesta) proxima pregunta
+    next_question_number = number + 1
+
+    can_continue = !current_is_last && next_question_number <= questions.maximum(:number)
+
+    if can_continue
+      return "/test/#{test_letter}/#{next_question_number}"
+    else
+      lessons = Lesson.where(test_letter: test_letter.next)
+      next_lesson = lessons.minimum(:number)
+      return "/test_status/#{test_letter}"
+    end
+  end
+
 end
