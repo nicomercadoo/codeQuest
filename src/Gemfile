@@ -24,3 +24,7 @@ gem 'asciidoctor'
 gem 'rack-test'
 gem 'rubocop'
 gem 'simplecov'
+
+group :development, :test do
+  gem 'database_cleaner'
+end

@@ -23,5 +23,20 @@ describe Lesson do
       lesson = Lesson.new(test_letter: nil)
       expect(lesson).not_to be_valid
     end
+
+    it 'should move on to the next lesson', type: :feature do 
+      first_lesson = Lesson.create(number: 1, title: 'Introduction', test_letter: 'A')
+      second_lesson = Lesson.create(number: 2, title: 'Conclusion', test_letter: 'A')
+      result = first_lesson.getNextLesson
+      expect(result).to eq("/lesson/A/2")
+    end
+
+    it 'should move on to the next lesson' do 
+      lesson = Lesson.create(number: 1, title: 'Introduction', test_letter: 'A')
+      question = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
+      result = lesson.getNextLesson
+      expect(result).to eq("/test/A/1")
+    end
+
   end
 end
