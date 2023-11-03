@@ -31,7 +31,7 @@ describe Lesson do
       expect(result).to eq("/lesson/A/2")
     end
 
-    it 'should move on to the next lesson' do 
+    it 'should not move on to the next lesson' do 
       lesson = Lesson.create(number: 1, title: 'Introduction', test_letter: 'A')
       question = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
       result = lesson.getNextLesson

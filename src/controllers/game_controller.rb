@@ -138,10 +138,10 @@ class GameController < Sinatra::Application
       question = Question.find_by(number: question_number, test_letter: test_letter)
       selected_option = Option.find_by(number: selected_option_number, test_letter: test_letter,
                                           question_number: question_number)
-      session = request.env['rack.session']
+      account_id = session[:account_id]
 
       # Metodo para verificar si la opcion elegida es correcta
-      answer_status = selected_option.choose_option(question, session)
+      answer_status = selected_option.choose_option(question, account_id)
       # Redirige segun corresponda 
       redirect question.submit_answer(answer_status)
     else

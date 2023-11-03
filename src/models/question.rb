@@ -49,8 +49,6 @@ class Question < ActiveRecord::Base
 
     if number <= questions.maximum(:number)
       return "/#{answer_status ? 'correct' : 'incorrect'}/#{test_letter}/#{number}"
-    else
-      return '/home'
     end
   end
 

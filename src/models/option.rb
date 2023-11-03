@@ -24,11 +24,10 @@ class Option < ActiveRecord::Base
                                              attributes: { 'showtitle' => true, 'stylesheet' => stylesheet_path }
   end
 
-  def choose_option(question, session)
-    account_id = session[:account_id]
+  def choose_option(question, account_id)
     account_option = AccountOption.find_or_create_by(account_id: account_id, question_id: question.id)
     account_option.update(option_id: id)
-    account_question = AccountQuestion.find_by(account_id: account_id, question_id: question.id)
+    account_question = AccountQuestion.find_or_create_by(account_id: account_id, question_id: question.id)
     # Verifica si la opción seleccionada es correcta
     if correct
       account_question.update(well_answered: true)
