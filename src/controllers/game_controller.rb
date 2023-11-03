@@ -135,55 +135,15 @@ class GameController < Sinatra::Application
       test_letter = params[:test_letter]
       selected_option_number = params[:selected_option]
 
-      @test = Test.find_by(letter: test_letter)
-      @question = Question.find_by(number: question_number, test_letter: test_letter)
-      @questions = Question.all
-      @options = Option.all
-
-      # Encuentra la opción seleccionada por el usuario
+      question = Question.find_by(number: question_number, test_letter: test_letter)
       selected_option = Option.find_by(number: selected_option_number, test_letter: test_letter,
-                                       question_number: question_number)
+                                          question_number: question_number)
+      account_id = session[:account_id]
 
-      correct_option = selected_option.correct
-
-      current_account_id = session[:account_id]
-
-      existing_account_option = AccountOption.find_by(account_id: current_account_id, question_id: @question.id)
-
-      # Me fijo si ya contestó esa pregunta
-      if existing_account_option
-        # Actualizo la tabla
-        existing_account_option.update(option_id: selected_option.id)
-      else
-        # Creo la opción en la tabla accounts_options
-        AccountOption.create(option_id: selected_option.id, account_id: current_account_id, question_id: @question.id)
-      end
-
-      # Verifica si la opción seleccionada es correcta
-      if correct_option
-
-        # Actualiza el estado de la pregunta para indicar que ha sido bien respondida
-        if @question
-          existing_account_question = AccountQuestion.find_by(account_id: current_account_id, question_id: @question.id)
-          existing_account_question.update(well_answered: true)
-        else
-          # Si @question es nulo, maneja el caso de error
-          redirect '/error_page'
-        end
-      else
-        existing_account_question = AccountQuestion.find_by(account_id: current_account_id, question_id: @question.id)
-        existing_account_question.update(well_answered: false)
-      end
-
-      @questions = Question.where(test_letter: test_letter)
-      next_question_number = @question.number
-
-      if next_question_number <= @questions.maximum(:number)
-        redirect "/#{correct_option ? 'correct' : 'incorrect'}/#{test_letter}/#{@question.number}"
-      else
-        redirect '/home'
-      end
-
+      # Metodo para verificar si la opcion elegida es correcta
+      answer_status = selected_option.choose_option(question, account_id)
+      # Redirige segun corresponda 
+      redirect question.submit_answer(answer_status)
     else
       redirect '/'
     end

@@ -23,7 +23,7 @@ class Question < ActiveRecord::Base
                                                attributes: { 'showtitle' => true, 'stylesheet' => stylesheet_path }
   end
 
-  def aswered
+  def get_next_question
     # Se obtienen todas las preguntas que estan relacionadas con el test
     questions = Question.where(test_letter: test_letter)
     # Se obtiene la ultima pregunta
@@ -41,6 +41,14 @@ class Question < ActiveRecord::Base
       lessons = Lesson.where(test_letter: test_letter.next)
       next_lesson = lessons.minimum(:number)
       return "/test_status/#{test_letter}"
+    end
+  end
+
+  def submit_answer(answer_status)
+    questions = Question.where(test_letter: test_letter)
+
+    if number <= questions.maximum(:number)
+      return "/#{answer_status ? 'correct' : 'incorrect'}/#{test_letter}/#{number}"
     end
   end
 
