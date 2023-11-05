@@ -1,5 +1,12 @@
 class RegisterController < Sinatra::Application
 
+  def log(msg, thing)
+    logger.info '*******************'
+    logger.info "#{msg}: "
+    logger.info thing
+    logger.info '*******************'
+  end
+
   set :views, '/src/views'
 
   post '/' do
@@ -30,46 +37,33 @@ class RegisterController < Sinatra::Application
     name = params[:name]
     nickname = params[:nickname]
 
-    valid_email_format = /^[a-zA-Z0-9_.+-]+@(gmail|outlook|hotmail|live)\.[a-z.]+$/
-    valid_password_format = /(?=(?:.*[A-Z].*)+)(?=(?:.*[a-z].*)+)(?=(?:.*\d.*)+)(?!(?:.*\s.*)+)^(?=.{8,}$).*/
-    valid_name_format = /(?=(?:^\D*$)+)/
-    valid_nickname_format = /(?=(?:^\S*$)+)/
+    validation = Account.validate_data(email, password, name, nickname)
 
-    redirect '/signup?Invalid-email' unless email =~ valid_email_format
-    redirect '/signup?Invalid-password' unless password =~ valid_password_format
-    redirect '/signup?Invalid-name' unless name =~ valid_name_format
-    redirect '/signup?Invalid-nickname' unless nickname =~ valid_nickname_format
+    redirect '/signup?Invalid-email' unless validation[:email]
+    redirect '/signup?Invalid-password' unless validation[:password]
+    redirect '/signup?Invalid-name' unless validation[:name]
+    redirect '/signup?Invalid-nickname' unless validation[:nickname]
 
-    account = Account.find_by(email: email, password: password)
-    account_with_nickname = Account.find_by(nickname: nickname)
+    # Debug
+    log 'Account data', params
+    log 'All Accounts', Account.all
+    log 'Account.find_by(nickname: nickname)', Account.find_by(nickname: nickname)
 
-    if account
-      redirect '/signup?error=Account-already-exists'
+    redirect '/signup?error=Account-already-exists'  if Account.find_by(email: email, password: password)
+    redirect '/signup?error=Nickname-already-exists' if Account.find_by(nickname: nickname)
+
+    account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
+
+    if account.save
+      session[:logged_in] = true
+      session[:account_id] = account.id
+      session[:account_theme] = account.theme_light
+
+      account.stuff
+
+      redirect '/home'
     else
-      redirect '/signup?error=Nickname-already-exists' if account_with_nickname
-      account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
-
-      if account.save
-        session[:logged_in] = true
-        session[:account_id] = account.id
-        session[:account_theme] = account.theme_light
-
-        Lesson.all.each do |lesson|
-          AccountLesson.create(account_id: account.id, lesson_id: lesson.id)
-        end
-
-        Question.all.each do |question|
-          AccountQuestion.create(account_id: account.id, question_id: question.id)
-        end
-
-        Test.all.each do |test|
-          AccountTest.create(account_id: account.id, test_id: test.id)
-        end
-
-        redirect '/home'
-      else
-        erb :signup, locals: { error_message: 'Error al crear cuenta' }
-      end
+      erb :signup, locals: { error_message: 'Error al crear cuenta' }
     end
   end
 

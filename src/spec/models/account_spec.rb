@@ -1,15 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../../models/init'
-require_relative '../../models/account'
-require_relative '../../models/lesson'
-require_relative '../../models/test'
-require_relative '../../models/option'
-require_relative '../../models/question'
-require_relative '../../models/account_lesson'
-require_relative '../../models/account_test'
-require_relative '../../models/account_option'
-require_relative '../../models/account_question'
 
 describe Account do
   describe 'Valid' do
@@ -18,8 +9,14 @@ describe Account do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
                               theme_light: 'dark')
+        # Act
+        validation = Account.validate_data(account.email, account.password, account.name, account.nickname)
+
         # Assert
-        expect(account.valid? && account.correct_format_of_fields?).to be_truthy
+        expect(validation[:email]).to be_truthy
+        expect(validation[:password]).to be_truthy
+        expect(validation[:name]).to be_truthy
+        expect(validation[:nickname]).to be_truthy
       end
     end
     context 'not valid situations' do
@@ -27,32 +24,44 @@ describe Account do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@yieil.com', password: 'Juanito32', nickname: 'juanito',
                               theme_light: 'dark')
+        # Act
+        validation = Account.validate_data(account.email, account.password, account.name, account.nickname)
+
         # Assert
-        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
+        expect(validation[:email]).to be_falsey
       end
 
       it 'should be invalid (password blame)' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'juanito3', nickname: 'juanito',
                               theme_light: 'dark')
+        # Act
+        validation = Account.validate_data(account.email, account.password, account.name, account.nickname)
+
         # Assert
-        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
+        expect(validation[:password]).to be_falsey
       end
 
       it 'should be invalid (nickname blame)' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'ju anito',
                               theme_light: 'dark')
+        # Act
+        validation = Account.validate_data(account.email, account.password, account.name, account.nickname)
+
         # Assert
-        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
+        expect(validation[:nickname]).to be_falsey
       end
 
       it 'should be invalid (name blame)' do
         # Arrange
         account = Account.new(name: 'Juanit0', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
                               theme_light: 'dark')
+        # Act
+        validation = Account.validate_data(account.email, account.password, account.name, account.nickname)
+
         # Assert
-        expect(account.valid? && account.correct_format_of_fields?).to be_falsey
+        expect(validation[:name]).to be_falsey
       end
     end
   end
