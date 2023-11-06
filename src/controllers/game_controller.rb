@@ -16,12 +16,13 @@ class GameController < Sinatra::Application
       # Progreso
       account = Account.find(session[:account_id])
 
-      if lesson
-        accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
+      # if lesson
+      #   accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
 
-        # Actualizar el valor de lesson_completed
-        accounts_lesson&.update(lesson_completed: true)
-      end
+      #   # Actualizar el valor de lesson_completed
+      #   accounts_lesson&.update(lesson_completed: true)
+      # end
+      AccountLesson.complete_lesson(lesson.id, account.id) if lesson
 
       erb :lesson, locals: { lesson: lesson, lesson_content: lesson_html_body }
     else
