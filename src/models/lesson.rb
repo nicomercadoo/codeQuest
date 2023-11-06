@@ -21,6 +21,22 @@ class Lesson < ActiveRecord::Base
                                              attributes: { 'showtitle' => true, 'stylesheet' => stylesheet_path }
   end
 
+  def self.present_lesson(session, test_letter, lesson_number)
+    lesson = find_by(test_letter: test_letter, number: lesson_number)
+
+    lesson_html_body = lesson.content
+
+    # Progreso
+    account = Account.find(session[:account_id])
+
+    if account
+      accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
+      accounts_lesson&.update(lesson_completed: true)
+    end
+
+    { lesson: lesson, lesson_content: lesson_html_body }
+  end
+
   def getNextLesson
     # Se obtiene la letra del test que se corresponde con la leccion
     related_test_letter = test_letter

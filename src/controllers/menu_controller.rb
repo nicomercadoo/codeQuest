@@ -1,6 +1,7 @@
 class MenuController < Sinatra::Application
 
   set :views, '/src/views'
+  set :public_folder, '/src/styles'
 
   get '/home' do
     if session[:logged_in] == true
