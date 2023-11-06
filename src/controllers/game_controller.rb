@@ -94,15 +94,16 @@ class GameController < Sinatra::Application
       @options = Option.all
 
       current_account_id = session[:account_id]
-      existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
-      if !AccountQuestion.where(account_id: current_account_id,
-                                question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
-        # Todas las preguntas del test han sido respondidas correctamente
+      # existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
+      # if !AccountQuestion.where(account_id: current_account_id,
+      #                           question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
+      #   # Todas las preguntas del test han sido respondidas correctamente
 
-        existing_account_test.update(test_completed: true)
-      else
-        existing_account_test.update(test_completed: false)
-      end
+      #   existing_account_test.update(test_completed: true)
+      # else
+      #   existing_account_test.update(test_completed: false)
+      # end
+      AccountTest.check_and_update_test_completion(current_account_id, test.id, questions, test_letter)
 
       # Obtengo todas las respuestas de la cuenta
       answers = AccountOption.where(account_id: current_account_id, option_id: @options.where(test_letter: test_letter))
