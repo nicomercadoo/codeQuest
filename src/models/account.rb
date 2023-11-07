@@ -21,6 +21,7 @@ class Account < ActiveRecord::Base
 
   after_commit :actualizar_progreso
 
+  # Valida si los datos que se pretenden guardar en una cuenta son válidos
   def self.validate_data(email, password, name, nickname)
     valid_email_format = /^[a-zA-Z0-9_.+-]+@(gmail|outlook|hotmail|live)\.[a-z.]+$/
     valid_password_format = /(?=(?:.*[A-Z].*)+)(?=(?:.*[a-z].*)+)(?=(?:.*\d.*)+)(?!(?:.*\s.*)+)^(?=.{8,}$).*/
@@ -30,6 +31,7 @@ class Account < ActiveRecord::Base
     {email: valid_email_format.match(email), password: valid_password_format.match(password), name: valid_name_format.match(name), nickname: valid_nickname_format.match(nickname)}
   end
 
+  # Crea los registros de las lecciones, preguntas y tests para la cuenta
   def stuff
     Lesson.all.each do |lesson|
       AccountLesson.create(account_id: self.id, lesson_id: lesson.id)
@@ -44,9 +46,8 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # Actualiza el progreso de la cuenta
   def actualizar_progreso
-    # Lógica para actualizar el progreso de la cuenta
-
     # Los capítulos valen el 100% del progreso (1 cap 100%, 2 caps 50%, etc)
     total_chapters = Test.distinct.count(:letter)
     total_progress = 100

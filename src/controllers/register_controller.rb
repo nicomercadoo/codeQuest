@@ -31,7 +31,6 @@ class RegisterController < Sinatra::Application
   end
 
   post '/signup' do
-    # Retrieve the form data
     email = params[:email]
     password = params[:password]
     name = params[:name]
@@ -39,15 +38,10 @@ class RegisterController < Sinatra::Application
 
     validation = Account.validate_data(email, password, name, nickname)
 
-    redirect '/signup?Invalid-email' unless validation[:email]
+    redirect '/signup?Invalid-email'    unless validation[:email]
     redirect '/signup?Invalid-password' unless validation[:password]
-    redirect '/signup?Invalid-name' unless validation[:name]
+    redirect '/signup?Invalid-name'     unless validation[:name]
     redirect '/signup?Invalid-nickname' unless validation[:nickname]
-
-    # Debug
-    log 'Account data', params
-    log 'All Accounts', Account.all
-    log 'Account.find_by(nickname: nickname)', Account.find_by(nickname: nickname)
 
     redirect '/signup?error=Account-already-exists'  if Account.find_by(email: email, password: password)
     redirect '/signup?error=Nickname-already-exists' if Account.find_by(nickname: nickname)
