@@ -1,15 +1,13 @@
 class MenuController < Sinatra::Application
 
   set :views, '/src/views'
+  set :public_folder, '/src/styles'
+  
 
   get '/home' do
-    if session[:logged_in] == true
-      @tests = Test.all
-
-      erb :home, locals: { tests: @tests }
-    else
-      redirect '/'
-    end
+    logged_in?
+    @tests = Test.all
+    erb :home, locals: { tests: @tests }
   end
   
   post '/home' do
@@ -25,76 +23,49 @@ class MenuController < Sinatra::Application
   end
 
   get '/profile' do
-    if session[:logged_in] == true
-      
-      erb :profile
-    else
-      redirect '/'
-    end
+    logged_in?
+    erb :profile
   end
 
   post '/profile' do
-    if session[:logged_in] == true
-      account = Account.find(session[:account_id])
+    logged_in?
+    account = Account.find(session[:account_id])
+    account.update(nickname: params[:nicknameInput]) if params[:nicknameInput]
+    account.update(email: params[:emailInput]) if params[:emailInput]
+    account.update(password: params[:passwordInput]) if params[:passwordInput]
 
-      account.update(nickname: params[:nicknameInput]) if params[:nicknameInput]
-
-      account.update(email: params[:emailInput]) if params[:emailInput]
-
-      account.update(password: params[:passwordInput]) if params[:passwordInput]
-
-      if params[:theme] == 'dark'
-        account.update(theme_light: true)
-        session[:account_theme] = true
-      end
-
-      if params[:theme] == 'light'
-        account.update(theme_light: false)
-        session[:account_theme] = false
-      end
-
-      redirect '/profile'
+    if params[:theme] == 'dark'
+      account.update(theme_light: true)
     else
-      redirect '/'
+      account.update(theme_light: false)
     end
+    redirect '/profile'
   end
 
   before '/snippets' do
-    redirect '/' unless session[:logged_in]
+    logged_in?
     @snippets = Snippet.where(account_id: session[:account_id])
   end
 
   get '/snippets' do
-    if session[:logged_in] == true
-
-      erb :snippets, locals: { snippets: @snippets }
-    else
-      redirect '/'
-    end
+    erb :snippets, locals: { snippets: @snippets }
   end
 
   post '/snippets' do
-    if session[:logged_in] == true
-      Account.find(session[:account_id])
-      
-      if params[:snippet_code]
-        Snippet.create(code: params[:snippet_code], description: params[:snippet_description],
-        account_id: session[:account_id])
-      end
-      
-      erb :snippets, locals: { snippets: @snippets }
-    else
-      redirect '/'
+    logged_in?
+    Account.find(session[:account_id])
+
+    if params[:snippet_code]
+      Snippet.create(code: params[:snippet_code], description: params[:snippet_description],
+      account_id: session[:account_id])
     end
+    
+    erb :snippets, locals: { snippets: @snippets }
   end
   
   get '/resources' do
-    if session[:logged_in] == true
-
-      erb :resources
-    else
-      redirect '/'
-    end
+    logged_in?
+    erb :resources
   end
 
   post '/logout' do
@@ -104,5 +75,8 @@ class MenuController < Sinatra::Application
     redirect '/'
   end
 
+  def logged_in?
+    redirect '/' unless session[:logged_in]
+  end
 
 end
