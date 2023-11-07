@@ -28,21 +28,22 @@ class Account < ActiveRecord::Base
     valid_name_format = /(?=(?:^\D*$)+)/
     valid_nickname_format = /(?=(?:^\S*$)+)/
 
-    {email: valid_email_format.match(email), password: valid_password_format.match(password), name: valid_name_format.match(name), nickname: valid_nickname_format.match(nickname)}
+    { email: valid_email_format.match(email), password: valid_password_format.match(password),
+      name: valid_name_format.match(name), nickname: valid_nickname_format.match(nickname) }
   end
 
   # Crea los registros de las lecciones, preguntas y tests para la cuenta
   def stuff
     Lesson.all.each do |lesson|
-      AccountLesson.create(account_id: self.id, lesson_id: lesson.id)
+      AccountLesson.create(account_id: id, lesson_id: lesson.id)
     end
 
     Question.all.each do |question|
-      AccountQuestion.create(account_id: self.id, question_id: question.id)
+      AccountQuestion.create(account_id: id, question_id: question.id)
     end
 
     Test.all.each do |test|
-      AccountTest.create(account_id: self.id, test_id: test.id)
+      AccountTest.create(account_id: id, test_id: test.id)
     end
   end
 

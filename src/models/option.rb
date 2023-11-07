@@ -31,11 +31,10 @@ class Option < ActiveRecord::Base
     # Verifica si la opción seleccionada es correcta
     if correct
       account_question.update(well_answered: true)
-      return true
+      true
     else
       account_question.update(well_answered: false)
-      return false
+      false
     end
   end
-
 end

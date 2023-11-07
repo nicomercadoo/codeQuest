@@ -35,21 +35,18 @@ class Question < ActiveRecord::Base
 
     can_continue = !current_is_last && next_question_number <= questions.maximum(:number)
 
-    if can_continue
-      return "/test/#{test_letter}/#{next_question_number}"
-    else
-      lessons = Lesson.where(test_letter: test_letter.next)
-      next_lesson = lessons.minimum(:number)
-      return "/test_status/#{test_letter}"
-    end
+    return "/test/#{test_letter}/#{next_question_number}" if can_continue
+
+    lessons = Lesson.where(test_letter: test_letter.next)
+    next_lesson = lessons.minimum(:number)
+    "/test_status/#{test_letter}"
   end
 
   def submit_answer(answer_status)
     questions = Question.where(test_letter: test_letter)
 
-    if number <= questions.maximum(:number)
-      return "/#{answer_status ? 'correct' : 'incorrect'}/#{test_letter}/#{number}"
-    end
-  end
+    return unless number <= questions.maximum(:number)
 
+    "/#{answer_status ? 'correct' : 'incorrect'}/#{test_letter}/#{number}"
+  end
 end

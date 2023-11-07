@@ -1,5 +1,4 @@
 class RegisterController < Sinatra::Application
-
   def log(msg, thing)
     logger.info '*******************'
     logger.info "#{msg}: "
@@ -60,5 +59,4 @@ class RegisterController < Sinatra::Application
       erb :signup, locals: { error_message: 'Error al crear cuenta' }
     end
   end
-
 end

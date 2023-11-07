@@ -24,30 +24,29 @@ describe Question do
       expect(question).not_to be_valid
     end
 
-    it 'should move on to the next question' do 
+    it 'should move on to the next question' do
       question1 = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
       question2 = Question.create(number: 2, description: 'Is this a question?', test_letter: 'A')
       result = question1.get_next_question
-      expect(result).to eq("/test/A/2")
+      expect(result).to eq('/test/A/2')
     end
 
-    it 'should not move on to the next question' do 
+    it 'should not move on to the next question' do
       question = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
       result = question.get_next_question
-      expect(result).to eq("/test_status/A")
+      expect(result).to eq('/test_status/A')
     end
 
     it 'answer status should be incorrect' do
       question = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
       result = question.submit_answer(false)
-      expect(result).to eq("/incorrect/A/1")
+      expect(result).to eq('/incorrect/A/1')
     end
 
     it 'answer status should be correct' do
       question = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
       result = question.submit_answer(true)
-      expect(result).to eq("/correct/A/1")
+      expect(result).to eq('/correct/A/1')
     end
-
   end
 end

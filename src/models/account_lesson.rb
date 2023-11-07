@@ -24,5 +24,4 @@ class AccountLesson < ActiveRecord::Base
       exists?(lesson_id: lesson.id, account_id: account_id, lesson_completed: true)
     end
   end
-  
 end

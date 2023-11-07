@@ -43,7 +43,8 @@ describe AccountLesson do
       lesson = Lesson.find_or_create_by(number: 1, title: 'Title', test_letter: 'A')
       lesson.save
 
-      account_lesson = AccountLesson.find_or_create_by(lesson_completed: false, account_id: account.id, lesson_id: lesson.id)
+      account_lesson = AccountLesson.find_or_create_by(lesson_completed: false, account_id: account.id,
+                                                       lesson_id: lesson.id)
       account_lesson.save
 
       AccountLesson.complete_lesson(lesson.id, account.id)
@@ -80,6 +81,5 @@ describe AccountLesson do
 
       expect(AccountLesson.previous_lessons_completed?(lessons, account.id)).to be false
     end
-    
   end
 end

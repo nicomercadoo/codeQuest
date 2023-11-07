@@ -21,10 +21,10 @@ RSpec.describe 'Sinatra App' do
 
     expect(last_response.status).to eq(200) # Verifica el código de respuesta HTTP
   end
-  
+
   it 'probando ruta / del server cuando el usuario está autenticado' do
-    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', 
-                  theme_light: true)
+    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                   theme_light: true)
 
     # Configura una sesión simulada con el usuario autenticado
     session = { logged_in: true, account_theme: true, account_id: 1 }
@@ -39,8 +39,8 @@ RSpec.describe 'Sinatra App' do
   end
 
   it 'probando ruta /home del server cuando el usuario está autenticado' do
-    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', 
-                  theme_light: true)
+    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                   theme_light: true)
 
     # Configura una sesión simulada con el usuario autenticado
     session = { logged_in: true, account_theme: true, account_id: 1 }
@@ -64,9 +64,9 @@ RSpec.describe 'Sinatra App' do
   end
 
   it 'probando ruta /profile del server cuando el usuario está autenticado' do
-    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', 
-                  theme_light: true)
-                  
+    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                   theme_light: true)
+
     # Configura una sesión simulada con el usuario autenticado
     session = { logged_in: true, account_theme: true, account_id: 1 }
 
@@ -89,8 +89,8 @@ RSpec.describe 'Sinatra App' do
   end
 
   it 'probando ruta /lesson/:test_letter/:lesson_number del server cuando el usuario está autenticado' do
-    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', 
-                  theme_light: true)
+    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                   theme_light: true)
 
     Test.create(letter: 'A', description: 'Description', cant_questions: 5)
 
@@ -117,9 +117,10 @@ RSpec.describe 'Sinatra App' do
     expect(last_response.status).to eq(200)
   end
 
-  it 'probando ruta /test/:test_letter/:question_number del server cuando el usuario está autenticado y la pregunta existe', type: :feature do
-    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', 
-                  theme_light: true)
+  it 'probando ruta /test/:test_letter/:question_number del server cuando el usuario está autenticado y la pregunta existe',
+     type: :feature do
+    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                   theme_light: true)
 
     Test.create(letter: 'A', description: 'Description', cant_questions: 5)
 
@@ -133,8 +134,8 @@ RSpec.describe 'Sinatra App' do
   end
 
   it 'probando ruta /test/:test_letter/:question_number del server cuando el usuario está autenticado pero la pregunta no existe' do
-    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', 
-                  theme_light: true)
+    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                   theme_light: true)
     question = Question.find_by(number: 1, description: 'Is this a description?', test_letter: 'A')
 
     # Si la pregunta existe, la eliminamos
@@ -186,8 +187,8 @@ RSpec.describe 'Sinatra App' do
   end
 
   it 'probando ruta /test_status/:test_letter del server cuando el usuario está autenticado' do
-    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', 
-                  theme_light: true)
+    Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                   theme_light: true)
 
     Test.create(letter: 'A', description: 'Description', cant_questions: 5)
     # Configura una sesión simulada con el usuario autenticado
@@ -199,7 +200,6 @@ RSpec.describe 'Sinatra App' do
   end
 
   it 'probando ruta /test_status/:test_letter del server cuando el usuario no está autenticado' do
-
     Test.create(letter: 'A', description: 'Description', cant_questions: 5)
     # Configura una sesión simulada con el usuario autenticado
     session = { logged_in: false }

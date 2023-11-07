@@ -77,12 +77,12 @@ describe Account do
       # Assert
       expect(account2.save).to be_truthy
     end
-
   end
   describe 'Stuff account' do
     it 'Should be valid' do
       # Arrange
-      account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', theme_light: 'dark')
+      account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
+                            theme_light: 'dark')
 
       # Act
       account.save

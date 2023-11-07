@@ -68,5 +68,4 @@ class App < Sinatra::Application
       erb :login
     end
   end
-
 end

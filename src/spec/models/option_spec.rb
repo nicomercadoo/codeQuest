@@ -38,9 +38,9 @@ describe Option do
     it 'option chosen is incorrect' do
       question = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
       option = Option.create(number: 1, correct: false, description: 'This is an option', question_number: 1,
-                              test_letter: 'A')
+                             test_letter: 'A')
       account = Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
-                                  theme_light: 'dark')
+                               theme_light: 'dark')
       result = option.choose_option(question, account.id)
       expect(result).to be_falsey
     end
@@ -48,12 +48,11 @@ describe Option do
     it 'option chosen is correct' do
       question = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
       option = Option.create(number: 1, correct: true, description: 'This is an option', question_number: 1,
-                              test_letter: 'A')
+                             test_letter: 'A')
       account = Account.create(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
-                                  theme_light: 'dark')
+                               theme_light: 'dark')
       result = option.choose_option(question, account.id)
       expect(result).to be_truthy
     end
-
   end
 end

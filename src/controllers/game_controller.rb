@@ -1,15 +1,13 @@
 require_relative '../models/account'
 
 class GameController < Sinatra::Application
-
   set :views, '/src/views'
   File.join(File.dirname(__FILE__), 'lessons')
 
   get '/lesson/:test_letter/:lesson_number' do
-
     logged_in?
     lesson_info = Lesson.present_lesson(session, params[:test_letter], params[:lesson_number])
-  
+
     if lesson_info
       erb :lesson, locals: lesson_info
 
@@ -17,7 +15,7 @@ class GameController < Sinatra::Application
       redirect '/'
     end
   end
-  
+
   get '/test/:test_letter/:question_number' do
     logged_in?
 
@@ -63,29 +61,24 @@ class GameController < Sinatra::Application
 
     test_letter = params[:test_letter]
 
-    @test = Test.find_by(letter: test_letter)
-    @questions = Question.all
-    @options = Option.all
+    test = Test.find_by(letter: test_letter)
+    questions = Question.all
+    options = Option.all
 
     current_account_id = session[:account_id]
-    existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
-    if !AccountQuestion.where(account_id: current_account_id,
-                              question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
-      # Todas las preguntas del test han sido respondidas correctamente
+    existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: test.id)
 
-      existing_account_test.update(test_completed: true)
-    else
-      existing_account_test.update(test_completed: false)
-    end
+
+    existing_account_test.check_and_update_test_completion(current_account_id, questions, test_letter)
 
     # Obtengo todas las respuestas de la cuenta
-    answers = AccountOption.where(account_id: current_account_id, option_id: @options.where(test_letter: test_letter))
+    answers = AccountOption.where(account_id: current_account_id, option_id: options.where(test_letter: test_letter))
     count_correct = 0
     answers.each do |answer|
       count_correct += 1 if answer.option.correct
     end
     # Busco el account_test relacionado a la question de la option
-    related_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
+    related_account_test = AccountTest.find_by(account_id: current_account_id, test_id: test.id)
     related_account_test.update_column(:correct_questions, count_correct)
 
     @test_completed = existing_account_test.test_completed
@@ -102,24 +95,23 @@ class GameController < Sinatra::Application
 
   post '/submit_answer' do
     logged_in?
-    
+
     question_number = params[:question_number]
     test_letter = params[:test_letter]
     selected_option_number = params[:selected_option]
 
     question = Question.find_by(number: question_number, test_letter: test_letter)
     selected_option = Option.find_by(number: selected_option_number, test_letter: test_letter,
-                                        question_number: question_number)
+                                     question_number: question_number)
     account_id = session[:account_id]
 
     # Metodo para verificar si la opcion elegida es correcta
     answer_status = selected_option.choose_option(question, account_id)
-    # Redirige segun corresponda 
+    # Redirige segun corresponda
     redirect question.submit_answer(answer_status)
   end
 
   def logged_in?
     redirect '/' unless session[:logged_in]
   end
-
 end

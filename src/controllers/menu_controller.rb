@@ -1,15 +1,13 @@
 class MenuController < Sinatra::Application
-
   set :views, '/src/views'
   set :public_folder, '/src/styles'
-  
 
   get '/home' do
     logged_in?
     @tests = Test.all
     erb :home, locals: { tests: @tests }
   end
-  
+
   post '/home' do
     if params[:lesson_number]
       lesson_number = params[:lesson_number]
@@ -57,12 +55,12 @@ class MenuController < Sinatra::Application
 
     if params[:snippet_code]
       Snippet.create(code: params[:snippet_code], description: params[:snippet_description],
-      account_id: session[:account_id])
+                     account_id: session[:account_id])
     end
-    
+
     erb :snippets, locals: { snippets: @snippets }
   end
-  
+
   get '/resources' do
     logged_in?
     erb :resources
@@ -78,5 +76,4 @@ class MenuController < Sinatra::Application
   def logged_in?
     redirect '/' unless session[:logged_in]
   end
-
 end

@@ -46,17 +46,16 @@ describe AccountTest do
                                           nickname: 'juanito', theme_light: 'dark')
       test = Test.find_or_create_by(letter: 'A', description: 'Description', cant_questions: 5)
       test.save
-  
+
       account_test = AccountTest.find_or_create_by(test_completed: false, correct_questions: 0, account_id: account.id,
                                                    test_id: test.id)
       account_test.save
-  
+
       questions = Question.where(test_letter: test.letter)
-  
+
       AccountTest.check_and_update_test_completion(account.id, test.id, questions, test.letter)
-  
+
       expect(account_test.reload.test_completed).not_to be_nil
     end
-    
   end
 end
