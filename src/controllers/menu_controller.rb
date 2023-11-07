@@ -1,6 +1,5 @@
 class MenuController < Sinatra::Application
 
-  require_relative '/game_controller'
   set :views, '/src/views'
   set :public_folder, '/src/styles'
   
@@ -76,5 +75,8 @@ class MenuController < Sinatra::Application
     redirect '/'
   end
 
+  def logged_in?
+    redirect '/' unless session[:logged_in]
+  end
 
 end
