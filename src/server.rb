@@ -43,18 +43,7 @@ class App < Sinatra::Application
     logger.info '*******************'
   end
 
-  set :views, File.join(File.dirname(__FILE__), 'views')
-  set :public_folder, File.join(File.dirname(__FILE__), 'styles')
-
   use RegisterController
   use MenuController
   use GameController
-
-  get '/' do
-    if session[:logged_in] == true
-      redirect '/home'
-    else
-      erb :login
-    end
-  end
 end

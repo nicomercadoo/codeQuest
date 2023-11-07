@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MenuController < Sinatra::Application
   set :views, '/src/views'
   set :public_folder, '/src/styles'

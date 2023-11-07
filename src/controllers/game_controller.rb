@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../models/account'
 
 class GameController < Sinatra::Application
@@ -67,7 +69,6 @@ class GameController < Sinatra::Application
 
     current_account_id = session[:account_id]
     existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: test.id)
-
 
     existing_account_test.check_and_update_test_completion(current_account_id, questions, test_letter)
 

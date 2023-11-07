@@ -55,6 +55,6 @@ class Lesson < ActiveRecord::Base
     next_lesson = number + 1
 
     # Se almacena la url a donde debera ser redirigido el usuario dependiendo de la situacion
-    next_step = current_is_last ? "/test/#{related_test_letter}/#{questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
+    current_is_last ? "/test/#{related_test_letter}/#{questions.minimum(:number)}" : "/lesson/#{related_test_letter}/#{next_lesson}"
   end
 end

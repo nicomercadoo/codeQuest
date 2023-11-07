@@ -38,7 +38,7 @@ class Question < ActiveRecord::Base
     return "/test/#{test_letter}/#{next_question_number}" if can_continue
 
     lessons = Lesson.where(test_letter: test_letter.next)
-    next_lesson = lessons.minimum(:number)
+    lessons.minimum(:number)
     "/test_status/#{test_letter}"
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RegisterController < Sinatra::Application
   def log(msg, thing)
     logger.info '*******************'
@@ -7,6 +9,14 @@ class RegisterController < Sinatra::Application
   end
 
   set :views, '/src/views'
+
+  get '/' do
+    if session[:logged_in] == true
+      redirect '/home'
+    else
+      erb :login
+    end
+  end
 
   post '/' do
     nickname = params[:nickname]

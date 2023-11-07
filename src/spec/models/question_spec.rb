@@ -26,7 +26,7 @@ describe Question do
 
     it 'should move on to the next question' do
       question1 = Question.create(number: 1, description: 'Is this a question?', test_letter: 'A')
-      question2 = Question.create(number: 2, description: 'Is this a question?', test_letter: 'A')
+      Question.create(number: 2, description: 'Is this a question?', test_letter: 'A')
       result = question1.get_next_question
       expect(result).to eq('/test/A/2')
     end
