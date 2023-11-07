@@ -4,8 +4,8 @@ require_relative '../../models/init'
 
 describe Account do
   describe 'Valid' do
-    context 'valid create situations' do
-      it 'should be valid' do
+    context 'Valid create situations' do
+      it 'Should be valid' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
                               theme_light: 'dark')
@@ -20,7 +20,7 @@ describe Account do
       end
     end
     context 'not valid situations' do
-      it 'should be invalid (email blame)' do
+      it 'Should be invalid (email blame)' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@yieil.com', password: 'Juanito32', nickname: 'juanito',
                               theme_light: 'dark')
@@ -31,7 +31,7 @@ describe Account do
         expect(validation[:email]).to be_falsey
       end
 
-      it 'should be invalid (password blame)' do
+      it 'Should be invalid (password blame)' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'juanito3', nickname: 'juanito',
                               theme_light: 'dark')
@@ -42,7 +42,7 @@ describe Account do
         expect(validation[:password]).to be_falsey
       end
 
-      it 'should be invalid (nickname blame)' do
+      it 'Should be invalid (nickname blame)' do
         # Arrange
         account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'ju anito',
                               theme_light: 'dark')
@@ -53,7 +53,7 @@ describe Account do
         expect(validation[:nickname]).to be_falsey
       end
 
-      it 'should be invalid (name blame)' do
+      it 'Should be invalid (name blame)' do
         # Arrange
         account = Account.new(name: 'Juanit0', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito',
                               theme_light: 'dark')
@@ -66,7 +66,7 @@ describe Account do
     end
   end
   describe 'Create same account' do
-    it 'should be invalid (email blame)' do
+    it 'Should be invalid (email blame)' do
       # Arrange
       account1 = Account.find_or_create_by(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32',
                                            nickname: 'juanito', theme_light: 'dark')
@@ -76,6 +76,23 @@ describe Account do
                                            nickname: account1.nickname, theme_light: account1.theme_light)
       # Assert
       expect(account2.save).to be_truthy
+    end
+
+  end
+  describe 'Stuff account' do
+    it 'Should be valid' do
+      # Arrange
+      account = Account.new(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32', nickname: 'juanito', theme_light: 'dark')
+
+      # Act
+      account.save
+      account.stuff
+
+      # Assert
+      expect(account).to be_truthy
+      expect(account.account_lessons).to be_truthy
+      expect(account.account_questions).to be_truthy
+      expect(account.account_tests).to be_truthy
     end
   end
 end
