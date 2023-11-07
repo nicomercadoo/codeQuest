@@ -1,3 +1,5 @@
+require_relative '../models/account'
+
 class GameController < Sinatra::Application
 
   set :views, '/src/views'
@@ -16,12 +18,6 @@ class GameController < Sinatra::Application
       # Progreso
       account = Account.find(session[:account_id])
 
-      # if lesson
-      #   accounts_lesson = AccountLesson.find_by(lesson_id: lesson.id, account_id: account.id)
-
-      #   # Actualizar el valor de lesson_completed
-      #   accounts_lesson&.update(lesson_completed: true)
-      # end
       AccountLesson.complete_lesson(lesson.id, account.id) if lesson
 
       erb :lesson, locals: { lesson: lesson, lesson_content: lesson_html_body }
@@ -83,30 +79,24 @@ class GameController < Sinatra::Application
 
       test_letter = params[:test_letter]
 
-      @test = Test.find_by(letter: test_letter)
-      @questions = Question.all
-      @options = Option.all
+      test = Test.find_by(letter: test_letter)
+      questions = Question.all
+      options = Option.all
 
       current_account_id = session[:account_id]
-      existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
-      if !AccountQuestion.where(account_id: current_account_id,
-                                question_id: @questions.where(test_letter: test_letter), well_answered: false).exists?
-        # Todas las preguntas del test han sido respondidas correctamente
+      existing_account_test = AccountTest.find_by(account_id: current_account_id, test_id: test.id)
 
-        existing_account_test.update(test_completed: true)
-      else
-        existing_account_test.update(test_completed: false)
-      end
-      # AccountTest.check_and_update_test_completion(current_account_id, test.id, questions, test_letter)
+
+      existing_account_test.check_and_update_test_completion(current_account_id, questions, test_letter)
 
       # Obtengo todas las respuestas de la cuenta
-      answers = AccountOption.where(account_id: current_account_id, option_id: @options.where(test_letter: test_letter))
+      answers = AccountOption.where(account_id: current_account_id, option_id: options.where(test_letter: test_letter))
       count_correct = 0
       answers.each do |answer|
         count_correct += 1 if answer.option.correct
       end
       # Busco el account_test relacionado a la question de la option
-      related_account_test = AccountTest.find_by(account_id: current_account_id, test_id: @test.id)
+      related_account_test = AccountTest.find_by(account_id: current_account_id, test_id: test.id)
       related_account_test.update_column(:correct_questions, count_correct)
 
       @test_completed = existing_account_test.test_completed
