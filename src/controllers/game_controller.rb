@@ -1,14 +1,18 @@
+require_relative '../models/account'
+
 class GameController < Sinatra::Application
 
   set :views, '/src/views'
   File.join(File.dirname(__FILE__), 'lessons')
 
   get '/lesson/:test_letter/:lesson_number' do
+
     logged_in?
     lesson_info = Lesson.present_lesson(session, params[:test_letter], params[:lesson_number])
   
     if lesson_info
       erb :lesson, locals: lesson_info
+
     else
       redirect '/'
     end
@@ -29,14 +33,8 @@ class GameController < Sinatra::Application
     lessons = Lesson.where(test_letter: test_letter)
     account = Account.find(session[:account_id])
 
-    # Verificar si todas las lecciones relacionadas con el test están completadas
-    lessons.each do |lesson|
-      previous_lessons_completed = AccountLesson.exists?(lesson_id: lesson.id, account_id: account.id,
-                                                          lesson_completed: true)
-
-      # Redirigir al inicio si alguna lección relacionada no está completada
-      redirect '/home?error=Previous-lessons-incompleted' unless previous_lessons_completed
-    end
+    previous_lessons_completed = AccountLesson.previous_lessons_completed?(lessons, account.id)
+    redirect '/home?error=Previous-lessons-incompleted' unless previous_lessons_completed
 
     if questions.exists?(number: question_number)
       # Encuentra la pregunta asociada al question_number y al test
