@@ -9,19 +9,8 @@ require 'asciidoctor'
 
 require 'sinatra/reloader' if Sinatra::Base.environment == :development
 
-require_relative 'models/account'
-require_relative 'models/lesson'
-require_relative 'models/test'
-require_relative 'models/option'
-require_relative 'models/question'
-require_relative 'models/snippet'
-require_relative 'models/account_lesson'
-require_relative 'models/account_test'
-require_relative 'models/account_option'
-require_relative 'models/account_question'
-require_relative 'controllers/register_controller'
-require_relative 'controllers/menu_controller'
-require_relative 'controllers/game_controller'
+require_relative 'models/init'
+require_relative 'controllers/init_controllers'
 
 class App < Sinatra::Application
   def initialize(_app = nil)
