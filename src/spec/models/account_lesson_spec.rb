@@ -36,5 +36,50 @@ describe AccountLesson do
 
       expect(account.progress).to be > initial_progress
     end
+
+    it 'marks the lesson as completed for the given account' do
+      account = Account.find_or_create_by(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32',
+                                          nickname: 'juanito', theme_light: 'dark')
+      lesson = Lesson.find_or_create_by(number: 1, title: 'Title', test_letter: 'A')
+      lesson.save
+
+      account_lesson = AccountLesson.find_or_create_by(lesson_completed: false, account_id: account.id, lesson_id: lesson.id)
+      account_lesson.save
+
+      AccountLesson.complete_lesson(lesson.id, account.id)
+
+      expect(account_lesson.reload.lesson_completed).to be true
+    end
+
+    it 'returns true when all previous lessons are completed' do
+      account = Account.find_or_create_by(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32',
+                                          nickname: 'juanito', theme_light: 'dark')
+      lesson1 = Lesson.find_or_create_by(number: 1, title: 'Title1', test_letter: 'A')
+      lesson2 = Lesson.find_or_create_by(number: 2, title: 'Title2', test_letter: 'A')
+      [lesson1, lesson2].each(&:save)
+
+      AccountLesson.find_or_create_by(lesson_completed: true, account_id: account.id, lesson_id: lesson1.id).save
+      AccountLesson.find_or_create_by(lesson_completed: true, account_id: account.id, lesson_id: lesson2.id).save
+
+      lessons = Lesson.where(id: [lesson1.id, lesson2.id])
+
+      expect(AccountLesson.previous_lessons_completed?(lessons, account.id)).to be true
+    end
+
+    it 'returns false when any previous lesson is not completed' do
+      account = Account.find_or_create_by(name: 'Juan', email: 'juanito@gmail.com', password: 'Juanito32',
+                                          nickname: 'juanito', theme_light: 'dark')
+      lesson1 = Lesson.find_or_create_by(number: 1, title: 'Title1', test_letter: 'A')
+      lesson2 = Lesson.find_or_create_by(number: 2, title: 'Title2', test_letter: 'A')
+      [lesson1, lesson2].each(&:save)
+
+      AccountLesson.find_or_create_by(lesson_completed: true, account_id: account.id, lesson_id: lesson1.id).save
+      AccountLesson.find_or_create_by(lesson_completed: false, account_id: account.id, lesson_id: lesson2.id).save
+
+      lessons = Lesson.where(id: [lesson1.id, lesson2.id])
+
+      expect(AccountLesson.previous_lessons_completed?(lessons, account.id)).to be false
+    end
+    
   end
 end
