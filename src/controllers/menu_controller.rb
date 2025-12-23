@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-class MenuController < Sinatra::Application
-  set :views, '/src/views'
-  set :public_folder, '/src/styles'
+class MenuController < ApplicationController
+  # Apply authentication to all routes except (none here, as all require auth)
+  before do
+    authenticate!
+  end
 
   get '/home' do
-    logged_in?
+
     @tests = Test.all
     erb :home, locals: { tests: @tests }
   end
@@ -23,12 +25,12 @@ class MenuController < Sinatra::Application
   end
 
   get '/profile' do
-    logged_in?
+
     erb :profile
   end
 
   post '/profile' do
-    logged_in?
+
     account = Account.find(session[:account_id])
     account.update(nickname: params[:nicknameInput]) if params[:nicknameInput]
     account.update(email: params[:emailInput]) if params[:emailInput]
@@ -42,29 +44,24 @@ class MenuController < Sinatra::Application
     redirect '/profile'
   end
 
-  before '/snippets' do
-    logged_in?
-    @snippets = Snippet.where(account_id: session[:account_id])
-  end
+
+
 
   get '/snippets' do
+    @snippets = Snippet.where(account_id: current_user.id)
     erb :snippets, locals: { snippets: @snippets }
   end
 
   post '/snippets' do
-    logged_in?
-    Account.find(session[:account_id])
-
     if params[:snippet_code]
       Snippet.create(code: params[:snippet_code], description: params[:snippet_description],
-                     account_id: session[:account_id])
+                     account_id: current_user.id)
     end
-
-    erb :snippets, locals: { snippets: @snippets }
+    redirect '/snippets'
   end
 
   get '/resources' do
-    logged_in?
+
     erb :resources
   end
 
@@ -75,7 +72,5 @@ class MenuController < Sinatra::Application
     redirect '/'
   end
 
-  def logged_in?
-    redirect '/' unless session[:logged_in]
-  end
+
 end

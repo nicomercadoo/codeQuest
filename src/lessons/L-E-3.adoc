@@ -1,27 +1,28 @@
-= Introducción a Haskell
+= Currying y Aplicación Parcial
 
-== ¿Qué es Haskell?
+== Curried Functions
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+En Haskell, **todas las funciones toman oficialmente un solo parámetro**.
+Cuando escribes `max 4 5`, en realidad estás haciendo `(max 4) 5`.
 
-== Primera Funcion
+1.  `max` toma 4 y devuelve... ¡una nueva función!
+2.  Esa nueva función espera un número y lo compara con 4.
+3.  Aplicamos 5 a esa nueva función y obtenemos el resultado.
 
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+Esto se llama **Currying** (por Haskell Curry).
+
+== Aplicación Parcial
+
+Podemos "parcialmente aplicar" funciones llamándolas con menos argumentos de los necesarios. La "nueva función" resultante podemos guardarla o pasarla a otro lado.
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+multThree :: (Num a) => a -> a -> a -> a
+multThree x y z = x * y * z
+
+multTwoWithNine = multThree 9
+-- multTwoWithNine es ahora una función que espera 2 numeros
 ----
 
-Otro ejemplo puede ser:
-
-[source,haskell]
-----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
-----
-
-== Resumen
-
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+Esto es extremadamente útil para usar con `map`.
+`map (multThree 9 2) [1..10]` aplicará `(9*2*x)` a cada elemento.

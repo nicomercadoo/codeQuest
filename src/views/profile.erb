@@ -20,7 +20,14 @@
         <span>codeQuest</span>
       </h1>
     </a>
-    <nav class="nav-links">
+    
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks">
       <ul>
         <li><a href="/home" class="nav-link">Inicio</a></li>
         <li><a href="/profile" class="current-page">Perfil</a></li>
@@ -30,55 +37,65 @@
       </ul>
     </nav>
   </header>
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
+    }
+  </script>
 
   <main>
-    <div class="profile-section">
-      <h2 class="section-title">Cambiar nickname</h2>
-      <div class="section-line"></div>
-      <div class="button-form-container">
-        <form class="text-form" id="usernameForm" method="post">
-          <input type="text" name="nicknameInput" placeholder="Nuevo nickname">
-          <button class="save-button" type="submit">Guardar</button>
-        </form>
+    <div class="content-container">
+      <div class="profile-section">
+        <h2 class="section-title">Cambiar nickname</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <form class="text-form" id="usernameForm" method="post">
+            <input type="text" name="nicknameInput" placeholder="Nuevo nickname">
+            <button class="save-button" type="submit">Guardar</button>
+          </form>
+        </div>
       </div>
-    </div>
 
-    <div class="profile-section">
-      <h2 class="section-title">Cambiar email</h2>
-      <div class="section-line"></div>
-      <div class="button-form-container">
-        <form class="text-form" id="emailForm" method="post">
-          <input type="text" name="emailInput" placeholder="Nuevo email">
-          <button class="save-button" type="submit">Guardar</button>
-        </form>
+      <div class="profile-section">
+        <h2 class="section-title">Cambiar email</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <form class="text-form" id="emailForm" method="post">
+            <input type="text" name="emailInput" placeholder="Nuevo email">
+            <button class="save-button" type="submit">Guardar</button>
+          </form>
+        </div>
       </div>
-    </div>
 
-    <div class="profile-section">
-      <h2 class="section-title">Cambiar contraseña</h2>
-      <div class="section-line"></div>
-      <div class="button-form-container">
-        <form class="text-form" id="passwordForm" method="post">
-          <input type="password" name="passwordInput" placeholder="Nueva contraseña">
-          <button class="save-button" type="submit">Guardar</button>
-        </form>
+      <div class="profile-section">
+        <h2 class="section-title">Cambiar contraseña</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <form class="text-form" id="passwordForm" method="post">
+            <input type="password" name="passwordInput" placeholder="Nueva contraseña">
+            <button class="save-button" type="submit">Guardar</button>
+          </form>
+        </div>
       </div>
-    </div>
 
-    <div class="profile-section">
-      <h2 class="section-title">Modo oscuro</h2>
-      <div class="section-line"></div>
-      <% if @account_theme %>
-        <form action= "/profile" method="post">
-          <button class="theme-button" type="submit">Activar</button>
-          <input type="hidden" name="theme" value="light">
-        </form>
-      <% else %>
-        <form action= "/profile" method="post">
-          <button class="theme-button" type="submit"> Desactivar</button>
-          <input type="hidden" name="theme" value="dark">
-        </form>
-      <% end %>
+      <div class="profile-section">
+        <h2 class="section-title">Modo oscuro</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <% if @account_theme %>
+            <form action= "/profile" method="post">
+              <button class="theme-button" type="submit">Activar</button>
+              <input type="hidden" name="theme" value="light">
+            </form>
+          <% else %>
+            <form action= "/profile" method="post">
+              <button class="theme-button" type="submit"> Desactivar</button>
+              <input type="hidden" name="theme" value="dark">
+            </form>
+          <% end %>
+        </div>
+      </div>
     </div>
   </main>
 </body>

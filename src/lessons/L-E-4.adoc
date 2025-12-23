@@ -1,27 +1,43 @@
-= Introducción a Haskell
+= Funciones de Orden Superior: Map y Filter
 
-== ¿Qué es Haskell?
+Una función de orden superior es aquella que toma una función como parámetro o devuelve una función. Haskell las usa para todo.
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+== Map
 
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+La navaja suiza. Toma una función y una lista. Aplica la función a cada elemento.
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
-----
+map :: (a -> b) -> [a] -> [b]
 
-Otro ejemplo puede ser:
+Prelude> map (+3) [1,5,3]
+[4,8,6]
+Prelude> map (++ "!") ["BIFF", "POW"]
+["BIFF!","POW!"]
+----
+¡Mucho más legible que un bucle recursivo manual!
+
+== Filter
+
+Toma un **predicado** (una función que devuelve `True` o `False`) y filtra la lista, manteniendo solo los que dan `True`.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+filter :: (a -> Bool) -> [a] -> [a]
+
+Prelude> filter (>3) [1,5,3,2,6]
+[5,6]
+Prelude> filter even [1..10]
+[2,4,6,8,10]
 ----
 
-== Resumen
+== Chaining (Encadenamiento)
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+La magia ocurre al combinarlas.
+"La suma de los cuadrados de los números impares menores a 10".
+
+[source,haskell]
+----
+sum (map (^2) (filter odd [1..10]))
+----
+(Se lee de derecha a izquierda: filtra impares -> eleva al cuadrado -> suma).

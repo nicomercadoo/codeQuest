@@ -1,27 +1,44 @@
-= Introducción a Haskell
+= Rangos (Ranges)
 
-== ¿Qué es Haskell?
+== Generando Secuencias
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
-
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+Escribir listas manualmente es aburrido. Los rangos son secuencias aritméticas generadas automáticamente.
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+Prelude> [1..10]
+[1,2,3,4,5,6,7,8,9,10]
+Prelude> ['K'..'Z']
+"KLMNOPQRSTUVWXYZ"
 ----
 
-Otro ejemplo puede ser:
+== Rangos con Pasos
+
+Puedes especificar el segundo elemento para indicarle a Haskell el "paso" o salto de la secuencia.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+Prelude> [2,4..10]
+[2,4,6,8,10]
+Prelude> [3,6..20]
+[3,6,9,12,15,18]
 ----
 
-== Resumen
+Para contar hacia atrás, **debes** usar un paso negativo. `[20..1]` no funciona (da lista vacía), necesitas `[20,19..1]`.
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+== Listas Infinitas
+
+Gracias a la evaluación perezosa, puedes crear listas que nunca terminan.
+*   `[13, 26..]` genera múltiplos de 13 para siempre.
+*   `cycle [1, 2, 3]` repite la lista infinitamente (`1,2,3,1,2,3...`).
+*   `repeat 5` genera una lista infinita de cincos.
+
+¿Para qué sirve? Puedes combinarlas con `take` y `zip`.
+
+[source,haskell]
+----
+Prelude> take 10 (cycle ["LOL", "LMAO"])
+["LOL","LMAO","LOL","LMAO","LOL","LMAO","LOL","LMAO","LOL","LMAO"]
+----
+
+⚠️ **Cuidado con los Floats:** Evita usar rangos con números flotantes (`[0.1, 0.3 .. 1]`). La imprecisión de punto flotante hace que los resultados sean impredecibles (puedes terminar con un elemento de más o de menos).

@@ -1,284 +1,204 @@
 # frozen_string_literal: true
 
-AccountTest = Class.new(ActiveRecord::Base)
-AccountLesson = Class.new(ActiveRecord::Base)
-AccountQuestion = Class.new(ActiveRecord::Base)
-AccountOption = Class.new(ActiveRecord::Base)
-Account = Class.new(ActiveRecord::Base)
+# Limpiar base de datos
+puts "Limpiando base de datos..."
+AccountLesson.destroy_all
+AccountQuestion.destroy_all
+AccountTest.destroy_all
+AccountOption.destroy_all
+Option.destroy_all
+Question.destroy_all
+Lesson.destroy_all
+Test.destroy_all
+puts "Base de datos limpia."
 
-# lista de letras de los tests en el directorio /src/tests
-tests_letters = ('A'..'E').to_a
+# --- TEST A: Fundamentos ---
+puts "Creando Test A..."
+test_a = Test.create(letter: 'A', description: 'Fundamentos de Haskell', cant_questions: 5)
 
-tests_letters.each do |letter|
-  # Test
-  next unless Dir.exist? "/src/tests/#{letter}"
+# Lessons A
+Lesson.create(number: 1, title: 'Introducción a Haskell', test_letter: 'A')
+Lesson.create(number: 2, title: 'Tu Entorno de Trabajo (GHCi)', test_letter: 'A')
+Lesson.create(number: 3, title: 'Primeros Pasos: Aritmética', test_letter: 'A')
+Lesson.create(number: 4, title: 'Tipos de Datos Básicos', test_letter: 'A')
+Lesson.create(number: 5, title: 'Funciones Simples', test_letter: 'A')
 
-  test = nil
-  File.open("/src/tests/#{letter}/test-specs.txt", 'r') do |f|
-    lines = f.readlines.map(&:chomp)
-    desc = lines[0][/description: (([[:ascii:]]|[á|é|í|ó|ú|ñ|Ñ])*)/, 1]
-    cq = lines[1][/cant_questions: (\d)/, 1].to_i
+# Questions A
+q_a1 = Question.create(number: 1, description: '¿Qué característica define mejor a Haskell?', test_letter: 'A')
+Option.create(number: 1, description: 'Es puramente funcional y perezoso', correct: true, question_number: q_a1.number, test_letter: 'A')
+Option.create(number: 2, description: 'Es orientado a objetos e imperativo', correct: false, question_number: q_a1.number, test_letter: 'A')
+Option.create(number: 3, description: 'Es dinámicamente tipado', correct: false, question_number: q_a1.number, test_letter: 'A')
 
-    test = Test.create(letter: letter, description: desc, cant_questions: cq)
-  end
+q_a2 = Question.create(number: 2, description: '¿Cómo se inicia el intérprete interactivo de Haskell?', test_letter: 'A')
+Option.create(number: 1, description: 'ghci', correct: true, question_number: q_a2.number, test_letter: 'A')
+Option.create(number: 2, description: 'haskell-run', correct: false, question_number: q_a2.number, test_letter: 'A')
+Option.create(number: 3, description: 'node', correct: false, question_number: q_a2.number, test_letter: 'A')
 
-  # Lesson
-  # Para cada test se crean las lecciones
-  l = 1
-  while File.exist?("/src/lessons/L-#{test.letter}-#{l}.adoc")
-    File.open ("/src/lessons/L-#{test.letter}-#{l}.adoc"), 'r' do |f|
-      title = f.readline.chomp[/= (([[:ascii:]]|[á|é|í|ó|ú|ñ|Ñ])*)/, 1]
-      Lesson.create(number: l, title: title, test_letter: test.letter)
-      l += 1
-    end
-  end
+q_a3 = Question.create(number: 3, description: '¿Cuál es el resultado de 5 * (-3) en Haskell?', test_letter: 'A')
+Option.create(number: 1, description: '-15', correct: true, question_number: q_a3.number, test_letter: 'A')
+Option.create(number: 2, description: 'Error de sintaxis', correct: false, question_number: q_a3.number, test_letter: 'A')
+Option.create(number: 3, description: '15', correct: false, question_number: q_a3.number, test_letter: 'A')
 
-  # Question
-  # Para cada test se crean las preguntas
-  q = 1
-  while File.exist?("/src/tests/A/Q-A-#{q}/Q-#{q}.adoc")
-    question = Question.create(number: q, description: 'una descripcion', test_letter: test.letter)
+q_a4 = Question.create(number: 4, description: '¿Qué tipo tiene la expresión "Hola"?', test_letter: 'A')
+Option.create(number: 1, description: '[Char] o String', correct: true, question_number: q_a4.number, test_letter: 'A')
+Option.create(number: 2, description: 'Text', correct: false, question_number: q_a4.number, test_letter: 'A')
+Option.create(number: 3, description: 'Char', correct: false, question_number: q_a4.number, test_letter: 'A')
 
-    # Option
-    # Para cada pregunta se crean las opciones
-    # Se asume la primera como correcta
-    o = 1
-    while File.exist?("/src/tests/A/Q-A-#{q}/Q-#{q}-O-#{o}.adoc")
-      Option.create(number: o, description: 'una descripcion',
-                    correct: o == 1, question_number: question.number, test_letter: test.letter)
-      o += 1
-    end
-    q += 1
-  end
-end
+q_a5 = Question.create(number: 5, description: '¿Cómo se define una función que duplica un número x?', test_letter: 'A')
+Option.create(number: 1, description: 'doble x = x + x', correct: true, question_number: q_a5.number, test_letter: 'A')
+Option.create(number: 2, description: 'function doble(x) { return x + x }', correct: false, question_number: q_a5.number, test_letter: 'A')
+Option.create(number: 3, description: 'doble = x + x', correct: false, question_number: q_a5.number, test_letter: 'A')
 
-# Test A
-# test_a = Test.create(letter: "A", description: "Introducción", cant_questions: 5)
 
-# lesson_a1 = Lesson.create(number: 1, title: "Introducción a Haskell", test_letter: test_a.letter)
-# lesson_a2 = Lesson.create(number: 2, title: "Obtener el entorno", test_letter: test_a.letter)
-# lesson_a3 = Lesson.create(number: 3, title: "Variables y funciones", test_letter: test_a.letter)
-# lesson_a4 = Lesson.create(number: 4, title: "Valores de verdad", test_letter: test_a.letter)
-# lesson_a5 = Lesson.create(number: 5, title: "Tipos básicos", test_letter: test_a.letter)
+# --- TEST B: Estructuras de Datos ---
+puts "Creando Test B..."
+Test.create(letter: 'B', description: 'Listas y Tuplas', cant_questions: 5)
 
-# question_a1 = Question.create(number: 1, description: "¿Qué es Haskell?", test_letter: test_a.letter)
-# question_a2 = Question.create(number: 2, description: "¿Cuál de estos no es un tipo de dato en Haskell?", test_letter: test_a.letter)
-# question_a3 = Question.create(number: 3, description: "¿Cómo se define una función?", test_letter: test_a.letter)
-# question_a4 = Question.create(number: 4, description: "¿Cómo se crea una lista?", test_letter: test_a.letter)
-# question_a5 = Question.create(number: 5, description: "¿Qué es la recursión?", test_letter: test_a.letter)
+# Lessons B
+Lesson.create(number: 1, title: 'Introducción a las Listas', test_letter: 'B')
+Lesson.create(number: 2, title: 'Operaciones con Listas', test_letter: 'B')
+Lesson.create(number: 3, title: 'Funciones Comunes de Listas', test_letter: 'B')
+Lesson.create(number: 4, title: 'Rangos (Ranges)', test_letter: 'B')
+Lesson.create(number: 5, title: 'List Comprehensions', test_letter: 'B')
 
-# option_a1 = Option.create(number: 1, description: "Un lenguaje de programación funcional", correct: true, question_number: question_a1.number, test_letter: test_a.letter)
-# option_a2 = Option.create(number: 2, description: "Un lenguaje de programación imperativo", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
-# option_a3 = Option.create(number: 3, description: "Un lenguaje de programación orientado a objetos", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
-# option_a16 = Option.create(number: 4, description: "alsdjflfk", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
-# option_a4 = Option.create(number: 1, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
-# option_a5 = Option.create(number: 2, description: "Bool", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
-# option_a6 = Option.create(number: 3, description: "Arraylist", correct: true, question_number: question_a2.number, test_letter: test_a.letter)
-# option_a7 = Option.create(number: 1, description: "Usando la palabra clave 'function'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
-# option_a8 = Option.create(number: 2, description: "Usando el operador '=>'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
-# option_a9 = Option.create(number: 3, description: "Usando el símbolo '->'", correct: true, question_number: question_a3.number, test_letter: test_a.letter)
-# option_a10 = Option.create(number: 1, description: "Mediante un bucle", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
-# option_a11 = Option.create(number: 2, description: "Usando la palabra clave 'list'", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
-# option_a12 = Option.create(number: 3, description: "Mediante la notación de corchetes", correct: true, question_number: question_a4.number, test_letter: test_a.letter)
-# option_a13 = Option.create(number: 1, description: "Un bucle que se llama a sí mismo", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
-# option_a14 = Option.create(number: 2, description: "Una función que se llama a sí misma", correct: true, question_number: question_a5.number, test_letter: test_a.letter)
-# option_a15 = Option.create(number: 3, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
+# Questions B
+q_b1 = Question.create(number: 1, description: '¿Qué sucede si intentas crear una lista con diferentes tipos [1, "a"]?', test_letter: 'B')
+Option.create(number: 1, description: 'Error, las listas deben ser homogéneas', correct: true, question_number: q_b1.number, test_letter: 'B')
+Option.create(number: 2, description: 'Se crea una lista mixta', correct: false, question_number: q_b1.number, test_letter: 'B')
+Option.create(number: 3, description: 'Convierte todo a String', correct: false, question_number: q_b1.number, test_letter: 'B')
 
-# Test B
-test_b = Test.create(letter: 'B', description: 'Conceptos básicos', cant_questions: 5)
+q_b2 = Question.create(number: 2, description: '¿Qué operador agrega un elemento al principio de una lista (cons)?', test_letter: 'B')
+Option.create(number: 1, description: ':', correct: true, question_number: q_b2.number, test_letter: 'B')
+Option.create(number: 2, description: '++', correct: false, question_number: q_b2.number, test_letter: 'B')
+Option.create(number: 3, description: '+', correct: false, question_number: q_b2.number, test_letter: 'B')
 
-Lesson.create(number: 1, title: 'Introducción a Haskell', test_letter: test_b.letter)
-Lesson.create(number: 2, title: 'Obtener el entorno', test_letter: test_b.letter)
-Lesson.create(number: 3, title: 'Variables y funciones', test_letter: test_b.letter)
-Lesson.create(number: 4, title: 'Valores de verdad', test_letter: test_b.letter)
-Lesson.create(number: 5, title: 'Tipos básicos', test_letter: test_b.letter)
+q_b3 = Question.create(number: 3, description: '¿Qué función devuelve el primer elemento de una lista?', test_letter: 'B')
+Option.create(number: 1, description: 'head', correct: true, question_number: q_b3.number, test_letter: 'B')
+Option.create(number: 2, description: 'first', correct: false, question_number: q_b3.number, test_letter: 'B')
+Option.create(number: 3, description: 'init', correct: false, question_number: q_b3.number, test_letter: 'B')
 
-question_b1 = Question.create(number: 1, description: '¿Cuál es el principal objetivo de Haskell?',
-                              test_letter: test_b.letter)
-question_b2 = Question.create(number: 2, description: '¿Cómo se realiza una estructura condicional en Haskell?',
-                              test_letter: test_b.letter)
-question_b3 = Question.create(number: 3, description: '¿Qué son los módulos en Haskell?', test_letter: test_b.letter)
-question_b4 = Question.create(number: 4, description: '¿Cómo se concatenan cadenas de texto en Haskell?',
-                              test_letter: test_b.letter)
-question_b5 = Question.create(number: 5, description: '¿Cuál es el concepto de currificación en Haskell?',
-                              test_letter: test_b.letter)
+q_b4 = Question.create(number: 4, description: '¿Qué genera la expresión [2,4..10]?', test_letter: 'B')
+Option.create(number: 1, description: '[2,4,6,8,10]', correct: true, question_number: q_b4.number, test_letter: 'B')
+Option.create(number: 2, description: '[2,3,4,5,6,7,8,9,10]', correct: false, question_number: q_b4.number, test_letter: 'B')
+Option.create(number: 3, description: 'Error de sintaxis', correct: false, question_number: q_b4.number, test_letter: 'B')
 
-Option.create(number: 1, description: 'Permitir la programación funcional', correct: true,
-              question_number: question_b1.number, test_letter: test_b.letter)
-Option.create(number: 2, description: 'Permitir la programación orientada a objetos', correct: false,
-              question_number: question_b1.number, test_letter: test_b.letter)
-Option.create(number: 3, description: 'Permitir la programación imperativa', correct: false,
-              question_number: question_b1.number, test_letter: test_b.letter)
-Option.create(number: 1, description: 'Mediante la estructura if-else', correct: true,
-              question_number: question_b2.number, test_letter: test_b.letter)
-Option.create(number: 2, description: "Usando la palabra clave 'switch'", correct: false,
-              question_number: question_b2.number, test_letter: test_b.letter)
-Option.create(number: 3, description: 'Usando la estructura for', correct: false,
-              question_number: question_b2.number, test_letter: test_b.letter)
-Option.create(number: 1, description: 'Son bloques de código reutilizables', correct: true,
-              question_number: question_b3.number, test_letter: test_b.letter)
-Option.create(number: 2, description: 'Son operadores matemáticos', correct: false,
-              question_number: question_b3.number, test_letter: test_b.letter)
-Option.create(number: 3, description: 'Son estructuras de datos en Haskell', correct: false,
-              question_number: question_b3.number, test_letter: test_b.letter)
-Option.create(number: 1, description: "Usando el operador '+'", correct: false,
-              question_number: question_b4.number, test_letter: test_b.letter)
-Option.create(number: 2, description: "Usando la función 'concat'", correct: false,
-              question_number: question_b4.number, test_letter: test_b.letter)
-Option.create(number: 3, description: "Usando el operador '++'", correct: true,
-              question_number: question_b4.number, test_letter: test_b.letter)
-Option.create(number: 1, description: 'La aplicación de funciones parciales', correct: false,
-              question_number: question_b5.number, test_letter: test_b.letter)
-Option.create(number: 2, description: 'La aplicación de funciones de orden superior', correct: false,
-              question_number: question_b5.number, test_letter: test_b.letter)
-Option.create(number: 3,
-              description: 'La transformación de funciones de varios argumentos en una secuencia de funciones que toman un solo argumento', correct: true, question_number: question_b5.number, test_letter: test_b.letter)
+q_b5 = Question.create(number: 5, description: '¿Qué hace [x*2 | x <- [1..3]]?', test_letter: 'B')
+Option.create(number: 1, description: 'Devuelve [2, 4, 6]', correct: true, question_number: q_b5.number, test_letter: 'B')
+Option.create(number: 2, description: 'Devuelve [1, 2, 3]', correct: false, question_number: q_b5.number, test_letter: 'B')
+Option.create(number: 3, description: 'Devuelve [2, 4, 6, 8]', correct: false, question_number: q_b5.number, test_letter: 'B')
 
-# Test C
-test_c = Test.create(letter: 'C', description: 'Programación funcional', cant_questions: 5)
 
-Lesson.create(number: 1, title: 'Programación funcional', test_letter: test_c.letter)
-Lesson.create(number: 2, title: 'Recursión', test_letter: test_c.letter)
-Lesson.create(number: 3, title: 'Composición de funciones', test_letter: test_c.letter)
-Lesson.create(number: 4, title: 'Manejo de listas', test_letter: test_c.letter)
-Lesson.create(number: 5, title: 'Programación monádica', test_letter: test_c.letter)
+# --- TEST C: Tipos y Clases ---
+puts "Creando Test C..."
+Test.create(letter: 'C', description: 'Tipos y Typeclasses', cant_questions: 5)
 
-question_c1 = Question.create(number: 1, description: '¿Qué es la programación funcional?', test_letter: test_c.letter)
-question_c2 = Question.create(number: 2, description: '¿Cuál es el concepto central de la recursión?',
-                              test_letter: test_c.letter)
-question_c3 = Question.create(number: 3, description: '¿Qué es la composición de funciones en Haskell?',
-                              test_letter: test_c.letter)
-question_c4 = Question.create(number: 4, description: '¿Cómo se realiza el filtrado de una lista?',
-                              test_letter: test_c.letter)
-question_c5 = Question.create(number: 5, description: '¿Qué es una mónada en Haskell?', test_letter: test_c.letter)
+# Lessons C
+Lesson.create(number: 1, title: 'Tipos y Firmas', test_letter: 'C')
+Lesson.create(number: 2, title: 'Variables de Tipo', test_letter: 'C')
+Lesson.create(number: 3, title: 'Clases Eq y Ord', test_letter: 'C')
+Lesson.create(number: 4, title: 'Clases Show y Read', test_letter: 'C')
+Lesson.create(number: 5, title: 'Clases Enum y Bounded', test_letter: 'C')
 
-Option.create(number: 1, description: 'Un paradigma de programación basado en funciones', correct: true,
-              question_number: question_c1.number, test_letter: test_c.letter)
-Option.create(number: 2, description: 'Un paradigma de programación basado en objetos', correct: false,
-              question_number: question_c1.number, test_letter: test_c.letter)
-Option.create(number: 3, description: 'Un paradigma de programación basado en eventos', correct: false,
-              question_number: question_c1.number, test_letter: test_c.letter)
-Option.create(number: 1, description: 'La repetición de un bloque de código', correct: true,
-              question_number: question_c2.number, test_letter: test_c.letter)
-Option.create(number: 2, description: 'La división de un problema en subproblemas más pequeños',
-              correct: false, question_number: question_c2.number, test_letter: test_c.letter)
-Option.create(number: 3, description: 'La agrupación de elementos similares en una lista', correct: false,
-              question_number: question_c2.number, test_letter: test_c.letter)
-Option.create(number: 1,
-              description: 'La combinación de dos o más funciones para obtener una nueva función', correct: true, question_number: question_c3.number, test_letter: test_c.letter)
-Option.create(number: 2, description: 'La separación de una función en varias funciones más pequeñas',
-              correct: false, question_number: question_c3.number, test_letter: test_c.letter)
-Option.create(number: 3, description: 'La aplicación de funciones a una lista', correct: false,
-              question_number: question_c3.number, test_letter: test_c.letter)
-Option.create(number: 1, description: "Usando la función 'filter'", correct: true,
-              question_number: question_c4.number, test_letter: test_c.letter)
-Option.create(number: 2, description: "Usando la función 'map'", correct: false,
-              question_number: question_c4.number, test_letter: test_c.letter)
-Option.create(number: 3, description: "Usando la función 'reduce'", correct: false,
-              question_number: question_c4.number, test_letter: test_c.letter)
-Option.create(number: 1, description: 'Un tipo de dato en Haskell', correct: true,
-              question_number: question_c5.number, test_letter: test_c.letter)
-Option.create(number: 2, description: 'Una función pura en Haskell', correct: false,
-              question_number: question_c5.number, test_letter: test_c.letter)
-Option.create(number: 3, description: 'Un operador lógico en Haskell', correct: false,
-              question_number: question_c5.number, test_letter: test_c.letter)
+# Questions C
+q_c1 = Question.create(number: 1, description: 'En la firma "head :: [a] -> a", ¿qué es "a"?', test_letter: 'C')
+Option.create(number: 1, description: 'Una variable de tipo (puede ser cualquier tipo)', correct: true, question_number: q_c1.number, test_letter: 'C')
+Option.create(number: 2, description: 'Un tipo específico llamado "a"', correct: false, question_number: q_c1.number, test_letter: 'C')
+Option.create(number: 3, description: 'Un carácter', correct: false, question_number: q_c1.number, test_letter: 'C')
 
-# Test D
-test_d = Test.create(letter: 'D', description: 'Programación intermedia', cant_questions: 5)
+q_c2 = Question.create(number: 2, description: '¿Qué Typeclass permite comprobar igualdad (==)?', test_letter: 'C')
+Option.create(number: 1, description: 'Eq', correct: true, question_number: q_c2.number, test_letter: 'C')
+Option.create(number: 2, description: 'Ord', correct: false, question_number: q_c2.number, test_letter: 'C')
+Option.create(number: 3, description: 'Equal', correct: false, question_number: q_c2.number, test_letter: 'C')
 
-Lesson.create(number: 1, title: 'Manejo de excepciones en Haskell', test_letter: test_d.letter)
-Lesson.create(number: 2, title: 'Programación monádica', test_letter: test_d.letter)
-Lesson.create(number: 3, title: 'Lectura y escritura de archivos en Haskell', test_letter: test_d.letter)
-Lesson.create(number: 4, title: 'Estructuras de datos avanzadas en Haskell', test_letter: test_d.letter)
-Lesson.create(number: 5, title: 'Programación funcional lazzy', test_letter: test_d.letter)
+q_c3 = Question.create(number: 3, description: '¿Qué función convierte un valor a String?', test_letter: 'C')
+Option.create(number: 1, description: 'show', correct: true, question_number: q_c3.number, test_letter: 'C')
+Option.create(number: 2, description: 'read', correct: false, question_number: q_c3.number, test_letter: 'C')
+Option.create(number: 3, description: 'toString', correct: false, question_number: q_c3.number, test_letter: 'C')
 
-question_d1 = Question.create(number: 1, description: '¿Cómo se manejan las excepciones en haskell?',
-                              test_letter: test_d.letter)
-question_d2 = Question.create(number: 2, description: '¿Qué es la programación monádica?', test_letter: test_d.letter)
-question_d3 = Question.create(number: 3, description: '¿Cómo se realiza la lectura de archivos en Haskell?',
-                              test_letter: test_d.letter)
-question_d4 = Question.create(number: 4, description: '¿Cuáles son algunas estructuras de datos avanzadas en Haskell?',
-                              test_letter: test_d.letter)
-question_d5 = Question.create(number: 5, description: '¿Qué significa la evaluación lazy?', test_letter: test_d.letter)
+q_c4 = Question.create(number: 4, description: '¿Qué caracteriza a la clase Ord?', test_letter: 'C')
+Option.create(number: 1, description: 'Permite ordenar sus valores (>, <)', correct: true, question_number: q_c4.number, test_letter: 'C')
+Option.create(number: 2, description: 'Permite imprimir sus valores', correct: false, question_number: q_c4.number, test_letter: 'C')
+Option.create(number: 3, description: 'Permite enumerar sus valores', correct: false, question_number: q_c4.number, test_letter: 'C')
 
-Option.create(number: 1, description: 'Utilizando bloques try-catch', correct: true,
-              question_number: question_d1.number, test_letter: test_d.letter)
-Option.create(number: 2, description: 'Utilizando sentencias if-else', correct: false,
-              question_number: question_d1.number, test_letter: test_d.letter)
-Option.create(number: 3, description: 'Utilizando sentencias switch-case', correct: false,
-              question_number: question_d1.number, test_letter: test_d.letter)
-Option.create(number: 1, description: 'Un enfoque de programación basado en monoides', correct: true,
-              question_number: question_d2.number, test_letter: test_d.letter)
-Option.create(number: 2, description: 'Un enfoque de programación basado en bucles', correct: false,
-              question_number: question_d2.number, test_letter: test_d.letter)
-Option.create(number: 3, description: 'Un enfoque de programación basado en condicionales', correct: false,
-              question_number: question_d2.number, test_letter: test_d.letter)
-Option.create(number: 1, description: "Utilizando la función 'readFile'", correct: true,
-              question_number: question_d3.number, test_letter: test_d.letter)
-Option.create(number: 2, description: "Utilizando la función 'writeFile'", correct: false,
-              question_number: question_d3.number, test_letter: test_d.letter)
-Option.create(number: 3, description: "Utilizando la función 'openFile'", correct: false,
-              question_number: question_d3.number, test_letter: test_d.letter)
-Option.create(number: 1, description: 'Árboles binarios y grafos', correct: true,
-              question_number: question_d4.number, test_letter: test_d.letter)
-Option.create(number: 2, description: 'Listas y matrices', correct: false,
-              question_number: question_d4.number, test_letter: test_d.letter)
-Option.create(number: 3, description: 'Colas y pilas', correct: false,
-              question_number: question_d4.number, test_letter: test_d.letter)
-Option.create(number: 1,
-              description: 'La evaluación se realiza solo cuando los resultados son necesarios', correct: true, question_number: question_d5.number, test_letter: test_d.letter)
-Option.create(number: 2, description: 'La evaluación se realiza de manera inmediata', correct: false,
-              question_number: question_d5.number, test_letter: test_d.letter)
-Option.create(number: 3, description: 'La evaluación se realiza en paralelo', correct: false,
-              question_number: question_d5.number, test_letter: test_d.letter)
+q_c5 = Question.create(number: 5, description: '¿Qué función devuelve el sucesor de un Enum?', test_letter: 'C')
+Option.create(number: 1, description: 'succ', correct: true, question_number: q_c5.number, test_letter: 'C')
+Option.create(number: 2, description: 'next', correct: false, question_number: q_c5.number, test_letter: 'C')
+Option.create(number: 3, description: 'pred', correct: false, question_number: q_c5.number, test_letter: 'C')
 
-# Test E
-test_e = Test.create(letter: 'E', description: 'Programación avanzada', cant_questions: 5)
 
-Lesson.create(number: 1, title: 'Tipos de datos avanzados', test_letter: test_e.letter)
-Lesson.create(number: 2, title: 'Programación funcional reactiva', test_letter: test_e.letter)
-Lesson.create(number: 3, title: 'Programación concurrente', test_letter: test_e.letter)
-Lesson.create(number: 4, title: 'Optimización y rendimiento', test_letter: test_e.letter)
-Lesson.create(number: 5, title: 'Dependencias externas y extensiones', test_letter: test_e.letter)
+# --- TEST D: Sintaxis Avanzada ---
+puts "Creando Test D..."
+Test.create(letter: 'D', description: 'Sintaxis de Funciones', cant_questions: 5)
 
-question_e1 = Question.create(number: 1, description: '¿Cuáles son los tipos de datos avanzados en Haskell?',
-                              test_letter: test_e.letter)
-question_e2 = Question.create(number: 2, description: '¿Qué es la programación funcional reactiva?',
-                              test_letter: test_e.letter)
-question_e3 = Question.create(number: 3, description: '¿Cómo se realiza la programación concurrente en Haskell?',
-                              test_letter: test_e.letter)
-question_e4 = Question.create(number: 4,
-                              description: '¿Qué técnicas se utilizan para la optimización y rendimiento en Haskell?', test_letter: test_e.letter)
-question_e5 = Question.create(number: 5,
-                              description: '¿Cómo se utilizan dependencias externas y extensiones en Haskell?', test_letter: test_e.letter)
+# Lessons D
+Lesson.create(number: 1, title: 'Pattern Matching Básico', test_letter: 'D')
+Lesson.create(number: 2, title: 'Pattern Matching Avanzado', test_letter: 'D')
+Lesson.create(number: 3, title: 'Guardas (Guards)', test_letter: 'D')
+Lesson.create(number: 4, title: 'Where y Let', test_letter: 'D')
+Lesson.create(number: 5, title: 'Case Expressions', test_letter: 'D')
 
-Option.create(number: 1, description: 'Tipos algebraicos y tipos polimórficos', correct: true,
-              question_number: question_e1.number, test_letter: test_e.letter)
-Option.create(number: 2, description: 'Tipos básicos y tipos compuestos', correct: false,
-              question_number: question_e1.number, test_letter: test_e.letter)
-Option.create(number: 3, description: 'Tipos numéricos y tipos de cadena', correct: false,
-              question_number: question_e1.number, test_letter: test_e.letter)
-Option.create(number: 1, description: 'Un paradigma de programación basado en eventos', correct: true,
-              question_number: question_e2.number, test_letter: test_e.letter)
-Option.create(number: 2, description: 'Un paradigma de programación basado en objetos', correct: false,
-              question_number: question_e2.number, test_letter: test_e.letter)
-Option.create(number: 3, description: 'Un paradigma de programación basado en funciones', correct: false,
-              question_number: question_e2.number, test_letter: test_e.letter)
-Option.create(number: 1, description: 'Utilizando hilos de ejecución y comunicación entre ellos',
-              correct: true, question_number: question_e3.number, test_letter: test_e.letter)
-Option.create(number: 2, description: 'Utilizando técnicas de paralelismo automático', correct: false,
-              question_number: question_e3.number, test_letter: test_e.letter)
-Option.create(number: 3, description: 'Utilizando memoria compartida y exclusión mutua', correct: false,
-              question_number: question_e3.number, test_letter: test_e.letter)
-Option.create(number: 1, description: 'Optimización de bucles y uso eficiente de estructuras de datos',
-              correct: true, question_number: question_e4.number, test_letter: test_e.letter)
-Option.create(number: 2, description: 'Utilizando técnicas de programación dinámica', correct: false,
-              question_number: question_e4.number, test_letter: test_e.letter)
-Option.create(number: 3, description: 'Utilizando técnicas de memoización', correct: false,
-              question_number: question_e4.number, test_letter: test_e.letter)
-Option.create(number: 1, description: 'A través de importación directa de bibliotecas externas',
-              correct: true, question_number: question_e5.number, test_letter: test_e.letter)
-Option.create(number: 2, description: 'A través de la definición de tipos de datos personalizados',
-              correct: false, question_number: question_e5.number, test_letter: test_e.letter)
-Option.create(number: 3, description: 'A través de la utilización de lenguajes de programación externos',
-              correct: false, question_number: question_e5.number, test_letter: test_e.letter)
+# Questions D
+q_d1 = Question.create(number: 1, description: 'En pattern matching, ¿qué hace el patrón "_"?', test_letter: 'D')
+Option.create(number: 1, description: 'Coincide con cualquier cosa (comodín)', correct: true, question_number: q_d1.number, test_letter: 'D')
+Option.create(number: 2, description: 'Coincide solo con listas vacías', correct: false, question_number: q_d1.number, test_letter: 'D')
+Option.create(number: 3, description: 'Lanza un error', correct: false, question_number: q_d1.number, test_letter: 'D')
+
+q_d2 = Question.create(number: 2, description: '¿Cómo se descompone una lista en cabeza y cola?', test_letter: 'D')
+Option.create(number: 1, description: '(x:xs)', correct: true, question_number: q_d2.number, test_letter: 'D')
+Option.create(number: 2, description: '[x, xs]', correct: false, question_number: q_d2.number, test_letter: 'D')
+Option.create(number: 3, description: 'head:tail', correct: false, question_number: q_d2.number, test_letter: 'D')
+
+q_d3 = Question.create(number: 3, description: '¿Qué símbolo introduce una Guarda?', test_letter: 'D')
+Option.create(number: 1, description: '|', correct: true, question_number: q_d3.number, test_letter: 'D')
+Option.create(number: 2, description: '->', correct: false, question_number: q_d3.number, test_letter: 'D')
+Option.create(number: 3, description: '=>', correct: false, question_number: q_d3.number, test_letter: 'D')
+
+q_d4 = Question.create(number: 4, description: '¿Cuál es la diferencia entre where y let?', test_letter: 'D')
+Option.create(number: 1, description: 'let es una expresión, where es una cláusula sintáctica', correct: true, question_number: q_d4.number, test_letter: 'D')
+Option.create(number: 2, description: 'where es una expresión, let es una declaración', correct: false, question_number: q_d4.number, test_letter: 'D')
+Option.create(number: 3, description: 'No hay diferencia', correct: false, question_number: q_d4.number, test_letter: 'D')
+
+q_d5 = Question.create(number: 5, description: '¿Para qué sirve "case ... of"?', test_letter: 'D')
+Option.create(number: 1, description: 'Para hacer pattern matching en medio de una expresión', correct: true, question_number: q_d5.number, test_letter: 'D')
+Option.create(number: 2, description: 'Para definir tipos de datos', correct: false, question_number: q_d5.number, test_letter: 'D')
+Option.create(number: 3, description: 'Para importar módulos', correct: false, question_number: q_d5.number, test_letter: 'D')
+
+
+# --- TEST E: Recursión y Orden Superior ---
+puts "Creando Test E..."
+Test.create(letter: 'E', description: 'Recursión y Funcional', cant_questions: 5)
+
+# Lessons E
+Lesson.create(number: 1, title: 'Introducción a la Recursión', test_letter: 'E')
+Lesson.create(number: 2, title: 'Más Recursión', test_letter: 'E')
+Lesson.create(number: 3, title: 'Currying', test_letter: 'E')
+Lesson.create(number: 4, title: 'Map y Filter', test_letter: 'E')
+Lesson.create(number: 5, title: 'Lambdas y Folds', test_letter: 'E')
+
+# Questions E
+q_e1 = Question.create(number: 1, description: '¿Qué es necesario para que una función recursiva termine?', test_letter: 'E')
+Option.create(number: 1, description: 'Un caso base (edge condition)', correct: true, question_number: q_e1.number, test_letter: 'E')
+Option.create(number: 2, description: 'Un bucle while', correct: false, question_number: q_e1.number, test_letter: 'E')
+Option.create(number: 3, description: 'Usar la función break', correct: false, question_number: q_e1.number, test_letter: 'E')
+
+q_e2 = Question.create(number: 2, description: '¿Qué es una función Curried?', test_letter: 'E')
+Option.create(number: 1, description: 'Una función que toma sus argumentos uno a uno', correct: true, question_number: q_e2.number, test_letter: 'E')
+Option.create(number: 2, description: 'Una función picante', correct: false, question_number: q_e2.number, test_letter: 'E')
+Option.create(number: 3, description: 'Una función que no devuelve nada', correct: false, question_number: q_e2.number, test_letter: 'E')
+
+q_e3 = Question.create(number: 3, description: '¿Qué hace la función map?', test_letter: 'E')
+Option.create(number: 1, description: 'Aplica una función a cada elemento de una lista', correct: true, question_number: q_e3.number, test_letter: 'E')
+Option.create(number: 2, description: 'Filtra una lista', correct: false, question_number: q_e3.number, test_letter: 'E')
+Option.create(number: 3, description: 'Reduce una lista a un valor', correct: false, question_number: q_e3.number, test_letter: 'E')
+
+q_e4 = Question.create(number: 4, description: '¿Cómo se escribe una función anónima (Lambda) que suma 1?', test_letter: 'E')
+Option.create(number: 1, description: '\x -> x + 1', correct: true, question_number: q_e4.number, test_letter: 'E')
+Option.create(number: 2, description: 'lambda x: x + 1', correct: false, question_number: q_e4.number, test_letter: 'E')
+Option.create(number: 3, description: 'x => x + 1', correct: false, question_number: q_e4.number, test_letter: 'E')
+
+q_e5 = Question.create(number: 5, description: '¿Qué función se usa para reducir una lista a un solo valor?', test_letter: 'E')
+Option.create(number: 1, description: 'foldl / foldr', correct: true, question_number: q_e5.number, test_letter: 'E')
+Option.create(number: 2, description: 'map', correct: false, question_number: q_e5.number, test_letter: 'E')
+Option.create(number: 3, description: 'filter', correct: false, question_number: q_e5.number, test_letter: 'E')
+
+puts "Datos sembrados exitosamente."

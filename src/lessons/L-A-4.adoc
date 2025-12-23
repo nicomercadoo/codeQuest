@@ -1,27 +1,41 @@
-= Valores de verdad
+= Tipos de Datos Básicos
 
-== ¿Qué es Haskell?
+== Todo tiene un tipo
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+Haskell es un lenguaje **fuertemente tipado**. Esto significa que cada expresión tiene un tipo determinado en tiempo de compilación. A diferencia de Java o C++, Haskell tiene **inferencia de tipos**: el compilador deduce los tipos por ti la mayoría de las veces.
 
-== Primera Funcion
+Para "interrogar" a Haskell sobre el tipo de algo, usamos `:t` en GHCi.
 
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+== Tipos Numéricos
+
+Aquí es donde Haskell brilla vs otros lenguajes:
+
+*   **Int**: Es un número entero de tamaño fijo. En máquinas de 64-bits, va desde -2^63 hasta 2^63-1. Es muy rápido.
+*   **Integer**: Es un número entero **sin límite**. Puede almacenar números tan grandes como quepan en la memoria de tu RAM. Es menos eficiente que `Int` pero nunca se desbordará.
+*   **Float**: Número de coma flotante de precisión simple.
+*   **Double**: Coma flotante de precisión doble. Úsalo por defecto para decimales.
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+Prelude> factorial 50
+30414093201713378043612608166064768844377641568960512000000000000
+-- ¡Eso es un Integer en acción!
 ----
 
-Otro ejemplo puede ser:
+== Otros Tipos Básicos
+
+*   **Bool**: Lógica Booleana. Solo tiene dos valores: `True` y `False`.
+*   **Char**: Representa un caracter Unicode. Se escribe con comillas simples: `'a'`.
+*   **String**: Cadenas de texto. Curiosamente, en Haskell no son un tipo primitivo... ¡son solo una lista de caracteres! `"Hola"` es azúcar sintáctico para `['H', 'o', 'l', 'a']`.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+Prelude> :t 'a'
+'a' :: Char
+Prelude> :t True
+True :: Bool
+Prelude> :t "Hola"
+"Hola" :: [Char]
 ----
 
-== Resumen
-
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+El operador `::` se lee como "tiene el tipo". Declarar tipos explícitamente es una buena práctica para documentar tu código.

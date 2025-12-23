@@ -1,27 +1,53 @@
-= Hola
+= Operaciones con Listas
 
-== Internal Pointer Viriable
+== Concatenación (++)
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
-
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+El operador `++` une dos listas.
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+Prelude> [1, 2] ++ [3, 4]
+[1,2,3,4]
+Prelude> "Hola" ++ " " ++ "Mundo"
+"Hola Mundo"
 ----
 
-Otro ejemplo puede ser:
+⚠️ **Advertencia de Rendimiento:** Haskell necesita recorrer **toda** la lista de la izquierda para agregar la otra al final. Si haces `listaGigante ++ [1]`, tardará mucho.
+
+== Cons (:)
+
+El operador `:` (cons constructor) agrega un elemento al **inicio** de una lista.
+Esta operación es **instantánea** (O(1)), sin importar el tamaño de la lista.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+Prelude> 'A' : "GATO"
+"AGATO"
+Prelude> 0 : [1, 2, 3]
+[0,1,2,3]
 ----
 
-== Resumen
+De hecho, `[1, 2, 3]` es solo azúcar sintáctico para `1 : 2 : 3 : []`.
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+== Acceso por Índice (!!)
+
+Para sacar un elemento específico, usa `!!`. Los índices empiezan en 0.
+
+[source,haskell]
+----
+Prelude> "Steve Buscemi" !! 6
+'B'
+----
+
+Ten cuidado: Si pides el índice 100 de una lista de 5 elementos, obtendrás un error en tiempo de ejecución. Haskell no te protege de esto en tiempo de compilación.
+
+== Comparación
+
+Puedes comparar listas con `<, >, ==` si sus elementos son comparables. Se comparan en orden lexicográfico (como en el diccionario).
+
+[source,haskell]
+----
+Prelude> [3, 2, 1] > [2, 10, 10]
+True
+-- (3 es mayor que 2, asi que gana inmediatamente)
+----

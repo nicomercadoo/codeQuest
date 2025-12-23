@@ -1,27 +1,63 @@
-= Variables y funciones
+= Primeros Pasos: Aritmética
 
-== ¿Qué es Haskell?
+== Operadores Básicos
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+Haskell soporta todas las operaciones aritméticas que esperas, pero tiene algunas particularidades interesantes.
 
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
-
-[source,haskell]
-----
-plus :: Int -> Int -> Int
-plus a b = a + b
-----
-
-Otro ejemplo puede ser:
+*   Suma: `+`
+*   Resta: `-`
+*   Multiplicación: `*`
+*   División: `/`
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+Prelude> 10 * 2
+20
+Prelude> 10 / 2
+5.0
+----
+Nota que la división `/` **siempre** devuelve un número de punto flotante (`Fractional`), incluso si los números dividen perfectamente. `10/2` es `5.0`, no `5`.
+
+== División Entera
+
+Si necesitas división entera (descartando decimales), usas la función `div`, no un operador. En Haskell, para usar una función de dos parámetros como operador (en medio de los dos números), la rodeamos con comillas invertidas (backticks):
+
+[source,haskell]
+----
+Prelude> 10 `div` 3
+3
+Prelude> div 10 3  -- Es lo mismo, estilo prefijo
+3
 ----
 
-== Resumen
+También existen `mod` (módulo) y `rem` (remanente) para obtener el resto de una división.
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+== Paréntesis y Precedencia
+
+La precedencia de operadores es la estándar matemática: multiplicación y división ocurren antes que suma y resta.
+
+[source,haskell]
+----
+Prelude> 50 * 100 - 4999  -- (50 * 100) - 4999
+1
+Prelude> 50 * (100 - 4999)
+-244950
+----
+
+== El peligro de los Números Negativos
+
+Haskell a veces se confunde con el signo menos `-` porque puede ser el operador de resta o el signo de un número negativo.
+**Regla de oro:** Si usas un número negativo en una operación, envuélvelo siempre en paréntesis.
+
+[source,haskell]
+----
+Prelude> 5 * -3
+<interactive>:1:1: error: Precedence parsing error...
+----
+GHCi piensa que quieres restar 3 a la función 5 (lo cual no tiene sentido). La forma correcta es:
+
+[source,haskell]
+----
+Prelude> 5 * (-3)
+-15
+----

@@ -1,27 +1,27 @@
-= Introducción a Haskell
+= Introducción a la Recursión
 
-== ¿Qué es Haskell?
+== ¿Por qué recursión?
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+En lenguajes imperativos tienes bucles `for` y `while`. En Haskell, las variables son inmutables, por lo que un bucle `for i=0; i<10; i++` es imposible (no puedes cambiar `i`).
+La solución es que **las funciones se llamen a sí mismas** con nuevos parámetros.
 
-== Primera Funcion
+== Pensando Recursivamente
 
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+Para escribir una función recursiva, busca dos cosas:
+1.  **Caso Base:** La condición de parada (ej. lista vacía, número 0). Sin esto, tu programa se ejecutará infinitamente.
+2.  **Paso Recursivo:** Cómo reducir el problema a una versión un poco más pequeña de sí mismo.
+
+== Ejemplo: Maximum
+
+Busquemos el número más grande de una lista `[2, 5, 1]`.
+1.  Máximo de `[2, 5, 1]` es el mayor entre 2 y el máximo de `[5, 1]`.
+2.  Máximo de `[5, 1]` es el mayor entre 5 y el máximo de `[1]`.
+3.  Máximo de `[1]` es 1 (Caso base).
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "Vacío!"
+maximum' [x] = x              -- Caso base
+maximum' (x:xs) = max x (maximum' xs) -- Paso recursivo
 ----
-
-Otro ejemplo puede ser:
-
-[source,haskell]
-----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
-----
-
-== Resumen
-
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.

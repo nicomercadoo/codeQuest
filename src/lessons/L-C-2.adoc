@@ -1,27 +1,31 @@
-= Hola
+= Variables de Tipo
 
-== Internal Pointer Viriable
+== Polimorfismo
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+¿Qué pasa si queremos una función que devuelva el primer elemento de una lista, sin importar si es una lista de Enteros, Strings o Booleans?
+Si definimos `head :: [Int] -> Int`, no serviría para `String`.
 
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
-
+Si miramos el tipo de `head`:
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+Prelude> :t head
+head :: [a] -> a
 ----
 
-Otro ejemplo puede ser:
+Aquí, `a` no es un tipo concreto (como `Int` o `Bool`). Es una **variable de tipo**.
+Es como los "Generics" en Java o C#, pero mucho más potentes y comunes.
 
+Significa que `head` toma una lista de *cualquier tipo* `a`, y devuelve un elemento de ese mismo tipo `a`.
+
+== Nomenclatura
+
+Las variables de tipo siempre deben empezar en **minúscula** (a, b, x, y).
+Los tipos concretos siempre empiezan en **Mayúscula** (Int, Bool, String).
+
+Otro ejemplo, la función `fst` (first) que toma una tupla y devuelve el primer valor:
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+fst :: (a, b) -> a
 ----
-
-== Resumen
-
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+Esto nos dice que el par puede contener dos tipos diferentes (`a` y `b`), y la función devolverá algo del mismo tipo que el primer componente.
+`fst (1, "Hola")` devuelve `1` (donde a=Int, b=String).

@@ -1,27 +1,35 @@
-= Introducción a Haskell
+= Tipos y Firmas de Tipo
 
-== ¿Qué es Haskell?
+== Declaraciones explícitas
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+Ya vimos que Haskell tiene una inferencia de tipos muy potente. Sin embargo, en el mundo real, se considera "buena educación" escribir el tipo de todas tus funciones top-level.
+1.  Sirve como **documentación** infalible (el compilador te garantiza que es verdad).
+2.  Ayuda a encontrar errores más rápido.
 
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
-
-[source,haskell]
-----
-plus :: Int -> Int -> Int
-plus a b = a + b
-----
-
-Otro ejemplo puede ser:
+Una firma de tipo se escribe `nombreFuncion :: TipoArgumento -> TipoRetorno`.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+removeNonUppercase :: String -> String
+removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
 ----
 
-== Resumen
+== Funciones con Múltiples Parámetros
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+No hay distinción real entre parámetros y retorno (debido al Currying, que veremos luego). Simplemente separas todo con flechas `->`. El último elemento es lo que se devuelve.
+
+[source,haskell]
+----
+addThree :: Int -> Int -> Int -> Int
+addThree x y z = x + y + z
+----
+
+== Tipos Comunes para Recordar
+
+*   `Int`: Entero eficiente.
+*   `Integer`: Entero gigante.
+*   `Float`: Decimal simple.
+*   `Double`: Decimal doble (¡usa este!).
+*   `Bool`: `True` o `False`.
+*   `Char`: Caracter Unicode.
+*   `()`: Tupla vacía (Unit). Similar a `void` en C, solo tiene un valor: `()`.

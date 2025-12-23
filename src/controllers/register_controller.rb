@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RegisterController < Sinatra::Application
+class RegisterController < ApplicationController
   def log(msg, thing)
     logger.info '*******************'
     logger.info "#{msg}: "
@@ -8,7 +8,7 @@ class RegisterController < Sinatra::Application
     logger.info '*******************'
   end
 
-  set :views, '/src/views'
+
 
   get '/' do
     if session[:logged_in] == true
@@ -22,9 +22,9 @@ class RegisterController < Sinatra::Application
     nickname = params[:nickname]
     password = params[:password]
 
-    account = Account.find_by(nickname: nickname, password: password)
+    account = Account.find_by(nickname: nickname)
 
-    if account
+    if account && account.authenticate(password)
       session[:logged_in] = true
       session[:account_id] = account.id
       session[:account_theme] = account.theme_light
@@ -48,13 +48,17 @@ class RegisterController < Sinatra::Application
     validation = Account.validate_data(email, password, name, nickname)
 
     redirect '/signup?Invalid-email'    unless validation[:email]
-    redirect '/signup?Invalid-password' unless validation[:password]
+    # Password format validation could be done here if needed, but has_secure_password guarantees presence/hashing.
+    # If keeping strictly regex:
+    # redirect '/signup?Invalid-password' unless password =~ /(?=(?:.*[A-Z].*)+)(?=(?:.*[a-z].*)+)(?=(?:.*\d.*)+)(?!(?:.*\s.*)+)^(?=.{8,}$).*/
+
     redirect '/signup?Invalid-name'     unless validation[:name]
     redirect '/signup?Invalid-nickname' unless validation[:nickname]
 
-    redirect '/signup?error=Account-already-exists'  if Account.find_by(email: email, password: password)
+    redirect '/signup?error=Account-already-exists'  if Account.find_by(email: email)
     redirect '/signup?error=Nickname-already-exists' if Account.find_by(nickname: nickname)
 
+    # With has_secure_password, passing password: password automatically handles hashing
     account = Account.new(email: email, password: password, name: name, nickname: nickname, progress: 0)
 
     if account.save

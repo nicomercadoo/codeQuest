@@ -20,7 +20,14 @@
         <span>codeQuest</span>
       </h1>
     </a>
-    <nav class="nav-links">
+    
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks">
       <ul>
         <li><a href="/home" class="current-page">Inicio</a></li>
         <li><a href="/profile" class="nav-link">Perfil</a></li>
@@ -30,73 +37,80 @@
       </ul>
     </nav>
   </header>
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
+    }
+  </script>
 
   <main>
+    <div class="content-container">
+      <h2 class="section-title">Progreso</h2>
+      <div class="section-line"></div>
 
-    <h2 class="section-title">Progreso</h2>
-    <div class="section-line"></div>
-
-    <div class="progress-container">
-      <% @id = session[:account_id] %>
-      <% @account_progress = Account.find(@id).progress %>
-      <div id="progress-bar" class="progress-bar" style="width: <%= @account_progress %>%"></div>
-      <div class="haskell-logo">
-        <img src="haskell-logo.png" alt="Logo">
+      <div class="progress-container">
+        <% @id = session[:account_id] %>
+        <% @account_progress = Account.find(@id).progress %>
+        <div id="progress-bar" class="progress-bar" style="width: <%= @account_progress %>%"></div>
+        <div class="haskell-logo">
+          <img src="haskell-logo.png" alt="Logo">
+        </div>
       </div>
-    </div>
 
-    <% if params[:error] == "Previous-lessons-incompleted" %>
-      <div class="floating-box">
-          <p>Completa todas las lecciones para acceder al test.</p>
-          <a href="/home"><button>Aceptar</button></a>
-      </div>
-    <% end %>
-
-    <h2 class="section-title">Lecciones</h2>
-    <div class="section-line"></div>
-
-    <div class="button-stack">
-
-      <% @tests.each do |test| %>
-
-      <% @questions = Question.where(test_letter: test.letter) %>
-
-      <% @lessons = Lesson.where(test_letter: test.letter).order(:number) %>
-        <button class="chapter-button" onclick="toggleDropdown('<%= test.letter %>')">
-          <span class="chapter-title"><%= test.description %></span>
-          <div class="activity-number"><%= @lessons.count + 1 %> actividades</div>
-        </button>
-
-        <div class="dropdown-menu" id="<%= test.letter %>">
-          <% @lessons.each do |lesson| %>
-            <li>
-              <form action="/home" method="post">
-                <input name="lesson_number" value="<%= lesson.number %>" hidden>
-                <input name="test_letter" value="<%= test.letter %>" hidden>
-                <button type="submit" class="card lesson-card">
-                  <div class="card-content">
-                    <span class="title"><%= lesson.title %></span>
-                  </div>
-                  <div class="card-divider"></div>
-                  <span class="number"><%= lesson.number %></span>
-                </button>
-              </form>
-            </li>
-          <% end %>
-
-          <form action="/home" method="post">
-            <input name="test_letter" value="<%= test.letter %>" hidden>
-            <input name="question_number" value="<%= @questions.minimum(:number) %>" hidden>
-            <button type="submit" class="card test-card">
-              <div class="card-content">
-                <span class="title">Test</span>
-              </div>
-              <div class="card-divider"></div>
-              <span class="number"><%= test.letter %></span>
-            </button>
-          </form>
+      <% if params[:error] == "Previous-lessons-incompleted" %>
+        <div class="floating-box">
+            <p>Completa todas las lecciones para acceder al test.</p>
+            <a href="/home"><button>Aceptar</button></a>
         </div>
       <% end %>
+
+      <h2 class="section-title">Lecciones</h2>
+      <div class="section-line"></div>
+
+      <div class="button-stack">
+
+        <% @tests.each do |test| %>
+
+        <% @questions = Question.where(test_letter: test.letter) %>
+
+        <% @lessons = Lesson.where(test_letter: test.letter).order(:number) %>
+          <button class="chapter-button" onclick="toggleDropdown('<%= test.letter %>')">
+            <span class="chapter-title"><%= test.description %></span>
+            <div class="activity-number"><%= @lessons.count + 1 %> actividades</div>
+          </button>
+
+          <div class="dropdown-menu" id="<%= test.letter %>">
+            <% @lessons.each do |lesson| %>
+              <li>
+                <form action="/home" method="post">
+                  <input name="lesson_number" value="<%= lesson.number %>" hidden>
+                  <input name="test_letter" value="<%= test.letter %>" hidden>
+                  <button type="submit" class="card lesson-card">
+                    <div class="card-content">
+                      <span class="title"><%= lesson.title %></span>
+                    </div>
+                    <div class="card-divider"></div>
+                    <span class="number"><%= lesson.number %></span>
+                  </button>
+                </form>
+              </li>
+            <% end %>
+
+            <form action="/home" method="post">
+              <input name="test_letter" value="<%= test.letter %>" hidden>
+              <input name="question_number" value="<%= @questions.minimum(:number) %>" hidden>
+              <button type="submit" class="card test-card">
+                <div class="card-content">
+                  <span class="title">Test</span>
+                </div>
+                <div class="card-divider"></div>
+                <span class="number"><%= test.letter %></span>
+              </button>
+            </form>
+          </div>
+        <% end %>
+      </div>
     </div>
   </main>
   <script>

@@ -2,6 +2,7 @@
 
 require 'sinatra/activerecord'
 
+require_relative 'application_controller'
 require_relative 'game_controller'
 require_relative 'menu_controller'
 require_relative 'register_controller'

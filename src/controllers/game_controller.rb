@@ -2,12 +2,14 @@
 
 require_relative '../models/account'
 
-class GameController < Sinatra::Application
-  set :views, '/src/views'
+class GameController < ApplicationController
+  before do
+    authenticate!
+  end
   File.join(File.dirname(__FILE__), 'lessons')
 
   get '/lesson/:test_letter/:lesson_number' do
-    logged_in?
+
     lesson_info = Lesson.present_lesson(session, params[:test_letter], params[:lesson_number])
 
     if lesson_info
@@ -19,7 +21,7 @@ class GameController < Sinatra::Application
   end
 
   get '/test/:test_letter/:question_number' do
-    logged_in?
+
 
     test_letter = params[:test_letter]
     question_number = params[:question_number]
@@ -47,7 +49,7 @@ class GameController < Sinatra::Application
   end
 
   get '/:status/:test_letter/:question_number' do
-    logged_in?
+
 
     status = params[:status]
     test_letter = params[:test_letter]
@@ -59,7 +61,7 @@ class GameController < Sinatra::Application
   end
 
   get '/test_status/:test_letter' do
-    logged_in?
+
 
     test_letter = params[:test_letter]
 
@@ -95,7 +97,7 @@ class GameController < Sinatra::Application
   end
 
   post '/submit_answer' do
-    logged_in?
+
 
     question_number = params[:question_number]
     test_letter = params[:test_letter]
@@ -112,7 +114,5 @@ class GameController < Sinatra::Application
     redirect question.submit_answer(answer_status)
   end
 
-  def logged_in?
-    redirect '/' unless session[:logged_in]
-  end
+
 end

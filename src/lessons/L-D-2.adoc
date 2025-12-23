@@ -1,27 +1,39 @@
-= Hola
+= Pattern Matching en Listas y Tuplas
 
-== Internal Pointer Viriable
+== Tuplas
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
-
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+Pattern matching es la mejor forma de extraer datos de tuplas.
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+sumarVectores :: (Double, Double) -> (Double, Double) -> (Double, Double)
+sumarVectores (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
 ----
+Sin pattern matching, tendríamos que usar `fst` y `snd` repetidamente, lo cual es ilegible.
 
-Otro ejemplo puede ser:
+== Listas
+
+Podemos partir listas con la sintaxis `(x:xs)`.
+*   `x`: Es la **cabeza** (primer elemento).
+*   `xs`: Es la **cola** (el resto de la lista).
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+primero :: [a] -> String
+primero [] = "La lista está vacía"
+primero (x:_) = "El primer elemento es " ++ show x
 ----
 
-== Resumen
+También podemos especificar más elementos: `(x:y:z:resto)`.
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+== As-patterns (@)
+
+A veces quieres descomponer algo, pero también quieres mantener una referencia al objeto completo. Usamos `@`.
+
+[source,haskell]
+----
+capital :: String -> String
+capital "" = "¡Cadena vacía!"
+capital all@(x:xs) = "La primera letra de " ++ all ++ " es " ++ [x]
+----
+Aquí `all` contiene "Dracula" y `x` contiene 'D'. Nos ahorra escribir `(x:xs)` de nuevo en el cuerpo.

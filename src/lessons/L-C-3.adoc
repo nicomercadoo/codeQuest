@@ -1,27 +1,33 @@
-= Introducción a Haskell
+= Clases de Tipos: Eq y Ord
 
-== ¿Qué es Haskell?
+== No son "Clases" de OOP
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+Una **Typeclass** en Haskell NO es como una clase en Java/Python.
+Es más parecido a una **Interface** en Java o un **Protocol** en Swift. Define un comportamiento (un conjunto de funciones) que un tipo puede implementar.
 
-== Primera Funcion
+Cuando ves `=>` en una firma de tipo, es una **restricción de clase** (class constraint).
 
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+== Eq (Equality)
 
-[source,haskell]
-----
-plus :: Int -> Int -> Int
-plus a b = a + b
-----
-
-Otro ejemplo puede ser:
+La clase `Eq` define la igualdad. Cualquier tipo que quiera ser comparado con `==` o `/=` debe ser instancia de `Eq`.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+(==) :: (Eq a) => a -> a -> Bool
 ----
+Significa: "La función `==` toma dos valores del mismo tipo `a`, pero SOLO si `a` pertenece a la familia `Eq`".
 
-== Resumen
+Casi todos los tipos básicos (`Int`, `Char`, `Bool`) son `Eq`.
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+== Ord (Ordering)
+
+`Ord` es para tipos que tienen un orden. Habilitan `>`, `<`, `>=`, `<=`.
+Para ser `Ord`, un tipo primero debe ser `Eq`.
+
+La función `compare` es muy útil. Toma dos miembros de `Ord` y devuelve un `Ordering` (que puede ser `GT` (greater), `LT` (less) o `EQ` (equal)).
+
+[source,haskell]
+----
+Prelude> "Abrakadabra" `compare` "Zebra"
+LT
+----

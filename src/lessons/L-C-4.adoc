@@ -1,27 +1,44 @@
-= Introducción a Haskell
+= Clases de Tipos: Show y Read
 
-== ¿Qué es Haskell?
+== Show (Mostrar)
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
-
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+Los tipos que son instancias de `Show` pueden convertirse a String. Es lo que permite que GHCi te muestre resultados en pantalla.
+La función principal es `show`.
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+Prelude> show 3
+"3"
+Prelude> show True
+"True"
 ----
 
-Otro ejemplo puede ser:
+== Read (Leer)
+
+`Read` es lo opuesto. Toma un String e intenta convertirlo a un tipo específico.
+El problema es que Haskell a veces no sabe *a qué* tipo convertirlo.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+Prelude> read "5"
+*** Exception: Prelude.read: no parse
+-- ¡GHCi no sabe si queremos un Int, un Float o un Double!
 ----
 
-== Resumen
+Para arreglarlo, usamos **anotaciones de tipo explícitas**:
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+[source,haskell]
+----
+Prelude> read "5" :: Int
+5
+Prelude> read "5" :: Float
+5.0
+----
+
+Sin embargo, si usamos el resultado en una operación, la inferencia de tipos suele resolverlo sola:
+[source,haskell]
+----
+Prelude> (read "5") + 4
+9
+-- Haskell sabe que 4 es un número, así que asume que read debe devolver un número.
+----

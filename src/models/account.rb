@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+require 'bcrypt'
 
 class Account < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true
-  validates :password, presence: true
+  has_secure_password
   validates :nickname, presence: true
   validates :progress, presence: true
   validates :theme_light, inclusion: { in: [true, false] }
@@ -28,7 +29,7 @@ class Account < ActiveRecord::Base
     valid_name_format = /(?=(?:^\D*$)+)/
     valid_nickname_format = /(?=(?:^\S*$)+)/
 
-    { email: valid_email_format.match(email), password: valid_password_format.match(password),
+    { email: valid_email_format.match(email),
       name: valid_name_format.match(name), nickname: valid_nickname_format.match(nickname) }
   end
 

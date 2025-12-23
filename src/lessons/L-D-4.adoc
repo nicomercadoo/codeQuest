@@ -1,27 +1,39 @@
-= Introducción a Haskell
+= Where y Let
 
-== ¿Qué es Haskell?
+Para evitar repetir código (como el cálculo de BMI en la lección anterior), usamos bindings locales.
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
+== Where
 
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
-
-[source,haskell]
-----
-plus :: Int -> Int -> Int
-plus a b = a + b
-----
-
-Otro ejemplo puede ser:
+`where` se escribe al **final** de la función.
+Define variables que son visibles para **todas las guardas** de esa función.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+    where (f:_) = firstname
+          (l:_) = lastname
+----
+Observa que también podemos usar Pattern Matching dentro del bloque `where`.
+
+== Let
+
+`let` es una **expresión** (devuelve un valor), mientras que `where` es una construcción sintáctica.
+Forma: `let [definiciones] in [expresion]`.
+
+[source,haskell]
+----
+volumeCy r h =
+    let sideArea = 2 * pi * r * h
+        topArea = pi * r ^ 2
+    in  sideArea + 2 * topArea
 ----
 
-== Resumen
+Al ser una expresión, puedes meter un `let` en cualquier lado, incluso dentro de una lista:
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+[source,haskell]
+----
+Prelude> [let square x = x * x in (square 5, square 3, square 2)]
+[(25,9,4)]
+----
+Esto crea funciones locales `square` que solo existen dentro de esa lista.

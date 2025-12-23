@@ -1,27 +1,44 @@
-= Tipos básicos
+= Funciones Simples
 
-== ¿Qué es Haskell?
+== La Anatomía de una Función
 
-Lorem est elitr gubergren kasd erat labore in takimata stet consequat. Vero duo autem doming facilisis ut tempor gubergren id nibh invidunt veniam amet ipsum. Vel labore dolor magna velit elitr zzril ipsum dolor magna clita dignissim. Vero et lorem sit erat. Et clita eos dolor ipsum. Rebum dignissim sed in duo lorem duis eum. Dolore lorem sed sanctus sea accusam diam.
-
-== Primera Funcion
-
-Magna nobis ea. Tempor esse laoreet ipsum consequat dolore diam et duis enim sed consetetur vulputate sed molestie ipsum qui ea. Diam dolores lobortis ipsum feugiat diam et mazim elitr clita sed sea clita. Eos sed diam stet. Et diam invidunt in et velit. Dolores duo lorem sed ut amet lorem est. Vero ipsum tempor. No rebum tempor dolor sadipscing sit takimata sit duo dolores nulla adipiscing ea invidunt lorem gubergren iusto iriure. Clita eirmod facilisi ipsum in dolor nonumy consequat no. Sit lorem duo lorem blandit nisl iusto amet adipiscing duo suscipit enim erat ea sit elitr at.
+Las funciones son la unidad básica de ejecución en Haskell. Definirlas es trivial:
+`nombreFuncion parametro1 parametro2 ... = cuerpo`
 
 [source,haskell]
 ----
-plus :: Int -> Int -> Int
-plus a b = a + b
+dobleUs x = x + x
+dobleUs x y = x*2 + y*2
 ----
 
-Otro ejemplo puede ser:
+Observa que no hay paréntesis alrededor de los argumentos, ni llaves `{}` para el cuerpo, ni `return` al final. La última (y única) expresión evaluada es el valor de retorno.
+
+== Invocación de Funciones
+
+Aquí es donde muchos principiantes tropiezan. Para llamar a una función, **usas espacios**.
+
+**Incorrecto (estilo C/Java):** `bar(double(5))`
+**Correcto (Haskell):** `bar (double 5)`
+
+La función tiene la precedencia más alta.
+*   `double 5 + 2` significa `(double 5) + 2` -> `10 + 2` -> `12`.
+*   Si quisieras sumar primero, **necesitas** paréntesis: `double (5 + 2)`.
+
+== Funciones Condicionales (if-then-else)
+
+Haskell tiene `if`, pero es una **expresión**, no una sentencia de control. **Siempre** debe devolver un valor. Por lo tanto, la parte `else` es **obligatoria**. No puedes tener un `if` que "no haga nada" si la condición es falsa, porque la función debe devolver algo.
 
 [source,haskell]
 ----
-doublePlus :: Int -> Int -> Int
-doublePlus a b = 2 * (a + b)
+doubleSmallNumber x = if x > 100
+                        then x
+                        else x * 2
 ----
 
-== Resumen
+Dado que es una expresión, puedes ponerla en cualquier lado:
+[source,haskell]
+----
+doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
+----
 
-Et tempor nulla lorem. Diam in blandit consetetur autem kasd dignissim soluta. Eos erat dolore ipsum sanctus et elitr nonummy ut sit sit elitr dolores eirmod.
+Las funciones en Haskell deben comenzar con minúscula. Si comienzan con mayúscula, Haskell pensará que es un Tipo de Dato.

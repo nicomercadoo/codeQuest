@@ -20,7 +20,14 @@
         <span>codeQuest</span>
       </h1>
     </a>
-    <nav class="nav-links">
+    
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks">
       <ul>
         <li><a href="/home" class="nav-link">Inicio</a></li>
         <li><a href="/profile" class="nav-link">Perfil</a></li>
@@ -30,39 +37,47 @@
       </ul>
     </nav>
   </header>
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
+    }
+  </script>
   <main>
-    <div class="resources-section">
-        <h2 class="section-title">Libros</h2>
-        <div class="section-line"></div>
-        <ul class="resource-list">
-            <li><a href="http://learnyouahaskell.com/chapters" target="_blank">Learn you a Haskell for great good - Mirian Lipovača</a></li>
-            <br></br>
-            <li><a href="https://book.realworldhaskell.org/read/" target="_blank">Real Wolrd Haskell - O'Sullivan, Stewart, Goerzen</a></li>
-            <br></br>
-            <li><a href="https://haskellbook.com/img/sample.pdf" target="_blank">Haskell Programming from First Principles - Allen, Moronuki</a></li>
-        </ul>
-    </div>
-    <div class="resources-section">
-        <h2 class="section-title">Páginas útiles</h2>
-        <div class="section-line"></div>
-        <ul class="resource-list">
-            <li><a href="https://www.haskell.org" target="_blank">Haskell.org - Official Haskell website</a></li>
-            <br></br>
-            <li><a href="https://en.wikibooks.org/wiki/Haskell" target="_blank">Learn Haskell - Wikibooks</a></li>
-            <br></br>
-            <li><a href="https://www.haskell.org/tutorial/" target="_blank">A Gentle Intorduction to Haskell - Hudak, Peterson, Fasel</a></li>
-            <br></br>
-            <li><a href="https://wiki.haskell.org/Haskell" target="_blank">Haskell's wiki</a></li>
-        </ul>
-    </div>
-    <div class="resources-section">
-        <h2 class="section-title">Videos</h2>
-        <div class="section-line"></div>
-        <ul class="resource-list">
-            <li><a href="https://www.youtube.com/playlist?list=PLe7Ei6viL6jGp1Rfu0dil1JH1SHk9bgDV" target="_blank">Haskell for imperative programmers - Philipp Hagenlocher</a></li>
-            <br></br> 
-            <li><a href="https://www.youtube.com/watch?v=02_H3LjqMr8" target="_blank">Haskell tutorial - Derek Banas</a></li>
-        </ul>
+    <div class="content-container">
+        <div class="resources-section">
+            <h2 class="section-title">Libros</h2>
+            <div class="section-line"></div>
+            <ul class="resource-list">
+                <li><a href="http://learnyouahaskell.com/chapters" target="_blank">Learn you a Haskell for great good - Mirian Lipovača</a></li>
+                <br></br>
+                <li><a href="https://book.realworldhaskell.org/read/" target="_blank">Real Wolrd Haskell - O'Sullivan, Stewart, Goerzen</a></li>
+                <br></br>
+                <li><a href="https://haskellbook.com/img/sample.pdf" target="_blank">Haskell Programming from First Principles - Allen, Moronuki</a></li>
+            </ul>
+        </div>
+        <div class="resources-section">
+            <h2 class="section-title">Páginas útiles</h2>
+            <div class="section-line"></div>
+            <ul class="resource-list">
+                <li><a href="https://www.haskell.org" target="_blank">Haskell.org - Official Haskell website</a></li>
+                <br></br>
+                <li><a href="https://en.wikibooks.org/wiki/Haskell" target="_blank">Learn Haskell - Wikibooks</a></li>
+                <br></br>
+                <li><a href="https://www.haskell.org/tutorial/" target="_blank">A Gentle Intorduction to Haskell - Hudak, Peterson, Fasel</a></li>
+                <br></br>
+                <li><a href="https://wiki.haskell.org/Haskell" target="_blank">Haskell's wiki</a></li>
+            </ul>
+        </div>
+        <div class="resources-section">
+            <h2 class="section-title">Videos</h2>
+            <div class="section-line"></div>
+            <ul class="resource-list">
+                <li><a href="https://www.youtube.com/playlist?list=PLe7Ei6viL6jGp1Rfu0dil1JH1SHk9bgDV" target="_blank">Haskell for imperative programmers - Philipp Hagenlocher</a></li>
+                <br></br> 
+                <li><a href="https://www.youtube.com/watch?v=02_H3LjqMr8" target="_blank">Haskell tutorial - Derek Banas</a></li>
+            </ul>
+        </div>
     </div>
   </main>  
 </body> 
