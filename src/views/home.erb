@@ -88,7 +88,7 @@
             <input name="question_number" value="<%= @questions.minimum(:number) %>" hidden>
             <button type="submit" class="card test-card">
               <div class="card-content">
-                <h2> <%= test.description %> </h2>
+              <span class="description"><%= test.description %></span>
               </div>
               <div class="card-divider"></div>
               <span class="number"><%= test.letter %></span>
