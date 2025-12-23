@@ -1,0 +1,36 @@
+= Más Recursión y Acumuladores
+
+== Replicate
+
+Hagamos `replicate n x`, que crea una lista de `n` elementos `x`.
+`replicate 3 5` -> `[5, 5, 5]`
+
+[source,haskell]
+----
+replicate' :: (Num i, Ord i) => i -> a -> [a]
+replicate' n x
+    | n <= 0    = []  -- Caso base (freno)
+    | otherwise = x : replicate' (n-1) x
+----
+¡La guarda `n <= 0` es crucial!
+
+== Recursión con Acumuladores
+
+A veces es más eficiente pasar el estado actual como argumento.
+Por ejemplo, para invertir una lista.
+
+[source,haskell]
+----
+reverse' :: [a] -> [a]
+reverse' list = aux list []
+  where
+    aux [] acc = acc
+    aux (x:xs) acc = aux xs (x:acc)
+----
+Traza (reverse' [1,2]):
+1. aux [1,2] []
+2. aux [2] (1:[]) -> [1]
+3. aux [] (2:[1]) -> [2,1]
+4. devuelve [2,1]
+
+Esto suele ser más rápido que usar `++` recursivamente.

@@ -1,0 +1,43 @@
+= Case Expressions
+
+== Pattern Matching on-the-go
+
+Hacer pattern matching en los argumentos de una función es la forma más común. Pero a veces necesitas hacer matching sobre un valor intermedio dentro de la función. Ahí entra `case`.
+
+[source,haskell]
+----
+case expresion of patron1 -> resultado1
+                  patron2 -> resultado2
+                  patron3 -> resultado3
+----
+
+De hecho, el pattern matching de funciones es solo "azúcar sintáctico" sobre `case`.
+
+Estas dos funciones son intercambiables:
+
+[source,haskell]
+----
+head' :: [a] -> a
+head' [] = error "Lista vacía"
+head' (x:_) = x
+----
+
+[source,haskell]
+----
+head' :: [a] -> a
+head' xs = case xs of [] -> error "Lista vacía"
+                      (x:_) -> x
+----
+
+== Uso en Expresiones
+
+Como `case` es una expresión, puede usarse en medio de otras cosas:
+
+[source,haskell]
+----
+describeList :: [a] -> String
+describeList xs = "La lista es " ++ case xs of [] -> "vacia."
+                                               [x] -> "unitaria."
+                                               xs -> "larga."
+----
+(Aunque cuidado con la legibilidad aquí).

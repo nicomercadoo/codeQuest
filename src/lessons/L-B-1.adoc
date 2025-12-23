@@ -1,0 +1,40 @@
+= Introducción a las Listas
+
+== Estructura de Datos Fundamental
+
+En Haskell, las listas son la estructura de datos más utilizada. Son extremadamente versátiles para almacenar colecciones de elementos.
+
+Hay dos reglas sagradas para las listas en Haskell:
+1.  **Homogeneidad:** Todos los elementos deben ser del mismo tipo. `[1, 2, 3]` es válido. `[1, "hola"]` da error de compilación.
+2.  **Inmutabilidad:** Una vez creada, la lista no cambia. Cuando "modificas" una lista (como agregarle un elemento), en realidad estás creando una nueva lista que referencia a la anterior. Esto es muy eficiente en memoria gracias a la estructura de lista enlazada.
+
+== Sintaxis Básica
+
+Se usan corchetes `[]` y comas.
+
+[source,haskell]
+----
+numeros = [4, 8, 15, 16, 23, 42]
+letras = ['a', 'b', 'c']
+----
+
+== Cadenas son Listas
+
+Esto es clave: `String` es un alias para `[Char]`.
+[source,haskell]
+----
+Prelude> "Hola" == ['H', 'o', 'l', 'a']
+True
+----
+Esto significa que todas las funciones que aprenderás para manipular listas (reversarlas, cortarlas, unirlas) **funcionan automáticamente para textos**. ¡Genial!
+
+== Listas de Listas
+
+Las listas pueden contener cualquier cosa... ¡incluso otras listas!
+
+[source,haskell]
+----
+matriz = [[1,2,3], [4,5,6], [7,8,9]]
+----
+
+Pero recuerda la regla de homogeneidad: las listas internas deben ser del mismo tipo. No puedes tener `[[1,2], [1,2,3]]` (esto sí vale, ambos son `[Int]`) mezclado con `[['a']]` (esto es `[Char]`).

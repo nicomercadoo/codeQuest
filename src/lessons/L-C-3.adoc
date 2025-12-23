@@ -1,0 +1,33 @@
+= Clases de Tipos: Eq y Ord
+
+== No son "Clases" de OOP
+
+Una **Typeclass** en Haskell NO es como una clase en Java/Python.
+Es más parecido a una **Interface** en Java o un **Protocol** en Swift. Define un comportamiento (un conjunto de funciones) que un tipo puede implementar.
+
+Cuando ves `=>` en una firma de tipo, es una **restricción de clase** (class constraint).
+
+== Eq (Equality)
+
+La clase `Eq` define la igualdad. Cualquier tipo que quiera ser comparado con `==` o `/=` debe ser instancia de `Eq`.
+
+[source,haskell]
+----
+(==) :: (Eq a) => a -> a -> Bool
+----
+Significa: "La función `==` toma dos valores del mismo tipo `a`, pero SOLO si `a` pertenece a la familia `Eq`".
+
+Casi todos los tipos básicos (`Int`, `Char`, `Bool`) son `Eq`.
+
+== Ord (Ordering)
+
+`Ord` es para tipos que tienen un orden. Habilitan `>`, `<`, `>=`, `<=`.
+Para ser `Ord`, un tipo primero debe ser `Eq`.
+
+La función `compare` es muy útil. Toma dos miembros de `Ord` y devuelve un `Ordering` (que puede ser `GT` (greater), `LT` (less) o `EQ` (equal)).
+
+[source,haskell]
+----
+Prelude> "Abrakadabra" `compare` "Zebra"
+LT
+----

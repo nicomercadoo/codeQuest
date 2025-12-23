@@ -23,13 +23,32 @@
       </div>
     <% end %>
     <form class="form" method="post">
-      <input type="text" name="nickname" placeholder="Nickname" required>
+      <input type="text" name="nickname" placeholder="Nickname" required autofocus>
       <input type="password" name="password" placeholder="Contraseña" required>
       <div class="button-wrapper">
+        <a id="popup" href="#" class="password">Olvidé mi contraseña</a>
+        <div id="popup-box" class="hidden">
+          <p>Intenta recordarla 😃💀</p>
+        </div>
+        <br></br>
         <button type="submit" class="first-button">Iniciar sesión</button>
         <a href="/signup"><button type="button" class="second-button">Crear una cuenta</button></a>
       </div>
     </form>
   </div>
+  <script>
+    const popup = document.getElementById("popup");
+    const popupBox = document.getElementById("popup-box");
+
+    popup.addEventListener("click", () => {
+      // Show the forgotten password popup box
+      popupBox.classList.toggle("hidden");
+    })
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        // Focus on the username input when the page loads
+        document.getElementById("username").focus();
+    });
+  </script>
 </body>
 </html>

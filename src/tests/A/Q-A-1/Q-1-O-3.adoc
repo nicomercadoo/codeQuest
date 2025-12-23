@@ -1,0 +1,6 @@
+// OPTION 3 (TEST A)
+
+[source,haskell]
+----
+"Que mira' bobo"
+----

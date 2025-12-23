@@ -1,0 +1,44 @@
+= Clases de Tipos: Show y Read
+
+== Show (Mostrar)
+
+Los tipos que son instancias de `Show` pueden convertirse a String. Es lo que permite que GHCi te muestre resultados en pantalla.
+La función principal es `show`.
+
+[source,haskell]
+----
+Prelude> show 3
+"3"
+Prelude> show True
+"True"
+----
+
+== Read (Leer)
+
+`Read` es lo opuesto. Toma un String e intenta convertirlo a un tipo específico.
+El problema es que Haskell a veces no sabe *a qué* tipo convertirlo.
+
+[source,haskell]
+----
+Prelude> read "5"
+*** Exception: Prelude.read: no parse
+-- ¡GHCi no sabe si queremos un Int, un Float o un Double!
+----
+
+Para arreglarlo, usamos **anotaciones de tipo explícitas**:
+
+[source,haskell]
+----
+Prelude> read "5" :: Int
+5
+Prelude> read "5" :: Float
+5.0
+----
+
+Sin embargo, si usamos el resultado en una operación, la inferencia de tipos suele resolverlo sola:
+[source,haskell]
+----
+Prelude> (read "5") + 4
+9
+-- Haskell sabe que 4 es un número, así que asume que read debe devolver un número.
+----

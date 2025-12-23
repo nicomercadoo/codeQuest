@@ -1,0 +1,31 @@
+= Variables de Tipo
+
+== Polimorfismo
+
+¿Qué pasa si queremos una función que devuelva el primer elemento de una lista, sin importar si es una lista de Enteros, Strings o Booleans?
+Si definimos `head :: [Int] -> Int`, no serviría para `String`.
+
+Si miramos el tipo de `head`:
+[source,haskell]
+----
+Prelude> :t head
+head :: [a] -> a
+----
+
+Aquí, `a` no es un tipo concreto (como `Int` o `Bool`). Es una **variable de tipo**.
+Es como los "Generics" en Java o C#, pero mucho más potentes y comunes.
+
+Significa que `head` toma una lista de *cualquier tipo* `a`, y devuelve un elemento de ese mismo tipo `a`.
+
+== Nomenclatura
+
+Las variables de tipo siempre deben empezar en **minúscula** (a, b, x, y).
+Los tipos concretos siempre empiezan en **Mayúscula** (Int, Bool, String).
+
+Otro ejemplo, la función `fst` (first) que toma una tupla y devuelve el primer valor:
+[source,haskell]
+----
+fst :: (a, b) -> a
+----
+Esto nos dice que el par puede contener dos tipos diferentes (`a` y `b`), y la función devolverá algo del mismo tipo que el primer componente.
+`fst (1, "Hola")` devuelve `1` (donde a=Int, b=String).

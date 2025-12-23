@@ -7,25 +7,89 @@ body {
   user-select: none;
   width: 100%;
   font-family: 'Metropolis';
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 main {
-  padding-top: 30px;
-  padding-right: 80px;
-  padding-left: 80px;
+  padding-top: 2rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Centers the .content-container */
+}
+
+/* Standardized container for all centered page content */
+.content-container {
+  width: 700px;
+  max-width: 100%;
+  /* Responsive: never wider than screen */
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
   text-align: center;
-  font-size: 40px;
+  font-size: 2.5rem;
+  /* 40px */
 }
 
-li, a, button {
+h2 {
+  text-align: left;
+  font-size: 1.375rem;
+  /* 22px */
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  /* Reduced from 15px to sit closer to line */
+}
+
+/* Reusable Section Title and Line */
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-top: 20px;
+  text-align: left;
+  align-self: flex-start;
+  width: 100%;
+  margin-left: 0;
+  /* Override any legacy margins */
+}
+
+.section-line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent-color);
+  margin-top: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 0;
+  /* Override legacy */
+  margin-right: 0;
+}
+
+a,
+button {
   font-family: 'Metropolis';
   font-weight: bold;
-  color: var(--secondary-text-color);
+  color: var(--primary-color);
   text-decoration: none;
 }
+
+li {
+  font-family: 'Metropolis';
+  text-decoration: none;
+}
+
+/* Styles for the header */
 
 /* Styles for the header */
 
@@ -33,7 +97,43 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10%;
+  padding: 1.25rem 5%;
+  /* 5% padding for responsiveness */
+
+  & a {
+    color: var(--secondary-text-color);
+  }
+}
+
+
+p {
+  font-family: 'Open Sans';
+  text-align: left;
+  line-height: 1.5;
+  font-size: 1.0625rem;
+  /* 17px */
+}
+
+pre {
+  user-select: text;
+  color: var(--primary-color);
+  background-color: var(--bg-color);
+  padding: 10px;
+  font-family: 'Cascadia Code';
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 1.45;
+  text-rendering: optimizeSpeed;
+  border-color: #e3e3e3;
+  border-width: 1px;
+  border-style: solid;
+  max-width: 100%;
+  min-width: 200px;
+  overflow-x: auto;
+}
+
+header a {
+  color: var(--secondary-text-color);
 }
 
 .container {
@@ -54,9 +154,9 @@ header {
 }
 
 .logo img {
-  width: 30px; 
-  height: auto; 
-  margin-right: 10px; 
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
 }
 
 .logo span {
@@ -95,7 +195,7 @@ header {
   pointer-events: none;
 }
 
-.nav-link:hover::after{
+.nav-link:hover::after {
   opacity: 1;
 }
 
@@ -111,7 +211,7 @@ header {
   pointer-events: none;
 }
 
-.no-style-button {
+.logout-button {
   border: none;
   background-color: transparent;
   padding: 0;
@@ -120,8 +220,9 @@ header {
   color: inherit;
   cursor: pointer;
   transition: all 0.4s;
+  color: var(--secondary-text-color);
 }
 
-.no-style-button:hover {
+.logout-button:hover {
   text-decoration: none;
 }

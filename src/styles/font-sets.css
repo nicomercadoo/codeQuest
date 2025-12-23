@@ -1,3 +1,8 @@
+html {
+  font-size: 16px;
+  /* Base size */
+}
+
 @font-face {
   font-family: 'Metropolis';
   src: url('/fonts/Metropolis/Metropolis-MediumItalic.otf') format('opentype');
@@ -52,5 +57,12 @@
   font-family: 'Cascadia Code';
   src: url('/fonts/CascadiaCode/CascadiaCode-SemiBold.ttf') format('truetype');
   font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
   font-style: normal;
 }

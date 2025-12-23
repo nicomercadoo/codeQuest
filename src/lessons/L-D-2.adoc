@@ -1,0 +1,39 @@
+= Pattern Matching en Listas y Tuplas
+
+== Tuplas
+
+Pattern matching es la mejor forma de extraer datos de tuplas.
+
+[source,haskell]
+----
+sumarVectores :: (Double, Double) -> (Double, Double) -> (Double, Double)
+sumarVectores (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
+----
+Sin pattern matching, tendríamos que usar `fst` y `snd` repetidamente, lo cual es ilegible.
+
+== Listas
+
+Podemos partir listas con la sintaxis `(x:xs)`.
+*   `x`: Es la **cabeza** (primer elemento).
+*   `xs`: Es la **cola** (el resto de la lista).
+
+[source,haskell]
+----
+primero :: [a] -> String
+primero [] = "La lista está vacía"
+primero (x:_) = "El primer elemento es " ++ show x
+----
+
+También podemos especificar más elementos: `(x:y:z:resto)`.
+
+== As-patterns (@)
+
+A veces quieres descomponer algo, pero también quieres mantener una referencia al objeto completo. Usamos `@`.
+
+[source,haskell]
+----
+capital :: String -> String
+capital "" = "¡Cadena vacía!"
+capital all@(x:xs) = "La primera letra de " ++ all ++ " es " ++ [x]
+----
+Aquí `all` contiene "Dracula" y `x` contiene 'D'. Nos ahorra escribir `(x:xs)` de nuevo en el cuerpo.

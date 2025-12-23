@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class CreateAccounts < ActiveRecord::Migration[7.0]
   def change
     create_table :accounts do |t|
       t.string :name
-      t.string :email 
-      t.string :password 
-      t.string :nickname 
+      t.string :email
+      t.string :password
+      t.string :nickname
       t.integer :progress, default: 0
       t.boolean :theme_light, default: true
 
       t.timestamps
     end
-  end 
+  end
 end

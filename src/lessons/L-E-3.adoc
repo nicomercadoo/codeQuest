@@ -1,0 +1,28 @@
+= Currying y Aplicación Parcial
+
+== Curried Functions
+
+En Haskell, **todas las funciones toman oficialmente un solo parámetro**.
+Cuando escribes `max 4 5`, en realidad estás haciendo `(max 4) 5`.
+
+1.  `max` toma 4 y devuelve... ¡una nueva función!
+2.  Esa nueva función espera un número y lo compara con 4.
+3.  Aplicamos 5 a esa nueva función y obtenemos el resultado.
+
+Esto se llama **Currying** (por Haskell Curry).
+
+== Aplicación Parcial
+
+Podemos "parcialmente aplicar" funciones llamándolas con menos argumentos de los necesarios. La "nueva función" resultante podemos guardarla o pasarla a otro lado.
+
+[source,haskell]
+----
+multThree :: (Num a) => a -> a -> a -> a
+multThree x y z = x * y * z
+
+multTwoWithNine = multThree 9
+-- multTwoWithNine es ahora una función que espera 2 numeros
+----
+
+Esto es extremadamente útil para usar con `map`.
+`map (multThree 9 2) [1..10]` aplicará `(9*2*x)` a cada elemento.

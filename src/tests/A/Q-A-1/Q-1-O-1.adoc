@@ -1,0 +1,6 @@
+// OPTION 1 (TEST A)
+
+[source,haskell]
+----
+5
+----

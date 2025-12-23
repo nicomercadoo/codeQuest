@@ -1,0 +1,44 @@
+= Rangos (Ranges)
+
+== Generando Secuencias
+
+Escribir listas manualmente es aburrido. Los rangos son secuencias aritméticas generadas automáticamente.
+
+[source,haskell]
+----
+Prelude> [1..10]
+[1,2,3,4,5,6,7,8,9,10]
+Prelude> ['K'..'Z']
+"KLMNOPQRSTUVWXYZ"
+----
+
+== Rangos con Pasos
+
+Puedes especificar el segundo elemento para indicarle a Haskell el "paso" o salto de la secuencia.
+
+[source,haskell]
+----
+Prelude> [2,4..10]
+[2,4,6,8,10]
+Prelude> [3,6..20]
+[3,6,9,12,15,18]
+----
+
+Para contar hacia atrás, **debes** usar un paso negativo. `[20..1]` no funciona (da lista vacía), necesitas `[20,19..1]`.
+
+== Listas Infinitas
+
+Gracias a la evaluación perezosa, puedes crear listas que nunca terminan.
+*   `[13, 26..]` genera múltiplos de 13 para siempre.
+*   `cycle [1, 2, 3]` repite la lista infinitamente (`1,2,3,1,2,3...`).
+*   `repeat 5` genera una lista infinita de cincos.
+
+¿Para qué sirve? Puedes combinarlas con `take` y `zip`.
+
+[source,haskell]
+----
+Prelude> take 10 (cycle ["LOL", "LMAO"])
+["LOL","LMAO","LOL","LMAO","LOL","LMAO","LOL","LMAO","LOL","LMAO"]
+----
+
+⚠️ **Cuidado con los Floats:** Evita usar rangos con números flotantes (`[0.1, 0.3 .. 1]`). La imprecisión de punto flotante hace que los resultados sean impredecibles (puedes terminar con un elemento de más o de menos).

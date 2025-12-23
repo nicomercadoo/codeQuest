@@ -1,0 +1,42 @@
+= List Comprehensions
+
+== Teoría de Conjuntos Aplicada
+
+Si alguna vez hiciste matemáticas de conjuntos, esto te resultará familiar: `{ 2*x | x ∈ N, x ≤ 10 }`.
+En Haskell es casi idéntico: `[x*2 | x <- [1..10]]`.
+
+Es una forma declarativa de transformar y filtrar listas.
+
+Estructura: `[ transformacion | generador, filtro1, filtro2... ]`
+
+== Ejemplos Prácticos
+
+Vamos a obtener todos los números del 50 al 100 cuyo resto al dividir por 7 sea 3.
+
+[source,haskell]
+----
+Prelude> [ x | x <- [50..100], x `mod` 7 == 3 ]
+[52,59,66,73,80,87,94]
+----
+
+== Combinando Generadores
+
+Puedes usar múltiples listas de entrada. Haskell generará todas las combinaciones posibles (producto cartesiano).
+
+[source,haskell]
+----
+adjetivos = ["perezoso", "enojado"]
+sustantivos = ["gato", "perro"]
+frases = [adj ++ " " ++ sus | adj <- adjetivos, sus <- sustantivos]
+-- ["perezoso gato", "perezoso perro", "enojado gato", "enojado perro"]
+----
+
+== Reemplazando `length`
+
+Podemos implementar nuestra propia versión de `length` usando comprehensions: reemplazamos cada elemento por un 1, y luego sumamos todo.
+
+[source,haskell]
+----
+length' xs = sum [1 | _ <- xs]
+----
+(El guion bajo `_` significa que no nos importa el valor real del elemento, solo que existe).

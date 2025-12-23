@@ -1,0 +1,43 @@
+= Funciones de Orden Superior: Map y Filter
+
+Una función de orden superior es aquella que toma una función como parámetro o devuelve una función. Haskell las usa para todo.
+
+== Map
+
+La navaja suiza. Toma una función y una lista. Aplica la función a cada elemento.
+
+[source,haskell]
+----
+map :: (a -> b) -> [a] -> [b]
+
+Prelude> map (+3) [1,5,3]
+[4,8,6]
+Prelude> map (++ "!") ["BIFF", "POW"]
+["BIFF!","POW!"]
+----
+¡Mucho más legible que un bucle recursivo manual!
+
+== Filter
+
+Toma un **predicado** (una función que devuelve `True` o `False`) y filtra la lista, manteniendo solo los que dan `True`.
+
+[source,haskell]
+----
+filter :: (a -> Bool) -> [a] -> [a]
+
+Prelude> filter (>3) [1,5,3,2,6]
+[5,6]
+Prelude> filter even [1..10]
+[2,4,6,8,10]
+----
+
+== Chaining (Encadenamiento)
+
+La magia ocurre al combinarlas.
+"La suma de los cuadrados de los números impares menores a 10".
+
+[source,haskell]
+----
+sum (map (^2) (filter odd [1..10]))
+----
+(Se lee de derecha a izquierda: filtra impares -> eleva al cuadrado -> suma).

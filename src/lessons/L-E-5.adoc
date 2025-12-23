@@ -1,0 +1,34 @@
+= Lambdas y Folds
+
+== Lambdas (Funciones Anónimas)
+
+A veces necesitas una función pequeña para usar en un `map` una sola vez. No tiene sentido ponerle nombre.
+Usas `\` (barra invertida) para definir una lambda.
+
+[source,haskell]
+----
+-- (\parámetros -> cuerpo)
+Prelude> map (\x -> x + 3) [1,6,3]
+[4,9,6]
+----
+Normalmente, si la función es simple `(+3)`, prefieres las secciones. Pero para cosas complejas, lambdas son útiles.
+
+== Folds (Pliegues)
+
+`map` transforma una lista. `filter` reduce su tamaño.
+`fold` reduce toda la lista **a un solo valor**. Es el padre de `sum`, `product`, `and`, etc.
+
+`foldl` (fold left) recorre la lista desde la izquierda, acumulando un resultado.
+
+[source,haskell]
+----
+sum' :: (Num a) => [a] -> a
+sum' xs = foldl (\acc x -> acc + x) 0 xs
+----
+
+Paso a paso de `foldl (+) 0 [1, 2, 3]`:
+1.  `0 + 1 = 1` (nuevo acc)
+2.  `1 + 2 = 3` (nuevo acc)
+3.  `3 + 3 = 6` (resultado)
+
+`foldl` es generalmente más eficiente para listas finitas por ser "tail recursive". `foldr` es necesario para listas infinitas o para reconstruir listas (`: ` es asociativo a la derecha).

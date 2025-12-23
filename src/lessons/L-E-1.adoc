@@ -1,0 +1,27 @@
+= Introducción a la Recursión
+
+== ¿Por qué recursión?
+
+En lenguajes imperativos tienes bucles `for` y `while`. En Haskell, las variables son inmutables, por lo que un bucle `for i=0; i<10; i++` es imposible (no puedes cambiar `i`).
+La solución es que **las funciones se llamen a sí mismas** con nuevos parámetros.
+
+== Pensando Recursivamente
+
+Para escribir una función recursiva, busca dos cosas:
+1.  **Caso Base:** La condición de parada (ej. lista vacía, número 0). Sin esto, tu programa se ejecutará infinitamente.
+2.  **Paso Recursivo:** Cómo reducir el problema a una versión un poco más pequeña de sí mismo.
+
+== Ejemplo: Maximum
+
+Busquemos el número más grande de una lista `[2, 5, 1]`.
+1.  Máximo de `[2, 5, 1]` es el mayor entre 2 y el máximo de `[5, 1]`.
+2.  Máximo de `[5, 1]` es el mayor entre 5 y el máximo de `[1]`.
+3.  Máximo de `[1]` es 1 (Caso base).
+
+[source,haskell]
+----
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "Vacío!"
+maximum' [x] = x              -- Caso base
+maximum' (x:xs) = max x (maximum' xs) -- Paso recursivo
+----

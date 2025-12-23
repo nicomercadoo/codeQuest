@@ -5,10 +5,12 @@
   <link rel="stylesheet" type="text/css" href="<%=url('profile.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% if @theme == 'light' %>
-  <style>@import url('color-scheme-light.css');</style>
+<% @id = session[:account_id] %>
+<% @account_theme = Account.find(@id).theme_light %>
+<% if @account_theme %>
+  <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
 <% else %>
-  <style>@import url('color-scheme-dark.css');</style>
+  <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">
 <% end %>
 <body>
   <header class="container">
@@ -18,82 +20,83 @@
         <span>codeQuest</span>
       </h1>
     </a>
-    <nav class="nav-links">
+    
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks">
       <ul>
         <li><a href="/home" class="nav-link">Inicio</a></li>
         <li><a href="/profile" class="current-page">Perfil</a></li>
-        <%# <li><a href="/snippets" class="nav-link">Snippets</a></li> %>
-        <li><form action="/logout" method="post"><button type="submit" class="nav-link no-style-button">Salir</button></form></li>
+        <li><a href="/snippets" class="nav-link">Snippets</a></li>
+        <li><a href="/resources" class="nav-link">Recursos</a></li>
+        <li><form action="/logout" method="post"><button type="submit" class="nav-link logout-button">Salir</button></form></li>
       </ul>
     </nav>
   </header>
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
+    }
+  </script>
 
   <main>
-    <div class="profile-section">
-      <h2 class="section-title">Cambiar nickname</h2>
-      <div class="section-line"></div>
-      <div class="button-form-container">
-        <button class="change-button" id="changeButton" onclick="toggleForm('usernameForm')">Cambiar nickname</button>
-        <form class="text-form" id="usernameForm" style="display: none;", method="post">
-          <input type="text" name="nicknameInput" placeholder="Nuevo nickname">
-          <button class="save-button" type="submit">Guardar</button>
-        </form>
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <h2 class="section-title">Cambiar email</h2>
-      <div class="section-line"></div>
-      <div class="button-form-container">
-        <button class="change-button" id="emailChangeButton" onclick="toggleForm('emailForm')">Cambiar email</button>
-        <form class="text-form" id="emailForm" style="display: none;", method="post">
-          <input type="text" name="emailInput" placeholder="Nuevo email">
-          <button class="save-button" type="submit">Guardar</button>
-        </form>
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <h2 class="section-title">Cambiar contraseña</h2>
-      <div class="section-line"></div>
-      <div class="button-form-container">
-        <button class="change-button" id="passwordChangeButton" onclick="toggleForm('passwordForm')">Cambiar contraseña</button>
-        <form class="text-form" id="passwordForm" style="display: none;", method="post">
-          <input type="password" name="passwordInput" placeholder="Nueva contraseña">
-          <button class="save-button" type="submit">Guardar</button>
-        </form>
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <h2 class="section-title">Modo oscuro</h2>
-      <div class="section-line"></div>
-      <div class="button-form-container">
-        <% if @theme == 'light' %>
-          <form action= "/profile" method="post">
-            <button class="change-button" type="submit" id="darkModeButton"> Activar</button>
-            <input type="hidden" name="theme" value="light">
+    <div class="content-container">
+      <div class="profile-section">
+        <h2 class="section-title">Cambiar nickname</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <form class="text-form" id="usernameForm" method="post">
+            <input type="text" name="nicknameInput" placeholder="Nuevo nickname">
+            <button class="save-button" type="submit">Guardar</button>
           </form>
-        <% else %>
-          <form action= "/profile" method="post">
-            <button class="change-button" type="submit" id="darkModeButton"> Desactivar</button>
-            <input type="hidden" name="theme" value="dark">
-         </form>
-      <% end %>
+        </div>
+      </div>
 
+      <div class="profile-section">
+        <h2 class="section-title">Cambiar email</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <form class="text-form" id="emailForm" method="post">
+            <input type="text" name="emailInput" placeholder="Nuevo email">
+            <button class="save-button" type="submit">Guardar</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h2 class="section-title">Cambiar contraseña</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <form class="text-form" id="passwordForm" method="post">
+            <input type="password" name="passwordInput" placeholder="Nueva contraseña">
+            <button class="save-button" type="submit">Guardar</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h2 class="section-title">Modo oscuro</h2>
+        <div class="section-line"></div>
+        <div class="button-form-container">
+          <% if @account_theme %>
+            <form action= "/profile" method="post">
+              <button class="theme-button" type="submit">Activar</button>
+              <input type="hidden" name="theme" value="light">
+            </form>
+          <% else %>
+            <form action= "/profile" method="post">
+              <button class="theme-button" type="submit"> Desactivar</button>
+              <input type="hidden" name="theme" value="dark">
+            </form>
+          <% end %>
+        </div>
       </div>
     </div>
   </main>
-  
-  <script>
-    function toggleForm(formId) {
-      var form = document.getElementById(formId);
-      if (form.style.display === 'none') {
-        form.style.display = 'block';
-      } else {
-        form.style.display = 'none';
-      }
-    }
-  </script>
 </body>
 </html>

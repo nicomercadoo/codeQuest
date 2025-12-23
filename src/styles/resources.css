@@ -1,0 +1,37 @@
+@import url('font-sets.css');
+@import url('common.css');
+
+/* Styles for each section in the resources page */
+
+/* Styles for each section in the resources page */
+
+.resources-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Align content to left */
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+/* section-title and line are in common.css */
+
+.resource-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    color: var(--primary-color);
+}
+
+.resource-list li {
+    font-size: 24px;
+    text-decoration: none;
+    margin: 0;
+    padding: 10px 15px;
+    color: var(--primary-color);
+}
+
+.resource-list li::marker {
+    color: var(--accent-color);
+}

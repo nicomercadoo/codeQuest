@@ -1,0 +1,63 @@
+= Primeros Pasos: Aritmética
+
+== Operadores Básicos
+
+Haskell soporta todas las operaciones aritméticas que esperas, pero tiene algunas particularidades interesantes.
+
+*   Suma: `+`
+*   Resta: `-`
+*   Multiplicación: `*`
+*   División: `/`
+
+[source,haskell]
+----
+Prelude> 10 * 2
+20
+Prelude> 10 / 2
+5.0
+----
+Nota que la división `/` **siempre** devuelve un número de punto flotante (`Fractional`), incluso si los números dividen perfectamente. `10/2` es `5.0`, no `5`.
+
+== División Entera
+
+Si necesitas división entera (descartando decimales), usas la función `div`, no un operador. En Haskell, para usar una función de dos parámetros como operador (en medio de los dos números), la rodeamos con comillas invertidas (backticks):
+
+[source,haskell]
+----
+Prelude> 10 `div` 3
+3
+Prelude> div 10 3  -- Es lo mismo, estilo prefijo
+3
+----
+
+También existen `mod` (módulo) y `rem` (remanente) para obtener el resto de una división.
+
+== Paréntesis y Precedencia
+
+La precedencia de operadores es la estándar matemática: multiplicación y división ocurren antes que suma y resta.
+
+[source,haskell]
+----
+Prelude> 50 * 100 - 4999  -- (50 * 100) - 4999
+1
+Prelude> 50 * (100 - 4999)
+-244950
+----
+
+== El peligro de los Números Negativos
+
+Haskell a veces se confunde con el signo menos `-` porque puede ser el operador de resta o el signo de un número negativo.
+**Regla de oro:** Si usas un número negativo en una operación, envuélvelo siempre en paréntesis.
+
+[source,haskell]
+----
+Prelude> 5 * -3
+<interactive>:1:1: error: Precedence parsing error...
+----
+GHCi piensa que quieres restar 3 a la función 5 (lo cual no tiene sentido). La forma correcta es:
+
+[source,haskell]
+----
+Prelude> 5 * (-3)
+-15
+----

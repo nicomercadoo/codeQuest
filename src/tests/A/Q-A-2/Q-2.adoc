@@ -1,0 +1,12 @@
+// QUESTION 2, TEST A
+
+== ¿Cuál sería una posible definicion?
+
+Dado el siguiente perfil:
+[source, haskell]
+----
+double :: Int -> Int
+double x = ???
+----
+
+¿Cual seria una definicion para que la función devuelva el doble del argumento?

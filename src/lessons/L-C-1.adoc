@@ -1,0 +1,35 @@
+= Tipos y Firmas de Tipo
+
+== Declaraciones explícitas
+
+Ya vimos que Haskell tiene una inferencia de tipos muy potente. Sin embargo, en el mundo real, se considera "buena educación" escribir el tipo de todas tus funciones top-level.
+1.  Sirve como **documentación** infalible (el compilador te garantiza que es verdad).
+2.  Ayuda a encontrar errores más rápido.
+
+Una firma de tipo se escribe `nombreFuncion :: TipoArgumento -> TipoRetorno`.
+
+[source,haskell]
+----
+removeNonUppercase :: String -> String
+removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
+----
+
+== Funciones con Múltiples Parámetros
+
+No hay distinción real entre parámetros y retorno (debido al Currying, que veremos luego). Simplemente separas todo con flechas `->`. El último elemento es lo que se devuelve.
+
+[source,haskell]
+----
+addThree :: Int -> Int -> Int -> Int
+addThree x y z = x + y + z
+----
+
+== Tipos Comunes para Recordar
+
+*   `Int`: Entero eficiente.
+*   `Integer`: Entero gigante.
+*   `Float`: Decimal simple.
+*   `Double`: Decimal doble (¡usa este!).
+*   `Bool`: `True` o `False`.
+*   `Char`: Caracter Unicode.
+*   `()`: Tupla vacía (Unit). Similar a `void` en C, solo tiene un valor: `()`.

@@ -5,71 +5,124 @@
   <link rel="stylesheet" type="text/css" href="<%=url('snippets.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% if @theme == 'light' %>
+<% @id = session[:account_id] %>
+<% @account_theme = Account.find(@id).theme_light %>
+<% if @account_theme %>
   <style>@import url('color-scheme-light.css');</style>
 <% else %>
   <style>@import url('color-scheme-dark.css');</style>
 <% end %>
 <body>
   <header class="container">
-   <a href='/home'>
+    <a href='/home'>
       <h1 class="logo">
         <img src="favicon2.png" alt="Logo">
         <span>codeQuest</span>
       </h1>
     </a>
-    <nav class="nav-links">
+    
+    <button class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks">
       <ul>
         <li><a href="/home" class="nav-link">Inicio</a></li>
         <li><a href="/profile" class="nav-link">Perfil</a></li>
         <li><a href="/snippets" class="current-page">Snippets</a></li>
-        <li><form action="/logout" method="post"><button type="submit" class="nav-link no-style-button">Salir</button></form></li>
+        <li><a href="/resources" class="nav-link">Recursos</a></li>
+        <li><form action="/logout" method="post"><button type="submit" class="nav-link logout-button">Salir</button></form></li>
       </ul>
     </nav>
   </header>
-
-  <main>
-    <button class="new-snippet-button" onclick="showInput()">Crear snippet</button>
-    <div id="inputContainer">
-      <div class="title-field">
-        <input type="text" placeholder="Titulo del snippet" />
-      </div>
-      <div class="input-field">
-        <div class="line-count" id="lineCount">1</div>
-        <textarea class="text-area" id="textInput" placeholder="Ingresa tu snippet" oninput="updateLineCount()"></textarea>
-      </div>
-      <div class="button-container">
-        <button class="save-button">Guardar</button>
-      </div>
-    </div>
-  </main>  
   <script>
-    function toggleVisibility(element) {
-      element.style.visibility = element.style.visibility === 'visible' ? 'hidden' : 'visible';
-    }
-
-    function showInput() {
-      const titleField = document.querySelector('.title-field');
-      const inputField = document.querySelector('.input-field');
-      const buttonContainer = document.querySelector('.button-container');
-
-      toggleVisibility(titleField);
-      toggleVisibility(inputField);
-      toggleVisibility(buttonContainer);
-    } 
-
-    function updateLineCount() {
-      const textarea = document.getElementById('textInput');
-      const lineCount = document.getElementById('lineCount');
-      const lines = textarea.value.split('\n');
-      let lineNumbers = '';
-
-      for (let i = 0; i < lines.length; i++) {
-        lineNumbers += (i + 1) + ' \n';
-      }
-
-      lineCount.textContent = lineNumbers;
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('active');
     }
   </script>
+
+  <main>
+    <div class="content-container">
+      <form action="/snippets" method="post" style="width: 100%;">
+        <div class="snippet-section">
+          <h2 class="section-title">Crear snippet</h2>
+          <div class="section-line"></div>
+          <div id="inputContainer">
+            <div class="title-field">
+              <input type="text" name="snippet_description" placeholder="Descripción del snippet" />
+            </div>
+            <div class="input-field">
+              <textarea class="text-area" id="textInput" name="snippet_code" placeholder="Ingresa tu snippet"></textarea>
+            </div>
+            <div class="save-button-container">
+              <button class="save-button" type="submit">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="snippet-section">
+        <h2 class="section-title">Tus snippets</h2>
+        <div class="section-line"></div>
+        
+        <!-- Search bar aligned to the right -->
+        <div class="snippet-search-row">
+            <div class="snippet-search">
+                <input type="text" class="search-input" id="searchInput" placeholder="Buscar por descripción">
+                <button class="search-button" onclick="searchSnippets()">Buscar</button>
+            </div>
+        </div>
+
+        <div class="button-stack">
+          <% @snippets.each do |snippet| %>
+            <div class="snippet-button" onclick="toggleDropdown('<%= snippet.id %>')" data-title="<%= snippet.description %>">
+              <span class="snippet-title"><%= snippet.description %></span>
+            </div>
+            <div id="dropdown-<%= snippet.id %>" class="dropdown" style="display: none">
+              <div class="dropdown-content">
+                <div class="snippet-code-box">
+                  <p><%= snippet.code %></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script>
+    function toggleDropdown(snippetId) {
+      var dropdown = document.getElementById('dropdown-' + snippetId);
+
+      if (dropdown.style.display === 'none') {
+        dropdown.style.display = 'block';  
+      } else {    
+        dropdown.style.display = 'none';    
+      }
+    };
+  </script>
+  <script>
+    function searchSnippets() {
+      var searchInput = document.getElementById('searchInput');
+      var searchText = searchInput.value.toLowerCase();
+  
+      var snippetButtons = document.querySelectorAll('.snippet-button');
+  
+      snippetButtons.forEach(function(button) {
+        var snippetTitle = button.getAttribute('data-title').toLowerCase();
+        var snippetSection = button.closest('.snippet-button');
+  
+        if (snippetTitle.includes(searchText)) {
+          snippetSection.style.display = 'block'; // Muestra la sección
+        } else {
+          snippetSection.style.display = 'none'; // Oculta la sección
+        }
+      });
+    }
+  </script>
+  
 </body>
 </html>

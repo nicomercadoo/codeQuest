@@ -1,0 +1,42 @@
+= Clases de Tipos: Enum y Bounded
+
+== Enum (Enumerables)
+
+Los miembros de `Enum` son tipos secuencialmente ordenados. Tienen un predecesor y un sucesor definidos.
+La ventaja principal es que podemos usarlos en **Rangos**.
+
+Tipos `Enum`: Bool, Char, Ordering, Int, Integer, Float, Double.
+
+Funciones clave:
+*   `succ`: Dame el siguiente.
+*   `pred`: Dame el anterior.
+
+[source,haskell]
+----
+Prelude> succ 'B'
+'C'
+Prelude> pred GT
+EQ
+----
+
+== Bounded (Acotados)
+
+Son tipos que tienen un límite inferior y superior definidos.
+Funciones: `minBound` y `maxBound`.
+
+[source,haskell]
+----
+Prelude> minBound :: Int
+-9223372036854775808
+Prelude> maxBound :: Bool
+True
+----
+
+Si un tipo es `Enum` y `Bounded` (como `Bool` o `Int`), podemos listar todos sus valores posibles:
+
+[source,haskell]
+----
+Prelude> [minBound .. maxBound] :: [Bool]
+[False,True]
+----
+(No intentes esto con [`Integer`], se te congelará la PC porque no es Bounded, es infinito).

@@ -1,0 +1,39 @@
+= Where y Let
+
+Para evitar repetir código (como el cálculo de BMI en la lección anterior), usamos bindings locales.
+
+== Where
+
+`where` se escribe al **final** de la función.
+Define variables que son visibles para **todas las guardas** de esa función.
+
+[source,haskell]
+----
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+    where (f:_) = firstname
+          (l:_) = lastname
+----
+Observa que también podemos usar Pattern Matching dentro del bloque `where`.
+
+== Let
+
+`let` es una **expresión** (devuelve un valor), mientras que `where` es una construcción sintáctica.
+Forma: `let [definiciones] in [expresion]`.
+
+[source,haskell]
+----
+volumeCy r h =
+    let sideArea = 2 * pi * r * h
+        topArea = pi * r ^ 2
+    in  sideArea + 2 * topArea
+----
+
+Al ser una expresión, puedes meter un `let` en cualquier lado, incluso dentro de una lista:
+
+[source,haskell]
+----
+Prelude> [let square x = x * x in (square 5, square 3, square 2)]
+[(25,9,4)]
+----
+Esto crea funciones locales `square` que solo existen dentro de esa lista.

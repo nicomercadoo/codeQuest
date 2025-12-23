@@ -1,0 +1,22 @@
+// OPTION 3 (TEST A)
+
+[source,haskell]
+----
+module Main where
+import System.Environment ( getArgs )
+import Data.Decimal ( Decimal )
+import Text.Regex.TDFA ( (=~) )
+import System.Exit ( die )
+
+main :: IO()
+main = do
+    args <- getArgs
+    if null args
+    then putStrLn "No arguments have been given."
+    else do
+        validateArgs args
+        let value = read (head args) -- :: Decimal
+        let rates = getRates $ tail args
+        let total = applyRates value rates
+        print total
+----

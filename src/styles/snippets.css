@@ -1,168 +1,270 @@
 @import url('font-sets.css');
 @import url('common.css');
 
-/* Styles for the "Crear snippet" button */
+/* Styles for the "Crear snippet" section */
 
-.new-snippet-button {
-    width: 700px;
-    height: 70px;
-    border-radius: 15px;
-    padding: 10px 15px;
-    margin-bottom: 50px;
+.snippet-section {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: -350px;
-    bottom: 0;
-    margin: auto;
-    border: none;
-    background-color: #4CAF50;
-    font-family: 'Metropolis';
-    font-size: 24px;
-    cursor: pointer;
-    transition: transform 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /* Center children like inputContainer */
+    width: 100%;
 }
 
-    
-.new-snippet-button:hover {
-    transform: scale(1.15);
+/* section-title and line are in common.css */
+
+#inputContainer {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px;
+    position: relative;
+    top: 10px;
 }
 
-/* Styles for the new snippet title field */
+/* Styles for the snippets' title field */
+
+/* Styles for the snippets' title field */
 
 .title-field {
-    width: 666px;
-    height: 55px;
-    border-radius: 15px;
-    padding: 10px 15px;
-    margin-top: -90px;
-    margin-bottom: 20px;
-    left: 2%;
-    font-family: 'Cascadia Code';
-    font-size: 26px;
+    width: 100%;
+    height: 3.5rem;
+    /* 55px */
+    box-sizing: border-box;
+    border-radius: 0.9375rem;
+    /* 15px */
+    padding: 0.625rem 0.9375rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.5625rem;
+    margin-left: 0;
+    font-size: 1.625rem;
+    /* 26px */
     outline: none;
     border: 2px solid var(--primary-color);
     background-color: var(--bg-color);
     color: var(--secondary-text-color);
     text-align: left;
     position: relative;
-    overflow: hidden;
     caret-color: gray;
-    visibility: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .title-field input {
     width: 100%;
     height: 100%;
-    border: none;
-    outline: none;
+    font-size: 1.5rem;
+    /* 24px */
     font-family: 'Cascadia Code';
-    font-size: 24px;
     background-color: transparent;
     color: var(--text-color);
+    border: none;
+    outline: none;
 }
 
 /* Styles for the snippet input field */
 
 .text-area {
-    appearance: none;
-    border-radius: 0;
-    border: none;
+    width: 100%;
+    height: 100%;
     padding: 0;
     font: inherit;
     color: var(--text-color);
+    background-color: transparent;
+    border: none;
     outline: none;
     resize: none;
-    background-color: transparent;
-    box-shadow: none;
-    overflow: auto; 
-    width: 100%;
-    height: 100%;
-}
-
-#inputContainer {
-    width: 700px;
-    position: fixed;
-    top: 330px;
-    left: 49%;
-    transform: translateX(-50%);
-}
-
-.line-count {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 30px;
-    height: 100%;
-    border-right: 1px solid var(--accent-color);
-    padding: 10px;
-    box-sizing: border-box;
-    font-family: 'Metropolis';
-    color: var(--primary-color);
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-    pointer-events: none;
 }
 
 .input-field {
     font-family: 'Cascadia Code';
-    width: calc(100% - 30px);
-    height: 300px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 14.375rem;
+    /* 230px */
+    /* padding: 10px 15px; */
+    margin-top: 1.25rem;
+    margin-bottom: 1.5625rem;
+    margin-left: 0;
     border: 2px solid var(--primary-color);
-    border-radius: 15px;
+    border-radius: 0.9375rem;
     color: var(--text-color);
-    line-height: 20px;
-    outline: none;
-    font-size: 16px;
-    padding: 5px 10px 0 40px;
-    padding-top: 9px !important;
+    line-height: 1.25rem;
+    font-size: 1.125rem;
+    /* 18px */
+    padding: 0.9375rem;
+    padding-top: 0.625rem;
     text-align: left;
     resize: none;
     position: relative;
-    overflow: hidden;
     caret-color: gray;
-    visibility: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .input-field::placeholder {
     position: absolute;
-    top: 10px;
-    left: 40px; 
+    left: 2.5rem;
 }
 
 /* Styles for the button to save the new snippet */
 
-.button-container {
-    display: center;
+.save-button-container {
+    display: flex;
     justify-content: center;
-    align-items: flex-end;
-    position: fixed;
-    bottom: -55px;
-    left: 50%;
-    transform: translateX(-50%); 
-    visibility: hidden;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
 }
-    
+
 .save-button {
-    font-family: 'Metropolis';
-    border-radius: 15px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    padding: 10px 20px;
+    height: 80px;
+    width: 350px;
+    background-color: var(--primary-color);
+    color: var(--secondary-text-color);
     border: none;
-    outline: none;
+    border-radius: 15px;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
     cursor: pointer;
-    transition: transform 0.2s;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);   
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
 }
 
 .save-button:hover {
     transform: scale(1.15);
 }
-    
+
+/* Styles for the snippet's list */
+/* snippet-list-title replaced by section-title */
+
+/* Styles for the snippet's list */
+/* snippet-list-title replaced by section-title */
+
+.button-stack {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.snippet-button {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    min-height: 4.375rem;
+    border-radius: 0.9375rem;
+    padding: 0.625rem 0.9375rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: none;
+    background-color: var(--bg-color);
+    font-family: 'Metropolis';
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* this class prevents the text from overflowing out of the button */
+.snippet-button .snippet-title {
+    color: var(--primary-color);
+    margin-right: 0.625rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+    /* Prevent overlap with arrow */
+}
+
+.snippet-button::after {
+    content: "";
+    position: absolute;
+    right: 0.625rem;
+    top: 45%;
+    margin-right: 0.3125rem;
+    border: solid var(--accent-color);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 0.3125rem;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.snippet-button:hover {
+    transform: scale(1.02);
+}
+
+.snippet-title {
+    color: var(--primary-color);
+    margin-right: 0.625rem;
+    font-family: 'Cascadia Code';
+}
+
+
+.snippet-code-box {
+    width: 100%;
+    max-width: 500px;
+    font-family: 'Cascadia Code';
+    min-height: 18.75rem;
+    height: auto;
+    background-color: var(--bg-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 0.9375rem;
+    padding-top: 0.625rem;
+    padding: 0.3125rem 0.625rem 0.625rem 0.625rem;
+    margin-top: 0.3125rem;
+    margin-bottom: 1.875rem;
+    text-align: left;
+    line-height: 1.25rem;
+    font-size: 1.125rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.snippet-search-row {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    /* Align right */
+    margin-bottom: 20px;
+}
+
+.snippet-search {
+    /* No margins */
+}
+
+.search-button {
+    margin-left: 20px;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.search-button:hover {
+    transform: scale(1.11);
+}
+
+.search-input {
+    font-family: 'Metropolis';
+    color: var(--text-color);
+    border: var(--accent-color) solid 2px;
+    outline: none;
+    background-color: var(--bg-color);
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-left: 20px;
+    margin-top: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    caret-color: gray;
+}

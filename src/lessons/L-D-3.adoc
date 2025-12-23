@@ -1,0 +1,26 @@
+= Guardas (Guards)
+
+== Más legible que IF-ELSE
+
+Si Pattern Matching es evaluar la "forma" de los datos, las Guardas son para evaluar sus **propiedades** (valores booleanos).
+Es muy similar a una estructura `if-else if-else` gigante, pero mucho más limpia.
+
+[source,haskell]
+----
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height
+    | bmi <= 18.5 = "Bajo peso"
+    | bmi <= 25.0 = "Normal"
+    | bmi <= 30.0 = "Sobrepeso"
+    | otherwise   = "Obesidad"
+    where bmi = weight / height ^ 2
+----
+
+== Sintaxis Clave
+
+1.  **NO hay signo `=`** después de los parámetros de la función. El `=` va después de cada guarda.
+2.  Las guardas se indentan al menos un espacio.
+3.  `otherwise` es simplemente una función que devuelve `True`, garantizando que este caso se ejecute si todos los anteriores fallaron. Si olvidas el `otherwise` y ninguna condición se cumple, el programa lanzará un error runtime.
+
+También puedes usar guardas en línea, aunque es menos común:
+`max' a b | a > b = a | otherwise = b`

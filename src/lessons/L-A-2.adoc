@@ -1,0 +1,53 @@
+= Tu Entorno de Trabajo
+
+== GHC y GHCi
+
+El corazón de Haskell es **GHC** (Glasgow Haskell Compiler). Es el compilador más robusto y utilizado. Junto con él viene **GHCi**, el modo interactivo (la "i" es de interactive).
+
+**GHCi** es un REPL (Read-Eval-Print Loop). Es tu laboratorio de pruebas. En lugar de escribir un archivo, compilarlo y ejecutarlo para ver si una pequeña función anda, simplemente la pruebas en GHCi al instante.
+
+== Comandos Básicos de GHCi
+
+Abre tu terminal y escribe `ghci`. Verás el prompt `Prelude>`.
+`Prelude` es el módulo por defecto que carga Haskell con las funciones básicas.
+
+Probemos algunas expresiones:
+[source,haskell]
+----
+Prelude> 2 + 2
+4
+Prelude> 5 * 3
+15
+Prelude> "Hola" ++ " " ++ "Mundo"
+"Hola Mundo"
+----
+
+=== Comandos útiles del sistema
+
+Los comandos internos de GHCi comienzan con dos puntos (`:`):
+
+*   `:load nombreArchivo.hs` (o `:l`): Carga un script desde tu disco.
+*   `:reload` (o `:r`): Recarga el archivo actual. Útil si hiciste cambios en el editor y quieres probarlos.
+*   `:type expresion` (o `:t`): Te dice el tipo de dato de una expresión (ej. `:t True` te dirá `Bool`).
+*   `:quit` (o `:q`): Cierra GHCi.
+*   `:set prompt "ghci> "` Cambia el texto del prompt si `Prelude>` te aburre.
+
+== Creando tu primer archivo
+
+Crea un archivo llamado `baby.hs`. Escribe dentro:
+
+[source,haskell]
+----
+doubleMe x = x + x
+----
+
+Ahora en tu terminal, ve a donde guardaste el archivo, corre `ghci`, y haz:
+[source,haskell]
+----
+Prelude> :l baby.hs
+[1 of 1] Compiling Main             ( baby.hs, interpreted )
+Ok, one module loaded.
+*Main> doubleMe 9
+18
+----
+¡Felicidades! Has compilado tu primera función.

@@ -5,7 +5,9 @@
   <link rel="stylesheet" type="text/css" href="<%=url('lesson.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% if @theme == 'light' %>
+<% @id = session[:account_id] %>
+<% @account_theme = Account.find(@id).theme_light %>
+<% if @account_theme %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
 <% else %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">
@@ -22,19 +24,20 @@
       <ul>
         <li><a href="/home" class="nav-link">Inicio</a></li>
         <li><a href="/profile" class="nav-link">Perfil</a></li>
-        <%# <li><a href="/snippets" class="nav-link">Snippets</a></li> %>
+        <li><a href="/snippets" class="nav-link">Snippets</a></li>
+        <li><a href="/resources" class="nav-link">Recursos</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
     <div class="text-container">
-      <h1><%= @lesson.title %></h1>
-      <p><%= @lesson.description %></p>
+      <!-- <h1><%= lesson.title %></h1> -->
+      <%= lesson_content %>
     </div>
 
     <div class="continue-button-container">
-      <a href="<%= @next_step %>"><button type="button" class="continue-button" onclick="updateProgress()"><%=@current_is_last ? "Hacer el Test" : "Siguiente"%></button></a>
+      <a href="<%= lesson.getNextLesson %>"><button type="button" class="continue-button" onclick="updateProgress()"><%=@current_is_last ? "Hacer el Test" : "Siguiente"%></button></a>
     </div>
   </main>
 

@@ -1,0 +1,36 @@
+= Funciones Comunes de Listas
+
+Haskell viene con un kit de herramientas enorme para listas en el `Prelude`.
+
+== Análisis Básico
+*   `head`: Primer elemento. (¡Explota si la lista es vacía!)
+*   `tail`: Todo **menos** el primer elemento.
+*   `last`: El último elemento. (Lento, tiene que recorrer todo).
+*   `init`: Todo **menos** el último elemento.
+
+[source,haskell]
+----
+lista = [5,4,3,2,1]
+head lista -- 5
+tail lista -- [4,3,2,1]
+----
+
+== Información y Búsqueda
+*   `length`: Devuelve la longitud (Int).
+*   `null`: Devuelve `True` si la lista está vacía. **Usa esto en lugar de `length lista == 0`** (es más limpio y rápido).
+*   `elem`: Toma un elemento y una lista, devuelve `True` si el elemento está en la lista. Se suele usar infijo: ``3 `elem` [1,2,3]``.
+
+== Manipulación
+*   `reverse`: Da vuelta la lista.
+*   `take n`: Extrae `n` elementos desde el principio.
+*   `drop n`: Elimina `n` elementos desde el principio y devuelve el resto.
+*   `maximum` / `minimum`: Devuelve el mayor/menor elemento (la lista debe ser ordenable).
+*   `sum` / `product`: Suma o multiplica todos los elementos.
+
+[source,haskell]
+----
+Prelude> take 3 [5,4,3,2,1]
+[5,4,3]
+Prelude> sum [1, 2, 3]
+6
+----

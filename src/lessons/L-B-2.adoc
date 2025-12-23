@@ -1,0 +1,53 @@
+= Operaciones con Listas
+
+== Concatenación (++)
+
+El operador `++` une dos listas.
+
+[source,haskell]
+----
+Prelude> [1, 2] ++ [3, 4]
+[1,2,3,4]
+Prelude> "Hola" ++ " " ++ "Mundo"
+"Hola Mundo"
+----
+
+⚠️ **Advertencia de Rendimiento:** Haskell necesita recorrer **toda** la lista de la izquierda para agregar la otra al final. Si haces `listaGigante ++ [1]`, tardará mucho.
+
+== Cons (:)
+
+El operador `:` (cons constructor) agrega un elemento al **inicio** de una lista.
+Esta operación es **instantánea** (O(1)), sin importar el tamaño de la lista.
+
+[source,haskell]
+----
+Prelude> 'A' : "GATO"
+"AGATO"
+Prelude> 0 : [1, 2, 3]
+[0,1,2,3]
+----
+
+De hecho, `[1, 2, 3]` es solo azúcar sintáctico para `1 : 2 : 3 : []`.
+
+== Acceso por Índice (!!)
+
+Para sacar un elemento específico, usa `!!`. Los índices empiezan en 0.
+
+[source,haskell]
+----
+Prelude> "Steve Buscemi" !! 6
+'B'
+----
+
+Ten cuidado: Si pides el índice 100 de una lista de 5 elementos, obtendrás un error en tiempo de ejecución. Haskell no te protege de esto en tiempo de compilación.
+
+== Comparación
+
+Puedes comparar listas con `<, >, ==` si sus elementos son comparables. Se comparan en orden lexicográfico (como en el diccionario).
+
+[source,haskell]
+----
+Prelude> [3, 2, 1] > [2, 10, 10]
+True
+-- (3 es mayor que 2, asi que gana inmediatamente)
+----

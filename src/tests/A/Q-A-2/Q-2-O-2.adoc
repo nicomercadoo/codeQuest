@@ -1,0 +1,7 @@
+// OPTION 2, QUESTION 2, TEST A
+
+[source, haskell]
+----
+double :: Int -> Int
+double x = x * x
+----

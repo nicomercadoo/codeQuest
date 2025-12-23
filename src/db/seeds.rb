@@ -1,160 +1,204 @@
-AccountTest = Class.new(ActiveRecord::Base)
-AccountLesson = Class.new(ActiveRecord::Base)
-AccountQuestion = Class.new(ActiveRecord::Base)
-AccountOption = Class.new(ActiveRecord::Base)
+# frozen_string_literal: true
+
+# Limpiar base de datos
+puts "Limpiando base de datos..."
+AccountLesson.destroy_all
+AccountQuestion.destroy_all
+AccountTest.destroy_all
+AccountOption.destroy_all
+Option.destroy_all
+Question.destroy_all
+Lesson.destroy_all
+Test.destroy_all
+puts "Base de datos limpia."
+
+# --- TEST A: Fundamentos ---
+puts "Creando Test A..."
+test_a = Test.create(letter: 'A', description: 'Fundamentos de Haskell', cant_questions: 5)
+
+# Lessons A
+Lesson.create(number: 1, title: 'Introducción a Haskell', test_letter: 'A')
+Lesson.create(number: 2, title: 'Tu Entorno de Trabajo (GHCi)', test_letter: 'A')
+Lesson.create(number: 3, title: 'Primeros Pasos: Aritmética', test_letter: 'A')
+Lesson.create(number: 4, title: 'Tipos de Datos Básicos', test_letter: 'A')
+Lesson.create(number: 5, title: 'Funciones Simples', test_letter: 'A')
+
+# Questions A
+q_a1 = Question.create(number: 1, description: '¿Qué característica define mejor a Haskell?', test_letter: 'A')
+Option.create(number: 1, description: 'Es puramente funcional y perezoso', correct: true, question_number: q_a1.number, test_letter: 'A')
+Option.create(number: 2, description: 'Es orientado a objetos e imperativo', correct: false, question_number: q_a1.number, test_letter: 'A')
+Option.create(number: 3, description: 'Es dinámicamente tipado', correct: false, question_number: q_a1.number, test_letter: 'A')
+
+q_a2 = Question.create(number: 2, description: '¿Cómo se inicia el intérprete interactivo de Haskell?', test_letter: 'A')
+Option.create(number: 1, description: 'ghci', correct: true, question_number: q_a2.number, test_letter: 'A')
+Option.create(number: 2, description: 'haskell-run', correct: false, question_number: q_a2.number, test_letter: 'A')
+Option.create(number: 3, description: 'node', correct: false, question_number: q_a2.number, test_letter: 'A')
+
+q_a3 = Question.create(number: 3, description: '¿Cuál es el resultado de 5 * (-3) en Haskell?', test_letter: 'A')
+Option.create(number: 1, description: '-15', correct: true, question_number: q_a3.number, test_letter: 'A')
+Option.create(number: 2, description: 'Error de sintaxis', correct: false, question_number: q_a3.number, test_letter: 'A')
+Option.create(number: 3, description: '15', correct: false, question_number: q_a3.number, test_letter: 'A')
+
+q_a4 = Question.create(number: 4, description: '¿Qué tipo tiene la expresión "Hola"?', test_letter: 'A')
+Option.create(number: 1, description: '[Char] o String', correct: true, question_number: q_a4.number, test_letter: 'A')
+Option.create(number: 2, description: 'Text', correct: false, question_number: q_a4.number, test_letter: 'A')
+Option.create(number: 3, description: 'Char', correct: false, question_number: q_a4.number, test_letter: 'A')
+
+q_a5 = Question.create(number: 5, description: '¿Cómo se define una función que duplica un número x?', test_letter: 'A')
+Option.create(number: 1, description: 'doble x = x + x', correct: true, question_number: q_a5.number, test_letter: 'A')
+Option.create(number: 2, description: 'function doble(x) { return x + x }', correct: false, question_number: q_a5.number, test_letter: 'A')
+Option.create(number: 3, description: 'doble = x + x', correct: false, question_number: q_a5.number, test_letter: 'A')
 
 
-# Test A
-test_a = Test.create(letter: "A", description: "Introducción a Haskell", cant_questions: 5)
+# --- TEST B: Estructuras de Datos ---
+puts "Creando Test B..."
+Test.create(letter: 'B', description: 'Listas y Tuplas', cant_questions: 5)
 
-lesson_a1 = Lesson.create(number: 1, title: "Introducción a Haskell", description: "En esta lección, aprenderás sobre Haskell, un lenguaje de programación funcional puro. Haskell se basa en la evaluación lazy, lo que significa que los cálculos se posponen hasta que los resultados sean necesarios. Además, Haskell se destaca por su expresividad y concisión en el código. Conocerás los fundamentos de Haskell, su sintaxis y cómo se utiliza para resolver problemas de programación.", test_letter: test_a.letter)
-lesson_a2 = Lesson.create(number: 2, title: "Tipos de datos en Haskell", description: "Los tipos de datos son una parte fundamental en Haskell. Aprenderás sobre los tipos básicos, como enteros, caracteres y booleanos. Además, explorarás los tipos algebraicos, que permiten crear estructuras de datos más complejas. Verás cómo definir tus propios tipos de datos personalizados en Haskell y cómo utilizarlos en tus programas.", test_letter: test_a.letter)
-lesson_a3 = Lesson.create(number: 3, title: "Funciones en Haskell", description: "Las funciones son la piedra angular de la programación en Haskell. Aprenderás cómo definir funciones en Haskell, utilizando patrones de coincidencia y guardias para manejar diferentes casos. También explorarás las funciones de orden superior, que permiten pasar funciones como argumentos o devolver funciones como resultados. Descubrirás cómo aprovechar la composición de funciones y cómo implementar recursión en Haskell.", test_letter: test_a.letter)
-lesson_a4 = Lesson.create(number: 4, title: "Listas en Haskell", description: "Las listas son una estructura de datos esencial en Haskell. Aprenderás cómo trabajar con listas, incluyendo su creación, manipulación y acceso a elementos. Explorarás las funciones de orden superior, como map, filter y foldr, que te ayudarán a transformar y procesar listas de manera eficiente. También verás cómo implementar recursión sobre listas para realizar operaciones más complejas.", test_letter: test_a.letter)
-lesson_a5 = Lesson.create(number: 5, title: "Recursión en Haskell", description: "La recursión es una técnica poderosa en Haskell. Aprenderás cómo utilizar la recursión para resolver problemas de manera elegante y eficiente. Explorarás ejemplos prácticos, como el cálculo de factoriales y la búsqueda en árboles binarios, utilizando funciones recursivas. También descubrirás cómo optimizar funciones recursivas utilizando la recursión de cola.", test_letter: test_a.letter)
+# Lessons B
+Lesson.create(number: 1, title: 'Introducción a las Listas', test_letter: 'B')
+Lesson.create(number: 2, title: 'Operaciones con Listas', test_letter: 'B')
+Lesson.create(number: 3, title: 'Funciones Comunes de Listas', test_letter: 'B')
+Lesson.create(number: 4, title: 'Rangos (Ranges)', test_letter: 'B')
+Lesson.create(number: 5, title: 'List Comprehensions', test_letter: 'B')
 
-question_a1 = Question.create(number: 1, description: "¿Qué es Haskell?", test_letter: test_a.letter)
-question_a2 = Question.create(number: 2, description: "¿Cuál de estos no es un tipo de dato en Haskell?", test_letter: test_a.letter)
-question_a3 = Question.create(number: 3, description: "¿Cómo se define una función?", test_letter: test_a.letter)
-question_a4 = Question.create(number: 4, description: "¿Cómo se crea una lista?", test_letter: test_a.letter)
-question_a5 = Question.create(number: 5, description: "¿Qué es la recursión?", test_letter: test_a.letter)
+# Questions B
+q_b1 = Question.create(number: 1, description: '¿Qué sucede si intentas crear una lista con diferentes tipos [1, "a"]?', test_letter: 'B')
+Option.create(number: 1, description: 'Error, las listas deben ser homogéneas', correct: true, question_number: q_b1.number, test_letter: 'B')
+Option.create(number: 2, description: 'Se crea una lista mixta', correct: false, question_number: q_b1.number, test_letter: 'B')
+Option.create(number: 3, description: 'Convierte todo a String', correct: false, question_number: q_b1.number, test_letter: 'B')
 
-option_a1 = Option.create(number: 1, description: "Un lenguaje de programación funcional", correct: true, question_number: question_a1.number, test_letter: test_a.letter)
-option_a2 = Option.create(number: 2, description: "Un lenguaje de programación imperativo", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
-option_a3 = Option.create(number: 3, description: "Un lenguaje de programación orientado a objetos", correct: false, question_number: question_a1.number, test_letter: test_a.letter)
-option_a4 = Option.create(number: 1, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
-option_a5 = Option.create(number: 2, description: "Bool", correct: false, question_number: question_a2.number, test_letter: test_a.letter)
-option_a6 = Option.create(number: 3, description: "Arraylist", correct: true, question_number: question_a2.number, test_letter: test_a.letter)
-option_a7 = Option.create(number: 1, description: "Usando la palabra clave 'function'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
-option_a8 = Option.create(number: 2, description: "Usando el operador '=>'", correct: false, question_number: question_a3.number, test_letter: test_a.letter)
-option_a9 = Option.create(number: 3, description: "Usando el símbolo '->'", correct: true, question_number: question_a3.number, test_letter: test_a.letter)
-option_a10 = Option.create(number: 1, description: "Mediante un bucle", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
-option_a11 = Option.create(number: 2, description: "Usando la palabra clave 'list'", correct: false, question_number: question_a4.number, test_letter: test_a.letter)
-option_a12 = Option.create(number: 3, description: "Mediante la notación de corchetes", correct: true, question_number: question_a4.number, test_letter: test_a.letter)
-option_a13 = Option.create(number: 1, description: "Un bucle que se llama a sí mismo", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
-option_a14 = Option.create(number: 2, description: "Una función que se llama a sí misma", correct: true, question_number: question_a5.number, test_letter: test_a.letter)
-option_a15 = Option.create(number: 3, description: "Un tipo de dato en Haskell", correct: false, question_number: question_a5.number, test_letter: test_a.letter)
+q_b2 = Question.create(number: 2, description: '¿Qué operador agrega un elemento al principio de una lista (cons)?', test_letter: 'B')
+Option.create(number: 1, description: ':', correct: true, question_number: q_b2.number, test_letter: 'B')
+Option.create(number: 2, description: '++', correct: false, question_number: q_b2.number, test_letter: 'B')
+Option.create(number: 3, description: '+', correct: false, question_number: q_b2.number, test_letter: 'B')
 
-# Test B
-test_b = Test.create(letter: "B", description: "Conceptos básicos", cant_questions: 5)
+q_b3 = Question.create(number: 3, description: '¿Qué función devuelve el primer elemento de una lista?', test_letter: 'B')
+Option.create(number: 1, description: 'head', correct: true, question_number: q_b3.number, test_letter: 'B')
+Option.create(number: 2, description: 'first', correct: false, question_number: q_b3.number, test_letter: 'B')
+Option.create(number: 3, description: 'init', correct: false, question_number: q_b3.number, test_letter: 'B')
 
-lesson_b1 = Lesson.create(number: 1, title: "Conceptos básicos", description: "En esta lección, repasaremos los conceptos fundamentales de Haskell. Aprenderás sobre su historia y características principales, como la programación funcional y la evaluación lazy. También exploraremos la tipificación estática y fuerte de Haskell, así como su sistema de módulos y funciones puras. Al final de esta lección, comprenderás los conceptos básicos que fundamentan el lenguaje Haskell.", test_letter: test_b.letter)
-lesson_b2 = Lesson.create(number: 2, title: "Estructuras de control en Haskell", description: "Aprenderás cómo utilizar las estructuras de control en Haskell. Descubrirás cómo realizar estructuras condicionales utilizando la expresión if-then-else, así como cómo utilizar estructuras de repetición, como el bucle for y el bucle while. Exploraremos ejemplos prácticos y veremos cómo aprovechar las estructuras de control para controlar el flujo de ejecución en tus programas Haskell.", test_letter: test_b.letter)
-lesson_b3 = Lesson.create(number: 3, title: "Módulos en Haskell", description: "Esta lección se centra en el uso de módulos en Haskell. Aprenderás qué son los módulos y cómo puedes utilizarlos para organizar y reutilizar tu código. Exploraremos cómo importar módulos, cómo definir tus propios módulos y cómo utilizar la declaración de exportación para controlar qué funciones y tipos son visibles fuera del módulo. También discutiremos las mejores prácticas en el uso de módulos en Haskell.", test_letter: test_b.letter)
-lesson_b4 = Lesson.create(number: 4, title: "Manipulación de cadenas", description: "Aprenderás cómo manipular cadenas de texto en Haskell. Exploraremos las funciones y operadores disponibles para trabajar con cadenas, incluyendo la concatenación, la búsqueda y la manipulación de caracteres individuales. Descubrirás cómo utilizar las funciones proporcionadas por el módulo Data.Text para realizar operaciones eficientes con cadenas en Haskell. También veremos ejemplos prácticos de manipulación de cadenas en Haskell.", test_letter: test_b.letter)
-lesson_b5 = Lesson.create(number: 5, title: "Programación funcional avanzada", description: "En esta lección, exploraremos conceptos avanzados de programación funcional en Haskell. Aprenderás sobre la currificación, que es la transformación de una función de múltiples argumentos en una secuencia de funciones que toman un solo argumento. También descubrirás la aplicación de funciones parciales y las funciones de orden superior, que te permiten crear funciones más flexibles y reutilizables. Al final de esta lección, estarás familiarizado con técnicas avanzadas de programación funcional en Haskell.", test_letter: test_b.letter)
+q_b4 = Question.create(number: 4, description: '¿Qué genera la expresión [2,4..10]?', test_letter: 'B')
+Option.create(number: 1, description: '[2,4,6,8,10]', correct: true, question_number: q_b4.number, test_letter: 'B')
+Option.create(number: 2, description: '[2,3,4,5,6,7,8,9,10]', correct: false, question_number: q_b4.number, test_letter: 'B')
+Option.create(number: 3, description: 'Error de sintaxis', correct: false, question_number: q_b4.number, test_letter: 'B')
 
-question_b1 = Question.create(number: 1, description: "¿Cuál es el principal objetivo de Haskell?", test_letter: test_b.letter)
-question_b2 = Question.create(number: 2, description: "¿Cómo se realiza una estructura condicional en Haskell?", test_letter: test_b.letter)
-question_b3 = Question.create(number: 3, description: "¿Qué son los módulos en Haskell?", test_letter: test_b.letter)
-question_b4 = Question.create(number: 4, description: "¿Cómo se concatenan cadenas de texto en Haskell?", test_letter: test_b.letter)
-question_b5 = Question.create(number: 5, description: "¿Cuál es el concepto de currificación en Haskell?", test_letter: test_b.letter)
+q_b5 = Question.create(number: 5, description: '¿Qué hace [x*2 | x <- [1..3]]?', test_letter: 'B')
+Option.create(number: 1, description: 'Devuelve [2, 4, 6]', correct: true, question_number: q_b5.number, test_letter: 'B')
+Option.create(number: 2, description: 'Devuelve [1, 2, 3]', correct: false, question_number: q_b5.number, test_letter: 'B')
+Option.create(number: 3, description: 'Devuelve [2, 4, 6, 8]', correct: false, question_number: q_b5.number, test_letter: 'B')
 
-option_b1 = Option.create(number: 1, description: "Permitir la programación funcional", correct: true, question_number: question_b1.number, test_letter: test_b.letter)
-option_b2 = Option.create(number: 2, description: "Permitir la programación orientada a objetos", correct: false, question_number: question_a1.number, test_letter: test_b.letter)
-option_b3 = Option.create(number: 3, description: "Permitir la programación imperativa", correct: false, question_number: question_b1.number, test_letter: test_b.letter)
-option_b4 = Option.create(number: 1, description: "Mediante la estructura if-else", correct: true, question_number: question_b2.number, test_letter: test_b.letter)
-option_b5 = Option.create(number: 2, description: "Usando la palabra clave 'switch'", correct: false, question_number: question_b2.number, test_letter: test_b.letter)
-option_b6 = Option.create(number: 3, description: "Usando la estructura for", correct: false, question_number: question_b2.number, test_letter: test_b.letter)
-option_b7 = Option.create(number: 1, description: "Son bloques de código reutilizables", correct: true, question_number: question_b3.number, test_letter: test_b.letter)
-option_b8 = Option.create(number: 2, description: "Son operadores matemáticos", correct: false, question_number: question_b3.number, test_letter: test_b.letter)
-option_b9 = Option.create(number: 3, description: "Son estructuras de datos en Haskell", correct: false, question_number: question_b3.number, test_letter: test_b.letter)
-option_b10 = Option.create(number: 1, description: "Usando el operador '+'", correct: false, question_number: question_b4.number, test_letter: test_b.letter)
-option_b11 = Option.create(number: 2, description: "Usando la función 'concat'", correct: false, question_number: question_b4.number, test_letter: test_b.letter)
-option_b12 = Option.create(number: 3, description: "Usando el operador '++'", correct: true, question_number: question_b4.number, test_letter: test_b.letter)
-option_b13 = Option.create(number: 1, description: "La aplicación de funciones parciales", correct: false, question_number: question_b5.number, test_letter: test_b.letter)
-option_b14 = Option.create(number: 2, description: "La aplicación de funciones de orden superior", correct: false, question_number: question_b5.number, test_letter: test_b.letter)
-option_b15 = Option.create(number: 3, description: "La transformación de funciones de varios argumentos en una secuencia de funciones que toman un solo argumento", correct: true, question_number: question_b5.number, test_letter: test_b.letter)
 
-# Test C
-test_c = Test.create(letter: "C", description: "Programación funcional", cant_questions: 5)
+# --- TEST C: Tipos y Clases ---
+puts "Creando Test C..."
+Test.create(letter: 'C', description: 'Tipos y Typeclasses', cant_questions: 5)
 
-lesson_c1 = Lesson.create(number: 1, title: "Programación funcional", description: "En esta lección, exploraremos los conceptos clave de la programación funcional en Haskell. Aprenderás que la programación funcional es un paradigma de programación basado en funciones, donde las funciones son tratadas como ciudadanos de primera clase. Descubrirás cómo Haskell implementa la programación funcional y cómo aprovechar sus características principales, como la inmutabilidad, la evaluación perezosa y las funciones puras. Al final de esta lección, comprenderás los fundamentos de la programación funcional en Haskell.", test_letter: test_c.letter)
-lesson_c2 = Lesson.create(number: 2, title: "Recursión", description: "Aprenderás cómo utilizar la recursión para resolver problemas en Haskell. La recursión es un concepto central en Haskell y te permite definir funciones que se llaman a sí mismas para abordar problemas de forma iterativa. Exploraremos ejemplos prácticos de recursión, como la implementación de funciones para calcular factoriales y sumas de números. También discutiremos técnicas para escribir funciones recursivas eficientes y evitar bucles infinitos.", test_letter: test_c.letter)
-lesson_c3 = Lesson.create(number: 3, title: "Composición de funciones", description: "Esta lección se enfoca en la composición de funciones en Haskell. Aprenderás qué es la composición de funciones y cómo puedes combinar dos o más funciones para obtener una nueva función. Descubrirás cómo utilizar el operador de composición (.) en Haskell y cómo aplicar la composición de funciones para crear programas más concisos y expresivos. También veremos ejemplos prácticos de la composición de funciones en Haskell.", test_letter: test_c.letter)
-lesson_c4 = Lesson.create(number: 4, title: "Manejo de listas", description: "Aprenderás a trabajar con listas y funciones de orden superior en Haskell. Las listas son una estructura de datos fundamental en Haskell y te permiten almacenar y manipular colecciones de elementos. Exploraremos funciones de orden superior, como map, filter y reduce, que te permiten realizar operaciones comunes en listas de manera concisa y elegante. También veremos cómo utilizar patrones de comprensión de listas para generar y transformar listas en Haskell.", test_letter: test_c.letter)
-lesson_c5 = Lesson.create(number: 5, title: "Programación monádica", description: "En esta lección, exploraremos el concepto de programación monádica y su uso en Haskell. Las mónadas son una abstracción poderosa que te permite encapsular efectos secundarios en un contexto controlado. Aprenderás qué es una mónada y cómo utilizar las mónadas proporcionadas por Haskell, como Maybe, Either y IO, para trabajar con efectos secundarios de manera segura y modular. Al final de esta lección, comprenderás los fundamentos de la programación monádica y su aplicación en Haskell.", test_letter: test_c.letter)
+# Lessons C
+Lesson.create(number: 1, title: 'Tipos y Firmas', test_letter: 'C')
+Lesson.create(number: 2, title: 'Variables de Tipo', test_letter: 'C')
+Lesson.create(number: 3, title: 'Clases Eq y Ord', test_letter: 'C')
+Lesson.create(number: 4, title: 'Clases Show y Read', test_letter: 'C')
+Lesson.create(number: 5, title: 'Clases Enum y Bounded', test_letter: 'C')
 
-question_c1 = Question.create(number: 1, description: "¿Qué es la programación funcional?", test_letter: test_c.letter)
-question_c2 = Question.create(number: 2, description: "¿Cuál es el concepto central de la recursión?", test_letter: test_c.letter)
-question_c3 = Question.create(number: 3, description: "¿Qué es la composición de funciones en Haskell?", test_letter: test_c.letter)
-question_c4 = Question.create(number: 4, description: "¿Cómo se realiza el filtrado de una lista?", test_letter: test_c.letter)
-question_c5 = Question.create(number: 5, description: "¿Qué es una mónada en Haskell?", test_letter: test_c.letter)
+# Questions C
+q_c1 = Question.create(number: 1, description: 'En la firma "head :: [a] -> a", ¿qué es "a"?', test_letter: 'C')
+Option.create(number: 1, description: 'Una variable de tipo (puede ser cualquier tipo)', correct: true, question_number: q_c1.number, test_letter: 'C')
+Option.create(number: 2, description: 'Un tipo específico llamado "a"', correct: false, question_number: q_c1.number, test_letter: 'C')
+Option.create(number: 3, description: 'Un carácter', correct: false, question_number: q_c1.number, test_letter: 'C')
 
-option_c1 = Option.create(number: 1, description: "Un paradigma de programación basado en funciones", correct: true, question_number: question_c1.number, test_letter: test_c.letter)
-option_c2 = Option.create(number: 2, description: "Un paradigma de programación basado en objetos", correct: false, question_number: question_c1.number, test_letter: test_c.letter)
-option_c3 = Option.create(number: 3, description: "Un paradigma de programación basado en eventos", correct: false, question_number: question_c1.number, test_letter: test_c.letter)
-option_c4 = Option.create(number: 1, description: "La repetición de un bloque de código", correct: true, question_number: question_c2.number, test_letter: test_c.letter)
-option_c5 = Option.create(number: 2, description: "La división de un problema en subproblemas más pequeños", correct: false, question_number: question_c2.number, test_letter: test_c.letter)
-option_c6 = Option.create(number: 3, description: "La agrupación de elementos similares en una lista", correct: false, question_number: question_c2.number, test_letter: test_c.letter)
-option_c7 = Option.create(number: 1, description: "La combinación de dos o más funciones para obtener una nueva función", correct: true, question_number: question_c3.number, test_letter: test_c.letter)
-option_c8 = Option.create(number: 2, description: "La separación de una función en varias funciones más pequeñas", correct: false, question_number: question_c3.number, test_letter: test_c.letter)
-option_c9 = Option.create(number: 3, description: "La aplicación de funciones a una lista", correct: false, question_number: question_c3.number, test_letter: test_c.letter)
-option_c10 = Option.create(number: 1, description: "Usando la función 'filter'", correct: true, question_number: question_c4.number, test_letter: test_c.letter)
-option_c11 = Option.create(number: 2, description: "Usando la función 'map'", correct: false, question_number: question_c4.number, test_letter: test_c.letter)
-option_c12 = Option.create(number: 3, description: "Usando la función 'reduce'", correct: false, question_number: question_c4.number, test_letter: test_c.letter)
-option_c13 = Option.create(number: 1, description: "Un tipo de dato en Haskell", correct: true, question_number: question_c5.number, test_letter: test_c.letter)
-option_c14 = Option.create(number: 2, description: "Una función pura en Haskell", correct: false, question_number: question_c5.number, test_letter: test_c.letter)
-option_c15 = Option.create(number: 3, description: "Un operador lógico en Haskell", correct: false, question_number: question_c5.number, test_letter: test_c.letter)
+q_c2 = Question.create(number: 2, description: '¿Qué Typeclass permite comprobar igualdad (==)?', test_letter: 'C')
+Option.create(number: 1, description: 'Eq', correct: true, question_number: q_c2.number, test_letter: 'C')
+Option.create(number: 2, description: 'Ord', correct: false, question_number: q_c2.number, test_letter: 'C')
+Option.create(number: 3, description: 'Equal', correct: false, question_number: q_c2.number, test_letter: 'C')
 
-# Test D
-test_d = Test.create(letter: "D", description: "Programación intermedia", cant_questions: 5)
+q_c3 = Question.create(number: 3, description: '¿Qué función convierte un valor a String?', test_letter: 'C')
+Option.create(number: 1, description: 'show', correct: true, question_number: q_c3.number, test_letter: 'C')
+Option.create(number: 2, description: 'read', correct: false, question_number: q_c3.number, test_letter: 'C')
+Option.create(number: 3, description: 'toString', correct: false, question_number: q_c3.number, test_letter: 'C')
 
-lesson_d1 = Lesson.create(number: 1, title: "Manejo de excepciones en Haskell", description: "Aprenderás a manejar excepciones en Haskell. Descubrirás cómo utilizar bloques try-catch para capturar y manejar excepciones en tu código. Exploraremos las diferentes excepciones predefinidas en Haskell y cómo puedes crear tus propias excepciones personalizadas. También discutiremos las mejores prácticas para el manejo de excepciones y cómo evitar errores comunes al trabajar con excepciones.", test_letter: test_d.letter)
-lesson_d2 = Lesson.create(number: 2, title: "Programación monádica", description: "En esta lección, exploraremos la programación monádica en Haskell. Aprenderás que la programación monádica es un enfoque basado en monoides que te permite encapsular efectos secundarios y cálculos en un contexto controlado. Descubrirás qué es una mónada y cómo utilizar las mónadas en Haskell para escribir código modular y seguro. Veremos ejemplos prácticos de programación monádica en Haskell y cómo combinar múltiples mónadas para abordar situaciones complejas.", test_letter: test_d.letter)
-lesson_d3 = Lesson.create(number: 3, title: "Lectura y escritura de archivos en Haskell", description: "Aprenderás cómo leer y escribir archivos en Haskell. Exploraremos las funciones predefinidas de Haskell, como readFile y writeFile, que te permiten interactuar con archivos en el sistema de archivos. Descubrirás cómo abrir archivos, leer su contenido, escribir en ellos y cerrarlos adecuadamente. También discutiremos cómo manejar errores y excepciones relacionados con la lectura y escritura de archivos.", test_letter: test_d.letter)
-lesson_d4 = Lesson.create(number: 4, title: "Estructuras de datos avanzadas en Haskell", description: "Esta lección se enfoca en las estructuras de datos avanzadas en Haskell. Aprenderás sobre las estructuras de datos como árboles binarios y grafos, que son fundamentales para resolver problemas más complejos. Exploraremos cómo implementar y manipular estas estructuras de datos en Haskell, así como las operaciones comunes que puedes realizar en ellas. También discutiremos las ventajas y desventajas de diferentes estructuras de datos según el escenario de uso.", test_letter: test_d.letter)
-lesson_d5 = Lesson.create(number: 5, title: "Programación funcional lazzy", description: "Exploraremos el concepto de evaluación lazy en Haskell. Aprenderás que en Haskell, la evaluación lazy significa que los cálculos se realizan solo cuando los resultados son necesarios. Descubrirás cómo la evaluación lazy puede mejorar la eficiencia y la modularidad del código al evitar cálculos innecesarios. Veremos ejemplos de evaluación lazy en Haskell y cómo puedes aprovechar esta característica para escribir programas más eficientes y elegantes.", test_letter: test_d.letter)
+q_c4 = Question.create(number: 4, description: '¿Qué caracteriza a la clase Ord?', test_letter: 'C')
+Option.create(number: 1, description: 'Permite ordenar sus valores (>, <)', correct: true, question_number: q_c4.number, test_letter: 'C')
+Option.create(number: 2, description: 'Permite imprimir sus valores', correct: false, question_number: q_c4.number, test_letter: 'C')
+Option.create(number: 3, description: 'Permite enumerar sus valores', correct: false, question_number: q_c4.number, test_letter: 'C')
 
-question_d1 = Question.create(number: 1, description: "¿Cómo se manejan las excepciones en haskell?", test_letter: test_d.letter)
-question_d2 = Question.create(number: 2, description: "¿Qué es la programación monádica?", test_letter: test_d.letter)
-question_d3 = Question.create(number: 3, description: "¿Cómo se realiza la lectura de archivos en Haskell?", test_letter: test_d.letter)
-question_d4 = Question.create(number: 4, description: "¿Cuáles son algunas estructuras de datos avanzadas en Haskell?", test_letter: test_d.letter)
-question_d5 = Question.create(number: 5, description: "¿Qué significa la evaluación lazy?", test_letter: test_d.letter)
+q_c5 = Question.create(number: 5, description: '¿Qué función devuelve el sucesor de un Enum?', test_letter: 'C')
+Option.create(number: 1, description: 'succ', correct: true, question_number: q_c5.number, test_letter: 'C')
+Option.create(number: 2, description: 'next', correct: false, question_number: q_c5.number, test_letter: 'C')
+Option.create(number: 3, description: 'pred', correct: false, question_number: q_c5.number, test_letter: 'C')
 
-option_d1 = Option.create(number: 1, description: "Utilizando bloques try-catch", correct: true, question_number: question_d1.number, test_letter: test_d.letter)
-option_d2 = Option.create(number: 2, description: "Utilizando sentencias if-else", correct: false, question_number: question_d1.number, test_letter: test_d.letter)
-option_d3 = Option.create(number: 3, description: "Utilizando sentencias switch-case", correct: false, question_number: question_d1.number, test_letter: test_d.letter)
-option_d4 = Option.create(number: 1, description: "Un enfoque de programación basado en monoides", correct: true, question_number: question_d2.number, test_letter: test_d.letter)
-option_d5 = Option.create(number: 2, description: "Un enfoque de programación basado en bucles", correct: false, question_number: question_d2.number, test_letter: test_d.letter)
-option_d6 = Option.create(number: 3, description: "Un enfoque de programación basado en condicionales", correct: false, question_number: question_d2.number, test_letter: test_d.letter)
-option_d7 = Option.create(number: 1, description: "Utilizando la función 'readFile'", correct: true, question_number: question_d3.number, test_letter: test_d.letter)
-option_d8 = Option.create(number: 2, description: "Utilizando la función 'writeFile'", correct: false, question_number: question_d3.number, test_letter: test_d.letter)
-option_d9 = Option.create(number: 3, description: "Utilizando la función 'openFile'", correct: false, question_number: question_d3.number, test_letter: test_d.letter)
-option_d10 = Option.create(number: 1, description: "Árboles binarios y grafos", correct: true, question_number: question_d4.number, test_letter: test_d.letter)
-option_d11 = Option.create(number: 2, description: "Listas y matrices", correct: false, question_number: question_d4.number, test_letter: test_d.letter)
-option_d12 = Option.create(number: 3, description: "Colas y pilas", correct: false, question_number: question_d4.number, test_letter: test_d.letter)
-option_d13 = Option.create(number: 1, description: "La evaluación se realiza solo cuando los resultados son necesarios", correct: true, question_number: question_d5.number, test_letter: test_d.letter)
-option_d14 = Option.create(number: 2, description: "La evaluación se realiza de manera inmediata", correct: false, question_number: question_d5.number, test_letter: test_d.letter)
-option_d15 = Option.create(number: 3, description: "La evaluación se realiza en paralelo", correct: false, question_number: question_d5.number, test_letter: test_d.letter)
 
-# Test E
-test_e = Test.create(letter: "E", description: "Programación avanzada", cant_questions: 5)
+# --- TEST D: Sintaxis Avanzada ---
+puts "Creando Test D..."
+Test.create(letter: 'D', description: 'Sintaxis de Funciones', cant_questions: 5)
 
-lesson_e1 = Lesson.create(number: 1, title: "Tipos de datos avanzados", description: "En esta lección, exploraremos los tipos de datos avanzados en Haskell. Aprenderás sobre los tipos algebraicos y tipos polimórficos, que te permiten representar estructuras de datos más complejas y expresar conceptos abstractos de manera concisa. Veremos cómo definir y utilizar estos tipos de datos en Haskell, y discutiremos algunas técnicas avanzadas de manipulación de tipos.", test_letter: test_e.letter)
-lesson_e2 = Lesson.create(number: 2, title: "Programación funcional reactiva", description: "Aprenderás cómo utilizar la programación funcional reactiva en Haskell. Descubrirás que la programación funcional reactiva es un paradigma basado en eventos que te permite construir aplicaciones reactivas y manejar flujos de datos asincrónicos. Exploraremos los conceptos clave de la programación funcional reactiva, como los eventos, los comportamientos y las señales, y cómo puedes utilizar bibliotecas específicas de Haskell para implementar este estilo de programación.", test_letter: test_e.letter)
-lesson_e3 = Lesson.create(number: 3, title: "Programación concurrente", description: "Esta lección se enfoca en la programación concurrente en Haskell. Aprenderás diferentes técnicas para realizar la programación concurrente, como el uso de hilos de ejecución y la comunicación entre ellos. Exploraremos cómo crear y administrar hilos en Haskell, así como las herramientas y abstracciones proporcionadas por el lenguaje para facilitar la programación concurrente. También discutiremos cómo manejar la concurrencia y evitar problemas como las condiciones de carrera y la incoherencia de datos.", test_letter: test_e.letter)
-lesson_e4 = Lesson.create(number: 4, title: "Optimización y rendimiento", description: "Aprenderás técnicas de optimización y mejora de rendimiento en Haskell. Descubrirás cómo optimizar bucles y utilizar estructuras de datos eficientes para mejorar el rendimiento de tus programas. Exploraremos técnicas como el desenrollado de bucles, la especialización de tipos y la evaluación estricta, que te permitirán escribir código más eficiente en Haskell. También discutiremos algunas herramientas y técnicas de perfilado para identificar y resolver cuellos de botella en tu código.", test_letter: test_e.letter)
-lesson_e5 = Lesson.create(number: 5, title: "Dependencias externas y extensiones", description: "Exploraremos cómo utilizar dependencias externas y extensiones de Haskell. Aprenderás a importar bibliotecas externas en tus proyectos Haskell para aprovechar funcionalidades adicionales y reutilizar código existente. Descubrirás cómo gestionar las dependencias de tu proyecto utilizando herramientas como Cabal o Stack. También discutiremos cómo habilitar y utilizar extensiones de Haskell, que son características adicionales que amplían el lenguaje y te permiten escribir código más expresivo y conciso.", test_letter: test_e.letter)
+# Lessons D
+Lesson.create(number: 1, title: 'Pattern Matching Básico', test_letter: 'D')
+Lesson.create(number: 2, title: 'Pattern Matching Avanzado', test_letter: 'D')
+Lesson.create(number: 3, title: 'Guardas (Guards)', test_letter: 'D')
+Lesson.create(number: 4, title: 'Where y Let', test_letter: 'D')
+Lesson.create(number: 5, title: 'Case Expressions', test_letter: 'D')
 
-question_e1 = Question.create(number: 1, description: "¿Cuáles son los tipos de datos avanzados en Haskell?", test_letter: test_e.letter)
-question_e2 = Question.create(number: 2, description: "¿Qué es la programación funcional reactiva?", test_letter: test_e.letter)
-question_e3 = Question.create(number: 3, description: "¿Cómo se realiza la programación concurrente en Haskell?", test_letter: test_e.letter)
-question_e4 = Question.create(number: 4, description: "¿Qué técnicas se utilizan para la optimización y rendimiento en Haskell?", test_letter: test_e.letter)
-question_e5 = Question.create(number: 5, description: "¿Cómo se utilizan dependencias externas y extensiones en Haskell?", test_letter: test_e.letter)
+# Questions D
+q_d1 = Question.create(number: 1, description: 'En pattern matching, ¿qué hace el patrón "_"?', test_letter: 'D')
+Option.create(number: 1, description: 'Coincide con cualquier cosa (comodín)', correct: true, question_number: q_d1.number, test_letter: 'D')
+Option.create(number: 2, description: 'Coincide solo con listas vacías', correct: false, question_number: q_d1.number, test_letter: 'D')
+Option.create(number: 3, description: 'Lanza un error', correct: false, question_number: q_d1.number, test_letter: 'D')
 
-option_e1 = Option.create(number: 1, description: "Tipos algebraicos y tipos polimórficos", correct: true, question_number: question_e1.number, test_letter: test_e.letter)
-option_e2 = Option.create(number: 2, description: "Tipos básicos y tipos compuestos", correct: false, question_number: question_e1.number, test_letter: test_e.letter)
-option_e3 = Option.create(number: 3, description: "Tipos numéricos y tipos de cadena", correct: false, question_number: question_e1.number, test_letter: test_e.letter)
-option_e4 = Option.create(number: 1, description: "Un paradigma de programación basado en eventos", correct: true, question_number: question_e2.number, test_letter: test_e.letter)
-option_e5 = Option.create(number: 2, description: "Un paradigma de programación basado en objetos", correct: false, question_number: question_e2.number, test_letter: test_e.letter)
-option_e6 = Option.create(number: 3, description: "Un paradigma de programación basado en funciones", correct: false, question_number: question_e2.number, test_letter: test_e.letter)
-option_e7 = Option.create(number: 1, description: "Utilizando hilos de ejecución y comunicación entre ellos", correct: true, question_number: question_e3.number, test_letter: test_e.letter)
-option_e8 = Option.create(number: 2, description: "Utilizando técnicas de paralelismo automático", correct: false, question_number: question_e3.number, test_letter: test_e.letter)
-option_e9 = Option.create(number: 3, description: "Utilizando memoria compartida y exclusión mutua", correct: false, question_number: question_e3.number, test_letter: test_e.letter)
-option_e10 = Option.create(number: 1, description: "Optimización de bucles y uso eficiente de estructuras de datos", correct: true, question_number: question_e4.number, test_letter: test_e.letter)
-option_e11 = Option.create(number: 2, description: "Utilizando técnicas de programación dinámica", correct: false, question_number: question_e4.number, test_letter: test_e.letter)
-option_e12 = Option.create(number: 3, description: "Utilizando técnicas de memoización", correct: false, question_number: question_e4.number, test_letter: test_e.letter)
-option_e13 = Option.create(number: 1, description: "A través de importación directa de bibliotecas externas", correct: true, question_number: question_e5.number, test_letter: test_e.letter)
-option_e14 = Option.create(number: 2, description: "A través de la definición de tipos de datos personalizados", correct: false, question_number: question_e5.number, test_letter: test_e.letter)
-option_e15 = Option.create(number: 3, description: "A través de la utilización de lenguajes de programación externos", correct: false, question_number: question_e5.number, test_letter: test_e.letter)
+q_d2 = Question.create(number: 2, description: '¿Cómo se descompone una lista en cabeza y cola?', test_letter: 'D')
+Option.create(number: 1, description: '(x:xs)', correct: true, question_number: q_d2.number, test_letter: 'D')
+Option.create(number: 2, description: '[x, xs]', correct: false, question_number: q_d2.number, test_letter: 'D')
+Option.create(number: 3, description: 'head:tail', correct: false, question_number: q_d2.number, test_letter: 'D')
+
+q_d3 = Question.create(number: 3, description: '¿Qué símbolo introduce una Guarda?', test_letter: 'D')
+Option.create(number: 1, description: '|', correct: true, question_number: q_d3.number, test_letter: 'D')
+Option.create(number: 2, description: '->', correct: false, question_number: q_d3.number, test_letter: 'D')
+Option.create(number: 3, description: '=>', correct: false, question_number: q_d3.number, test_letter: 'D')
+
+q_d4 = Question.create(number: 4, description: '¿Cuál es la diferencia entre where y let?', test_letter: 'D')
+Option.create(number: 1, description: 'let es una expresión, where es una cláusula sintáctica', correct: true, question_number: q_d4.number, test_letter: 'D')
+Option.create(number: 2, description: 'where es una expresión, let es una declaración', correct: false, question_number: q_d4.number, test_letter: 'D')
+Option.create(number: 3, description: 'No hay diferencia', correct: false, question_number: q_d4.number, test_letter: 'D')
+
+q_d5 = Question.create(number: 5, description: '¿Para qué sirve "case ... of"?', test_letter: 'D')
+Option.create(number: 1, description: 'Para hacer pattern matching en medio de una expresión', correct: true, question_number: q_d5.number, test_letter: 'D')
+Option.create(number: 2, description: 'Para definir tipos de datos', correct: false, question_number: q_d5.number, test_letter: 'D')
+Option.create(number: 3, description: 'Para importar módulos', correct: false, question_number: q_d5.number, test_letter: 'D')
+
+
+# --- TEST E: Recursión y Orden Superior ---
+puts "Creando Test E..."
+Test.create(letter: 'E', description: 'Recursión y Funcional', cant_questions: 5)
+
+# Lessons E
+Lesson.create(number: 1, title: 'Introducción a la Recursión', test_letter: 'E')
+Lesson.create(number: 2, title: 'Más Recursión', test_letter: 'E')
+Lesson.create(number: 3, title: 'Currying', test_letter: 'E')
+Lesson.create(number: 4, title: 'Map y Filter', test_letter: 'E')
+Lesson.create(number: 5, title: 'Lambdas y Folds', test_letter: 'E')
+
+# Questions E
+q_e1 = Question.create(number: 1, description: '¿Qué es necesario para que una función recursiva termine?', test_letter: 'E')
+Option.create(number: 1, description: 'Un caso base (edge condition)', correct: true, question_number: q_e1.number, test_letter: 'E')
+Option.create(number: 2, description: 'Un bucle while', correct: false, question_number: q_e1.number, test_letter: 'E')
+Option.create(number: 3, description: 'Usar la función break', correct: false, question_number: q_e1.number, test_letter: 'E')
+
+q_e2 = Question.create(number: 2, description: '¿Qué es una función Curried?', test_letter: 'E')
+Option.create(number: 1, description: 'Una función que toma sus argumentos uno a uno', correct: true, question_number: q_e2.number, test_letter: 'E')
+Option.create(number: 2, description: 'Una función picante', correct: false, question_number: q_e2.number, test_letter: 'E')
+Option.create(number: 3, description: 'Una función que no devuelve nada', correct: false, question_number: q_e2.number, test_letter: 'E')
+
+q_e3 = Question.create(number: 3, description: '¿Qué hace la función map?', test_letter: 'E')
+Option.create(number: 1, description: 'Aplica una función a cada elemento de una lista', correct: true, question_number: q_e3.number, test_letter: 'E')
+Option.create(number: 2, description: 'Filtra una lista', correct: false, question_number: q_e3.number, test_letter: 'E')
+Option.create(number: 3, description: 'Reduce una lista a un valor', correct: false, question_number: q_e3.number, test_letter: 'E')
+
+q_e4 = Question.create(number: 4, description: '¿Cómo se escribe una función anónima (Lambda) que suma 1?', test_letter: 'E')
+Option.create(number: 1, description: '\x -> x + 1', correct: true, question_number: q_e4.number, test_letter: 'E')
+Option.create(number: 2, description: 'lambda x: x + 1', correct: false, question_number: q_e4.number, test_letter: 'E')
+Option.create(number: 3, description: 'x => x + 1', correct: false, question_number: q_e4.number, test_letter: 'E')
+
+q_e5 = Question.create(number: 5, description: '¿Qué función se usa para reducir una lista a un solo valor?', test_letter: 'E')
+Option.create(number: 1, description: 'foldl / foldr', correct: true, question_number: q_e5.number, test_letter: 'E')
+Option.create(number: 2, description: 'map', correct: false, question_number: q_e5.number, test_letter: 'E')
+Option.create(number: 3, description: 'filter', correct: false, question_number: q_e5.number, test_letter: 'E')
+
+puts "Datos sembrados exitosamente."

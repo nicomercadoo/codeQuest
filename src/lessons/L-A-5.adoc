@@ -1,0 +1,44 @@
+= Funciones Simples
+
+== La Anatomía de una Función
+
+Las funciones son la unidad básica de ejecución en Haskell. Definirlas es trivial:
+`nombreFuncion parametro1 parametro2 ... = cuerpo`
+
+[source,haskell]
+----
+dobleUs x = x + x
+dobleUs x y = x*2 + y*2
+----
+
+Observa que no hay paréntesis alrededor de los argumentos, ni llaves `{}` para el cuerpo, ni `return` al final. La última (y única) expresión evaluada es el valor de retorno.
+
+== Invocación de Funciones
+
+Aquí es donde muchos principiantes tropiezan. Para llamar a una función, **usas espacios**.
+
+**Incorrecto (estilo C/Java):** `bar(double(5))`
+**Correcto (Haskell):** `bar (double 5)`
+
+La función tiene la precedencia más alta.
+*   `double 5 + 2` significa `(double 5) + 2` -> `10 + 2` -> `12`.
+*   Si quisieras sumar primero, **necesitas** paréntesis: `double (5 + 2)`.
+
+== Funciones Condicionales (if-then-else)
+
+Haskell tiene `if`, pero es una **expresión**, no una sentencia de control. **Siempre** debe devolver un valor. Por lo tanto, la parte `else` es **obligatoria**. No puedes tener un `if` que "no haga nada" si la condición es falsa, porque la función debe devolver algo.
+
+[source,haskell]
+----
+doubleSmallNumber x = if x > 100
+                        then x
+                        else x * 2
+----
+
+Dado que es una expresión, puedes ponerla en cualquier lado:
+[source,haskell]
+----
+doubleSmallNumber' x = (if x > 100 then x else x*2) + 1
+----
+
+Las funciones en Haskell deben comenzar con minúscula. Si comienzan con mayúscula, Haskell pensará que es un Tipo de Dato.

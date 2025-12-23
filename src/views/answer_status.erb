@@ -5,7 +5,9 @@
   <link rel="stylesheet" type="text/css" href="<%=url('answer_status.css')%>">
   <link rel="icon" type="image/png" href="/favicon2.png">
 </head>
-<% if @theme == 'light' %>
+<% @id = session[:account_id] %>
+<% @account_theme = Account.find(@id).theme_light %>
+<% if @account_theme %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-light.css">
 <% else %>
   <link rel="stylesheet" type="text/css" href="/color-scheme-dark.css">
@@ -28,7 +30,7 @@
   </header>
   <main>
     <h1>Tu respuesta es</h1>
-    <%if @status == 'correct'%>
+    <%if status == 'correct'%>
       <p class="status">CORRECTA</p>
       <p class="kaomoji">(/≧▽≦)/</p>
     <%else%>
@@ -36,9 +38,9 @@
       <p class="kaomoji">(╯︵╰,)</p>
     <%end%>
     <section class="buttons-section">
-      <a href="<%=@url_redirect%>"><button type="button" class="continue-button">Continuar</button></a>
+      <a href="<%= question.get_next_question %>"><button type="button" class="continue-button">Continuar</button></a>
     </section>
-  </main>
+  </main>  
 </body>
 </html>
-
+  

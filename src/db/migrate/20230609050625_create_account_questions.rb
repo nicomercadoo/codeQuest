@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAccountQuestions < ActiveRecord::Migration[7.0]
   def change
     create_table :account_questions do |t|

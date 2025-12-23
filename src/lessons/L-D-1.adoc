@@ -1,0 +1,33 @@
+= Pattern Matching (Básico)
+
+== ¿Qué es?
+
+Pattern matching no es solo un `switch` o `if-else` glorificado. Es una forma de definir funciones especificando patrones a los cuales los datos deben ajustarse.
+Haskell verifica los patrones de arriba hacia abajo.
+
+== Siete de la Suerte
+
+[source,haskell]
+----
+lucky :: (Integral a) => a -> String
+lucky 7 = "¡EL SIETE DE LA SUERTE!"
+lucky x = "Lo siento, no tienes suerte hoy"
+----
+
+1.  Llamas a `lucky 7`. Coincide con el primer patrón (el literal `7`). Ejecuta esa línea.
+2.  Llamas a `lucky 5`. No coincide con `7`. Va al siguiente patrón. `x` es una variable, y las variables coinciden con **cualquier cosa**. `x` pasa a valer 5.
+
+== El orden importa
+
+Si movieras `lucky x` al principio, ¡siempre coincidiría con todo! El caso específico `lucky 7` nunca se alcanzaría. El compilador de Haskell usualmente te avisará con un warning de "Pattern match(es) are overlapped".
+
+== Patrón Comodín
+
+Si no te importa el valor de una variable, usa `_`.
+
+[source,haskell]
+----
+esCero :: Int -> Bool
+esCero 0 = True
+esCero _ = False  -- Coincide con cualquier cosa que no sea 0
+----

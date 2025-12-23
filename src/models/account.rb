@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+require 'bcrypt'
+
 class Account < ActiveRecord::Base
   validates :name, presence: true
   validates :email, presence: true
-  validates :password, presence: true
+  has_secure_password
   validates :nickname, presence: true
   validates :progress, presence: true
   validates :theme_light, inclusion: { in: [true, false] }
@@ -14,22 +17,39 @@ class Account < ActiveRecord::Base
   has_many :questions, through: :account_questions
   has_many :account_tests
   has_many :tests, through: :account_tests
-
+  has_many :account_snippets
+  has_many :snippets
 
   after_commit :actualizar_progreso
 
-  def correct_format_of_fields?
+  # Valida si los datos que se pretenden guardar en una cuenta son válidos
+  def self.validate_data(email, password, name, nickname)
     valid_email_format = /^[a-zA-Z0-9_.+-]+@(gmail|outlook|hotmail|live)\.[a-z.]+$/
     valid_password_format = /(?=(?:.*[A-Z].*)+)(?=(?:.*[a-z].*)+)(?=(?:.*\d.*)+)(?!(?:.*\s.*)+)^(?=.{8,}$).*/
     valid_name_format = /(?=(?:^\D*$)+)/
     valid_nickname_format = /(?=(?:^\S*$)+)/
 
-    valid_email_format.match(email) && valid_password_format.match(password) && valid_name_format.match(name) && valid_nickname_format.match(nickname)
+    { email: valid_email_format.match(email),
+      name: valid_name_format.match(name), nickname: valid_nickname_format.match(nickname) }
   end
 
-  def actualizar_progreso
-    # Lógica para actualizar el progreso de la cuenta
+  # Crea los registros de las lecciones, preguntas y tests para la cuenta
+  def stuff
+    Lesson.all.each do |lesson|
+      AccountLesson.create(account_id: id, lesson_id: lesson.id)
+    end
 
+    Question.all.each do |question|
+      AccountQuestion.create(account_id: id, question_id: question.id)
+    end
+
+    Test.all.each do |test|
+      AccountTest.create(account_id: id, test_id: test.id)
+    end
+  end
+
+  # Actualiza el progreso de la cuenta
+  def actualizar_progreso
     # Los capítulos valen el 100% del progreso (1 cap 100%, 2 caps 50%, etc)
     total_chapters = Test.distinct.count(:letter)
     total_progress = 100
